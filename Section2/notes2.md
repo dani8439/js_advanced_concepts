@@ -155,3 +155,5 @@ We should write code that is predictable not only for humans but also for machin
 If JS were compiled, then either compilation would have to be super fast, OR the competing browsers would have to agree on some binary executable standard/format that can understand this machine code. As the browswers are the one executing the code.
 
 When JS was created in 1995, start of the browser wars. Compiling code ahead of time wasn't feasible. Also, having all the browsers agree, they didn't get along, wasn't going to happen. Still won't happen now.
+
+Now have WebAssembly. Could be a game changer. Standard Binary executor format. Didn't have it in 1995. 
