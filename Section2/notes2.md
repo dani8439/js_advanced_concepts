@@ -85,3 +85,65 @@ Bytecode is not a native machine code. Most computers won't understand it. With 
 Yes initially when it first came out, had JS engines that interpreted JS to bytecode, and that engine was able to run inside of our browswers. Things have evolved. Use interpreters and compilers to run it. Not technically an interpreted language. 
 
 Depends on the implementation of it. Can make one that only compiles. This is also true when it comes to Python. All matters depending on implentation. 
+
+# Writing Optimized Code
+
+Don't want to work against optimization and make it slow. 
+
+In order to help the JS engine want to be careful with: 
+
+- `eval()`
+- `arguments`
+- `for in` loop. 
+- `with` 
+- `delete` 
+
+Main reasons why these things can make our code less optimized. **inline caching**
+
+```
+// inline caching 
+function findUser(user) {
+    return `found ${user.firstName} ${user.lastName}`
+}
+
+const userData = {
+    firstName: 'Johnson',
+    lastName: 'Junior'
+}
+
+findUser(userData)
+```
+
+Due to inline caching done by the compiler, code that executes the same method repeatedly, compiler can optimize it so that whenever it's looking for userData, can use inline caching. Instead of looking up the object every time, it will cache or inline cache so find user just becomes the line of text. 
+
+will become 'found Johnson Junior' 
+
+Other thing are **Hidden Classes**. 
+
+```
+// hidden classes 
+function Animal(x, y) {
+    this.x = x;
+    this.y = y;
+}
+
+const obj1 = new Animal (1, 2);
+const obj2 = new Animal(3, 4);
+```
+
+Compiler will look at this and see we're creating 2 objects. 
+
+But if say:
+
+```
+obj1.a = 30;
+obj1.b = 100;
+obj2.b = 30;
+obj.a = 100;
+```
+
+This code will make the code run slower. Deoptimize it. Called hidden classes. Want to instantiate properties in same order. So hidden classes have the same properties. As soon as you start introducing things out of order, it will get confused. Internally it will slow things down. Want to assign all properties of an object in its constructor. Also make sure we add things in the same order. 
+
+That's why there's the issue of the delete keyword as well. If you delete a property, change hidden classes so they don't match up anymore.
+
+We should write code that is predictable not only for humans but also for machines. More predictable it is, better as it has no surprises. 
