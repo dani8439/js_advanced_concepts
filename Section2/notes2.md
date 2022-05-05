@@ -147,3 +147,11 @@ This code will make the code run slower. Deoptimize it. Called hidden classes. W
 That's why there's the issue of the delete keyword as well. If you delete a property, change hidden classes so they don't match up anymore.
 
 We should write code that is predictable not only for humans but also for machines. More predictable it is, better as it has no surprises. 
+
+# Web Assembly
+
+*Why not just use machine code from the beginning?* 
+
+If JS were compiled, then either compilation would have to be super fast, OR the competing browsers would have to agree on some binary executable standard/format that can understand this machine code. As the browswers are the one executing the code.
+
+When JS was created in 1995, start of the browser wars. Compiling code ahead of time wasn't feasible. Also, having all the browsers agree, they didn't get along, wasn't going to happen. Still won't happen now.
