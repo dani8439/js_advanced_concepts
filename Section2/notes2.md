@@ -70,3 +70,18 @@ Called ignition. Takes the AST and spits out Bytecode. Not as low level as machi
 JIT compiler, as the code is running, takes the code and compiles it/modifies it so it does what you've asked it to, tries to make optimizations to have it run faster. Optimized code is then used instead of Bytecode. Means JS code will be improving. Execution will gradually improve. Profiler and compiler are constantly optimizing. That's where the name comes from. The one for V8 is turbofan. Previous versions used 2 JIT compilers. This way is faster.
 
 Now we know this, we can write more optimized code. Can use this knowledge to make sure we don't confuse the compiler. 
+
+# Comparing Other Languages 
+
+`.exe` file is created by C++. 
+
+`g++ your_program.cpp -o your_program` creates the .exe file. 
+
+java uses a jvm, java virtual machine. Compiles or interprets to bytecode. Only needs to be converted once. 
+
+Bytecode is not a native machine code. Most computers won't understand it. With bytecode you need software such as a virtual machine or js engine. Can't double click and run a bytecode file without a js machine. 
+
+### Is JavaScript an interpreted language? 
+Yes initially when it first came out, had JS engines that interpreted JS to bytecode, and that engine was able to run inside of our browswers. Things have evolved. Use interpreters and compilers to run it. Not technically an interpreted language. 
+
+Depends on the implementation of it. Can make one that only compiles. This is also true when it comes to Python. All matters depending on implentation. 
