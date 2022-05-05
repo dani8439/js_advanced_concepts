@@ -67,4 +67,6 @@ Is there a way to get the best of both worlds? What if we combined them? What if
 
 Called ignition. Takes the AST and spits out Bytecode. Not as low level as machine code, but able to be interpreted by the JS engine in order to run our program. 
 
-JIT compiler, as the code is running, takes the code and compiles it/modifies it so it does what you've asked it to, tries to make optimizations to have it run faster. 
+JIT compiler, as the code is running, takes the code and compiles it/modifies it so it does what you've asked it to, tries to make optimizations to have it run faster. Optimized code is then used instead of Bytecode. Means JS code will be improving. Execution will gradually improve. Profiler and compiler are constantly optimizing. That's where the name comes from. The one for V8 is turbofan. Previous versions used 2 JIT compilers. This way is faster.
+
+Now we know this, we can write more optimized code. Can use this knowledge to make sure we don't confuse the compiler. 
