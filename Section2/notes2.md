@@ -204,3 +204,18 @@ Stores functions and variables as your code executes. At each entry the state of
 Not the same in every JS engine. Some are different. Where it's stored may be different. Simple objects are usually stored on the stack. Objects, complex data structures (arrays, etc) are stored in the heap. 
 
 Whatever is on top of the call stack is what JS is running. How cool is that? 
+
+# Stack Overflow 
+What happens if we keep calling functions nested inside of functions? So we keep growing stack until it gets larger and larger and larger and we can't do it anymore? That's called stack overflow. It can be caused very easily. 
+
+```
+function inception() {
+    inception()
+}
+
+inception();
+```
+
+`inception()` uses recursion. A function calling itself. 
+
+If we run `inception()` get a `RangeError: Maximum call stack size exceeded`. Get a stack trace (a snapshot of code execution of the stack frame).
