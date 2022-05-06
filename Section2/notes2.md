@@ -229,3 +229,44 @@ The GC prevents memory leaks (when memory gets too big and we reach our maximum 
 In low level languages like C, you control the GC. That's very dangerous. Also why programs like C are fast and memory efficient, as they give you control. 
 
 In JS, they use the mark and sweep algorithm to GC. Mark what we need, and sweep what we don't. 
+
+# Memory Leaks 
+
+```
+let array = [];
+// infinite loop
+for (let i = 5; i > 1; i++) {
+    array.push(i - 1);
+}
+```
+Run an infinite loop that keeps pushing to the array `i - 1` over and over until we fill up our memory, and use everything up and crash our browser.
+
+Filled up our memory heap with more and more data, garbage collection wasn't really working until we crashed our program. 
+
+Memory leaks are pieces of memory our app has used in the past, but is not needed any longer but has not yet been returned back to us. 
+
+## 3 Common Memory Leaks 
+- Global Variables: keep adding more and more and it's unnecessary. 
+- Event Listeners: not removing event listeners after they're finished, especially in SPA's navigating back and forth and they are constantly running in the background. 
+- Using set interval: keeps running and running unless we clear it. 
+
+```
+// Memory Leaks 
+// Global Variable 
+var a - 1;
+var b = 1;
+var c = 1;
+
+// Event listeners 
+var element = document.getElementById('button');
+element.addEventListener('click', onClick);
+
+// setInterval
+setInterval(() => {
+    // referencing objects...
+})
+```
+
+One example is Sound Cloud. People had it in the background of a gaming console, and they had a memory leak problem because people wouldn't close the app for hours. Huge memory leak in program. Unlike most website or apps, runs a really long time in background. 
+
+Memory is limited. When it comes to call stack and memory heap, those are two places JS remembers for its stored memory. We have limited use of them. To write efficient code, have to be conscious not to have stack overflow or memory leak.
