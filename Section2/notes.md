@@ -303,4 +303,47 @@ Going to make it really difficult if we have long running tasks. Imagine on twit
 
 Using the `alert()` function in console mimicks this. Until we click on `ok` can't do anything, freezes the page. 
 
-When we talk about JS, most of the time not just using the JS Engine which is synchronous. Not just that running our code. We have the **JavaScript Runtime**. 
+When we talk about JS, most of the time not just using the JS Engine which is synchronous. Not just that running our code. We have the **JavaScript Runtime**.
+
+# JavaScript Runtime
+
+JS is a single threaded language. One Stack, one Heap. If any other program wants to execute something, has to wait until the previous is executed. If do something that takes a really long time, will take a long time for our program. 
+
+In this case there's **JavaScript Runtime**
+
+**Web API** Web browser API to communicate and let the JS engine know hey I'm back with some data, some work you told me to do in the background. 
+
+The Web API comes with the browswer (Chrome, Safari, Firefox). All have JS implementation and JS runtime that provides a Web API. Applications that can do a bunch of things like send http requests, listen to DOM events, click events on the DOM, delay execution using `setTimeout()` or `setInterval()` can even be used for caching events on the browser. 
+
+`window` object in the browser provides a whole lot of stuff. Lots of cool stuff. All sorts of functions, some provided storage, etc. All provided by the browser, and not native to JS. Browsers are helping us to create rich web applications so that users aren't just sitting around waiting for JS to execute. Anything that can be offloaded in the background, they will do so in the background. 
+
+Browsers underneath the hood use low level programming languages like C++ in the background and these API's are called Web API's.
+
+Web API's are **Asynchronous**. Meaning we can instruct them to do stuff in the background while we continue to do what we need. 
+
+What are the other two things? **Event Loop** and **Callback Queue**? They are what happen underneath the hood. Have items on the call stack, as soon as something comes up like `setTimeout()` that's not part of JS but part of the Web API, the call stack says I have something here that's not for me, for the Web API, you take care of it. The Web API says I know what that is. I'll do it in the background. Once it's done, it'll send the data to a callback. And the Event loop will say as soon as the call stack is free, I have something for you here,w ould you like to add it ontot he stack. If the stack is empty, it will push the callback onto the stack. 
+
+```
+console.log('1');
+setTimeout(() => { console.log('2')}, 1000);
+console.log('3');
+```
+
+It will print out 1, 3, undefined, and then 2. Why? Because we added `console.log('1')` to our stack. Then we went to the next line, of `setTimeout()` which goes on to run in the background in the Web API. Then we run `console.log('3')`. Behind the scenes the Web API takes the setTimeout and runs a timer for 1 second. Once that 1 second is over, it'll push the callback, what to do once it's done running for 1 second, the console.log('2'), to the callback queue, and it says I'm the first person that's done, can you console.log('2')? The event loop is asking, is the callstack empty? Yes we can run. No we can't run, etc. After console.log gets printed and popped off, the event loop ticks and say alright, can you console.log('2') which is why we get this weird pattern.
+
+Philip Roberts has an amazing talk about the JS event loop. Created a tool called `loupe` to show all of this. 
+
+Even if you run the same code above with a timeout of 0, same pattern happens.
+
+```
+console.log('1');
+setTimeout(() => { console.log('2')}, 0);
+console.log('3');
+
+// 1
+// 3
+// undefined 
+// 2
+```
+
+Using this pattern, we can run asynchronous code. Whenever we get tasks that may take a long time, we can send that off to the browser, the browser can run that in the background, in the callback queue and event loop and get it done.
