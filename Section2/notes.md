@@ -294,3 +294,13 @@ Initially in 1995 when JS was born, this made things easy for implementation and
 Single threaded means I'm the JS engine and I'm eating with one hand. Putting food in my mouth and using same hand to grab next food when done chewing. Can't grab anymore food or eat anything more until I'm done chewing. One thing at a time. 
 
 Because of this, JS is *synchronous* meaning one at a time, as things appear, only one thing can happen at a time. That doesn't sound super fast, does it?
+
+# Excercise: Issue with Single Threaded 
+
+**What problems do you see with synchronous code?** 
+
+Going to make it really difficult if we have long running tasks. Imagine on twitter each thing had a long time to complete (5 seconds) before we could do something else. Couldn't scroll until the task was completed. 
+
+Using the `alert()` function in console mimicks this. Until we click on `ok` can't do anything, freezes the page. 
+
+When we talk about JS, most of the time not just using the JS Engine which is synchronous. Not just that running our code. We have the **JavaScript Runtime**. 
