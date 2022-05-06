@@ -157,3 +157,50 @@ If JS were compiled, then either compilation would have to be super fast, OR the
 When JS was created in 1995, start of the browser wars. Compiling code ahead of time wasn't feasible. Also, having all the browsers agree, they didn't get along, wasn't going to happen. Still won't happen now.
 
 Now have WebAssembly. Could be a game changer. Standard Binary executor format. Didn't have it in 1995. 
+
+# Call Stack and Memory Heap
+
+JS Engine does a lot of work for us. Biggest thing is reading our code and executing it. 2 most important things in this step are a place to store the data, and a place to actually run and keep track of what's happening line by line. 
+
+Call stack and Memory Heap. 
+
+Heap stores and writes information. Allocates, uses, and releases memory. 
+
+Stack a place to keep track of where we are in the code so we can run it in order. 
+
+With these two things the JS engine can do that. 
+
+```
+// Call stack + Memory Heap 
+const number = 610; // allocate memory for number 
+const string = "some text" // allocate memory for a string 
+const human = { // allocate memory for an object... and it's values
+    first: 'Andrei',
+    last: 'Neagoie'
+}
+
+function subtractTwo(num) {
+    return num - 2;
+}
+
+function calculate(){
+    const sumTotal = 4 + 5;
+    return subtractTwo(sumTotal);
+}
+
+calculate()
+
+// callstack adds calculate() on top of the stack. When finished running, will remove it.
+```
+
+Assign variables, and point to a region in the memory heap that has these values. 
+
+Our Memory Heap is a free store. Large region in memory JS Engine provides for. Can store any kind of arbitrary data in unordered fashion. Engine takes care of us to put data in storage boxes for us. 
+
+Call Stack operates as region of memory first in last out mode. 
+
+Stores functions and variables as your code executes. At each entry the state of the stack (the stack frame) allows us to know where we are in the code. Runs in first last one out mode. First one in is last one popped up. Can keep adding to it, and eventually pops all function calls until done with command. Use memory heap to point to different variables and objects and data we store. This is the way it works in most programming languages. 
+
+Not the same in every JS engine. Some are different. Where it's stored may be different. Simple objects are usually stored on the stack. Objects, complex data structures (arrays, etc) are stored in the heap. 
+
+Whatever is on top of the call stack is what JS is running. How cool is that? 
