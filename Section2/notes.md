@@ -286,3 +286,11 @@ One example is Sound Cloud. People had it in the background of a gaming console,
 Memory is limited. When it comes to call stack and memory heap, those are two places JS remembers for its stored memory. We have limited use of them. To write efficient code, have to be conscious not to have stack overflow or memory leak.
 
 # Single Threaded
+
+JS is a single threaded programming language. Being single threaded means only one set of instructions is executed at a time. How to check if it's single threaded? If it has only 1 call stack. We're never running functions in parallel. 
+
+Initially in 1995 when JS was born, this made things easy for implementation and developers, because JS was initially only a language for returning actions on a webpage, nothing really required having more than a single thread.
+
+Single threaded means I'm the JS engine and I'm eating with one hand. Putting food in my mouth and using same hand to grab next food when done chewing. Can't grab anymore food or eat anything more until I'm done chewing. One thing at a time. 
+
+Because of this, JS is *synchronous* meaning one at a time, as things appear, only one thing can happen at a time. That doesn't sound super fast, does it?
