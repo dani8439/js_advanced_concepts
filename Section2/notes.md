@@ -347,3 +347,18 @@ console.log('3');
 ```
 
 Using this pattern, we can run asynchronous code. Whenever we get tasks that may take a long time, we can send that off to the browser, the browser can run that in the background, in the callback queue and event loop and get it done.
+
+# Node.js
+Difference between a JS engine, and a JavaScript runtime. 
+
+A js file is like musical notes. Ways for us to write music/write programming.
+
+JS engine is like the musician or the composer. That person can read the music and make sense of it and understand it. 
+
+JS runtime is the whole package where we have the musician, but also give them the musical notes and all the tools to play the music.
+
+If we're able to have different JS runtimes, what do you think Node.js is? Is it a programming language? A JS engine? Is it a runtime? It's a JS runtime. It's not a language. It's a runtime. 
+
+Up until 2009, JS was just run in the browser. But node.js was created based on C++, that provides this runtime for us. The Node.js runtime looks very similiar to our browser based runtime. 
+
+V8 engine, and event loop, our callback queue. It does a little more than our web browser runtime. 
