@@ -396,3 +396,33 @@ removeItemsFromList();
 
 list;
 ```
+
+# Section Review 
+
+Learned about JS engine and all the steps of how we can send a js file through the steps, including an interpreter, and a compiler, a JIT compiler so code can run on our machine. Learned about Call stack and memory heap. Learned about single threaded model and the limitations of it as well as beauty and simplicity. And the very common interview question of `console.log()` and `setTimeout()`. 
+
+What happens here? 
+
+```
+setTimeout(() => { console.log('1', 'is the loneliest number')}, 1000);
+setTimeout(() => { console.log('2', 'can be as bad as one)}, 10)
+console.log('3','is a crowd');
+
+// 3 is a crowd
+// undefined 
+// 2 can be as bad as one 
+// 1 is the loneliest number
+```
+
+```
+setTimeout(() => { console.log('1', 'is the loneliest number')}, 0);
+Promise.resolve('hi').then(() => console.log('2'));
+console.log('3','is a crowd');
+
+// 3 is a crowd 
+// 2
+// undefined 
+// 1 is the loneliest number
+```
+
+How did that work? We'll learn in the async part of the course. But need to understand more fundamental aspects of JS first. 
