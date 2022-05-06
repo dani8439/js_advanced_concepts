@@ -362,3 +362,37 @@ If we're able to have different JS runtimes, what do you think Node.js is? Is it
 Up until 2009, JS was just run in the browser. But node.js was created based on C++, that provides this runtime for us. The Node.js runtime looks very similiar to our browser based runtime. 
 
 V8 engine, and event loop, our callback queue. It does a little more than our web browser runtime. 
+
+# Exercise: Fix This Code: 
+
+```
+//fill array with 60000 elements
+const list = new Array(60000).join('1.1').split('.');
+ 
+function removeItemsFromList() {
+    var item = list.pop();
+ 
+    if (item) {
+        removeItemsFromList();
+    }
+};
+ 
+removeItemsFromList();
+```
+
+```
+//fill array with 60000 elements
+const list = new Array(60000).join('1.1').split('.');
+ 
+function removeItemsFromList() {
+    var item = list.pop();
+ 
+    if (item) {
+        setTimeout(removeItemsFromList, 0);
+    }
+};
+ 
+removeItemsFromList();
+
+list;
+```
