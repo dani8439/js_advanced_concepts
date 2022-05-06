@@ -219,3 +219,13 @@ inception();
 `inception()` uses recursion. A function calling itself. 
 
 If we run `inception()` get a `RangeError: Maximum call stack size exceeded`. Get a stack trace (a snapshot of code execution of the stack frame).
+
+# Garbage Collection
+
+Before we talk about memory leaks, we have to talk about garbage collection. JS is a garbage collected language. Means when JS allocates memory. Say within a function we create an object that gets stores within our memory heap. Once we finish calling a function and we don't need that memory anymore, JS automatically frees up this memory that e no longer use, and collects our garbage. Only the data that is still useful to us remains as memory is limited.
+
+The GC prevents memory leaks (when memory gets too big and we reach our maximum size). But that's hypothetical. No perfect system. Garbage collection gives us a false sense of security. Because GC is done automatically. Big mistake though. Gives JS developers the false impression they can choose not to care about memory management. There are ways to make mistakes where GC doesn't clean up the memory and we still have little references hanging around.
+
+In low level languages like C, you control the GC. That's very dangerous. Also why programs like C are fast and memory efficient, as they give you control. 
+
+In JS, they use the mark and sweep algorithm to GC. Mark what we need, and sweep what we don't. 
