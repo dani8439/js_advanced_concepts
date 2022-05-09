@@ -108,3 +108,58 @@ function sing() {
 A function expression in hoisting, during creation phase, the variable is hoisted and assigned to `undefined`. With a function expression, until the execution phase reaches it, when we start running the code. With a function expression it's only going to be run after it's been defined. If run before, we get an error. 
 
 With our global EC, we have a few things that happen, the global object, and the this object during the creation phase when it gets assigned. Then during the execution phase when we run our code. Important to remember during the creation phase also have the act of hoisting. Anytime we see the `function` or the `var` keywords, we allocate space to them in our heap, to make sure that the JS engine is ready for the execution.
+
+# Exercise Hoisting 
+
+```
+var one = 1;
+var one = 2;
+
+console.log(one);
+// 2
+```
+
+```
+a();
+
+function a() {
+    console.log('hi')
+}
+
+function a() {
+    console.log('bye')
+}
+
+// bye
+```
+Last in becomes what it is. During hoisting phase, we look at the function, compiler says okay I'm going to hoist this, then goes to the next line, and puts it into memory. Because they are the same, because we're doing it one after the other, it will rewrite the place in memory to include the latter code. So lose the ability to say hi.
+
+# Exercise Hoisting 2
+
+```
+var favoriteFood = "grapes";
+
+var foodThoughts = function () {
+    console.log("Original favorite food: " + favoriteFood);
+
+    var favoriteFood = "sushi";
+
+    console.log("New favorite food: " + favoriteFood);
+};
+
+foodThoughts();
+
+// Original favorite food: undefined
+// New favorite food: sushi
+```
+
+Because `var favoriteFood = undefined` on the first pass. Then we go to the variable so foodThoughts get hoisted. 
+`var foodThoughts = undefined`. (During creation phase).
+
+During Execution Phase, almost don't need the variable keywords anymore. Start executing the code. First execution is `favoriteFood`. Then `foodThoughts` assigned the function, which is then run at the bottom. As soon as we run the function, a new execution is created, inside of it, hoisting happens during the creation phase. 
+
+Sees `var` in the little world with `favoriteFood` and it hoists it up. `var favoriteFood = undefined`. Which is the only one it sees. Logging `Original favorite food: undefined`. Then `favoriteFood` becomes sushi, which logs as the favorite food. 
+
+Isn't hoisting confusing? What happened to being predicatable with our code and making sure that the compiler and humans can understand it? Are arguments about whether you should use hoisting and if it's bad practice because we want to make coding predicatable. Doing things like above makes code very unpredicatable. Can avoid hoisting by not using the `var` keyword. Change all `vars` to `const` and `let`. Which will then give us an error. 
+
+If we're no longer using hoisting, we have to rewrite the code to make more sense. 
