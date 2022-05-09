@@ -163,3 +163,22 @@ Sees `var` in the little world with `favoriteFood` and it hoists it up. `var fav
 Isn't hoisting confusing? What happened to being predicatable with our code and making sure that the compiler and humans can understand it? Are arguments about whether you should use hoisting and if it's bad practice because we want to make coding predicatable. Doing things like above makes code very unpredicatable. Can avoid hoisting by not using the `var` keyword. Change all `vars` to `const` and `let`. Which will then give us an error. 
 
 If we're no longer using hoisting, we have to rewrite the code to make more sense. 
+
+# Exercise 3
+
+```
+function bigBrother(){
+  function littleBrother() {
+    return 'it is me!';
+  }
+  return littleBrother();
+  function littleBrother() {
+    return 'no me!';
+  }
+}
+
+// Before running this code, what do you think the output is?
+bigBrother();
+
+// no me!
+```
