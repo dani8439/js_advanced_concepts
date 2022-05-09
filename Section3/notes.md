@@ -56,3 +56,55 @@ In JS our lexical scope (available data + variables where the function was defin
 It doesn't matter where we call our function. Because wherever the function was lexically scoped, it will have access to certain things based on that property (say being written globally).
 
 What is the first lexical environment that we have? The **global lexical environment**.
+
+# Hoisting 
+
+In the Global Execution Context there was `global` and `this`. Then the run your code phase. Between them, there's an important step missing, **hoisting**.
+
+Hoisting is the behavior of moving the variables or function declarations to the top of their respective environment in compilation phase. 
+
+Variables are partially hoisted, and function declarations are hoisted. 
+
+```
+console.log('1----------');
+console.log(teddy);
+console.log(sing());
+var teddy = 'bear';
+function sing() {
+    console.log('ohhh la la la')
+}
+```
+Hoisting, during the creation phase of our global e.c., if we run this, get `undefined` for `teddy`. 
+
+JS engine will run `ohhh la la la`. During the creation phase will look through the code, as soon asa it sees the `var` keyword or the `function` it will allocate some memory to the code even if it just assigns it to `undefined`. 
+
+`teddy` is undefined because the JS engine during the creation phase, knew `teddy` was going to be a variable, but we don't know what it is yet, so it's `undefined`. That's what it means by variables being partially hoisted. We assign the variable itself, but not what's on the right side of the equal sign. Functions on the other hand are fully hoisted, so the function declaration is assigned a location in memory, so we know to `console.log('ohhh la la la')`.
+
+If we add a bracked to the function, so the js engine no longer sees `function` as the first word, we get a reference error, because it doesn't hoist it. Didn't see a `var` or a `function` so it's `undefined`. 
+
+If we change `var` to `const`, `const` or `let` are not hoisted. Only `var`. 
+
+The compiler isn't actually moving these lines of code. It's not moving `teddy` all the way up or the function. It's simply having one pass through the code, and reserving/assigning memory to that space. 
+
+We have function declarations (`function` is on the first line). Or function expressions, where we create a variable function: `var sing2 = function() { console.log('uhhh la la la')}`
+
+```
+console.log('1----------');
+console.log(teddy);
+console.log(sing());
+var teddy = 'bear';
+
+// function expression
+var sing2 = function() {
+    console.log('uhhh la la la')
+}
+
+// function declaration
+function sing() {
+    console.log('ohhh la la la')
+}
+```
+
+A function expression in hoisting, during creation phase, the variable is hoisted and assigned to `undefined`. With a function expression, until the execution phase reaches it, when we start running the code. With a function expression it's only going to be run after it's been defined. If run before, we get an error. 
+
+With our global EC, we have a few things that happen, the global object, and the this object during the creation phase when it gets assigned. Then during the execution phase when we run our code. Important to remember during the creation phase also have the act of hoisting. Anytime we see the `function` or the `var` keywords, we allocate space to them in our heap, to make sure that the JS engine is ready for the execution.
