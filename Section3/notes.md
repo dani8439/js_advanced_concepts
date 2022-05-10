@@ -182,3 +182,60 @@ bigBrother();
 
 // no me!
 ```
+
+# Function Invocation 
+
+Programs are simply assigning memory, for example assigning a value to a variable, then running a function to do something with those variables. Without functions our programs wouldn't do anything. Functions give us some amazing powers in JS. 
+
+We have function expression and function declarations.
+
+Expression starts with `var`, declaration starts with `function` keyword. Declarations get hoisted, expressions don't. 
+
+```
+// Function Expression 
+var canada = function() {
+    console.log('cold');
+}
+
+// Function Declaration 
+function india() {
+    console.log('warm');
+}
+```
+
+Can also write a function expression with an arrow function and it will have the same effect:
+
+```
+// Function Expression 
+var canada = () => {
+    console.log('cold');
+}
+```
+
+Our functions, we can call them. Terms sometimes vary. Telling our JS engine, hey run our function. Run with curly brackets, as soon as JS engine sees this, creates an execution context.
+
+```
+// Function Invocation/Call/Execution
+canada();
+india();
+```
+
+Pretty basic, nothing new. When it comes to the `canada()` function. The function is defined at run time, when we actually run the function vs `india()` where this function gets defined at parse time, when the compiler actually looks at the code, and starts hoisting and allocating memory. 
+
+These functions when executed have another piece to them. When a function is invoked, we create a new Execution Context on top of our global execution context. Get the `this` keyword. But unlike the global e.c. which gave us a global which is equal to `this`, we get `arguments`. 
+
+It's another keyword in JS. 
+
+```
+function marry(person1, person2) {
+    console.log('arguments', arguments)
+    return `${person1} is now married to ${person2}`
+}
+
+marry('Tim', 'Tina');
+
+// Arguments(2) ['Tim', 'Tina'...
+// 'Tim is now married to Tina'
+```
+
+Don't get `arguments` in the global object. Only available to us when we create a new EC with a function.
