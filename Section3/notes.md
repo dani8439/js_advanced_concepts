@@ -239,3 +239,45 @@ marry('Tim', 'Tina');
 ```
 
 Don't get `arguments` in the global object. Only available to us when we create a new EC with a function.
+
+# Arguments Keyword
+
+`Arguments` is a little dangerous to use. Why? Because it looks a little like an array but isn't an array. There's a lot of things you can do with the keyword which makes it harder for the engine to optimize your code. 
+
+Some cases where we might want to iterate or loop through arguments. One way to go about it is to say:
+
+`console.log(Array.from(arguments))` will create an array from whatever we give it, which will spit out: `['Tim', 'Tina']`. Which is nice. 
+
+Another method is to use Rest Parameters: 
+
+```
+function marry2(...args) {
+    console.log('arguments', args);
+    console.log(Array.from(arguments));
+    return `${args[0]} is now married to ${args[1]}`
+}
+
+marry2('Tim', 'Tina');
+
+// (2) ['Tim', 'Tina']
+// 'Tim is now married to Tina'
+```
+
+With modern JS you want to avoid `arguments`. Using the above techniques we can convert them to an array like object. 
+
+The arguments object is something we get on each execution context. 
+
+If we go back to the `india()` function, if we console.log(arguments) inside of it, what will we get? 
+
+```
+function india() {
+    console.log(arguments);
+    console.log('warm')
+}
+
+india();
+// {}
+// warm
+```
+
+Get an empty arguments object. Can still use it, even though we didn't pass any parameters into the function, because on each execution context, we still create a new arguments object.
