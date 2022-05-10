@@ -281,3 +281,49 @@ india();
 ```
 
 Get an empty arguments object. Can still use it, even though we didn't pass any parameters into the function, because on each execution context, we still create a new arguments object.
+
+# Variable Environment 
+
+There can be many execution contexts. What about variables that are created inside of these individual EC's. (Variables inside of a function?
+
+`Variable Environment` lives within the EC with `this` and `arguments`. 
+
+Each EC is like its own universe. Don't really know of each other. 
+
+What type of thing do we have in this variable environment?
+
+```
+function two() {
+    var isValid; // undefined
+}
+
+function one() {
+    var isValid = true; // local env
+    two(); // new EC
+}
+
+var isValid = false;
+one();
+
+// two()
+// one() -- true
+// global() -- false 
+```
+
+First thing that happens is we have function declarations, so everything gets hoisted and put at the top. Also have `isValid` which is a global variable and is assigned to `undefined` when its hoisted. 
+
+Then we start running or executing our code, first step is line 10, where we assign `false` to `isValid`, so changes `undefined` to `false`. Second step is line 11, where we invoke `one()` and a new EC is created on top of the stack.
+
+First step is we go into the funciton and have the `var isValid = true` which will be put into the new EC or the local environment.
+
+A new EC is created for `two()`, and put on top of the stack. And then we go into the `two()` world, where `isValid` remains `undefined.`
+
+In the global environment, we have `var isValid = false`. 
+
+In the `one()` EC, `isValid` is true. Doesn't care about what's happening globally. 
+
+In the `two()` EC, `isValid` is undefined. 
+
+Each of these worlds carries information/data that we have access to. Once each EC is done, it pops off the stack and the memory space is gone. Until all the memory is gone from our program.
+
+This variable environment - the place where we store the info (some can be on the callstack, or it can be a reference to somewhere in the heap). Each EC has its own variable environment.
