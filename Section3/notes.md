@@ -400,3 +400,9 @@ But we cannot `console.log(c)` within a different context, because it's defined 
 Variables declared outside a function are in global scope, they can be accessed in any other scope. Local scope however, any scope local to a function, variables declared are accessible within, and scopes surrounding it. Scope just defines the accessibility of variables, what we can access and what we cannot. 
 
 `eval()`, `arguments`, `for in`, `with`, and `delete`, hidden classes and inline caching have problems because of scope chain. Can change how scope and scope chains work with some of these internally, which is difficult for us. Makes problem. 
+
+# [[scope]]
+
+When a function is called, an environment is created for the little world it enters. That environment has a field that has its own variable environment, but also another place that points to the outer scope, and to the outer scope until it hits the global scope. The JS spec has this internally. [[scope]] or scopes. 
+
+If we created in dev tools, a `function a() {}` we can then go into the `window` object, we can then see `a()`. And we can go down in it and see `[[scopes]]` Which in this case is type global, because the scope in function a is global. 
