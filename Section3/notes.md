@@ -422,4 +422,41 @@ Where do you think this `height` variable is located? Is `height` being created 
 
 Underneath the hood, looks at `height` and says nothing has been declared. No var, let or const. So don't have it. Those keywords tell JS where to put them in the variable environment. So it goes to the global and asks is there such a thing as the height? Global env will say nope, I don't have it. But it's not throwing an error, because the global environment sees that it doesn't exist and will create it for us. 
 
-That's weird. Doesn't make any sense. This is something that in the past with JS you could do. Now we have something called, `use strict` which if we add it to the top of the page, it's introduced as a way to prevent JS from doing these weird unpredicable edge cases. No such thing as a perfect programming language. `use strict` allows us to prevent these pitfalls. 
+That's weird. Doesn't make any sense. This is something that in the past with JS you could do. Now we have something called, `use strict` which if we add it to the top of the page, it's introduced as a way to prevent JS from doing these weird unpredicable edge cases. No such thing as a perfect programming language. `use strict` allows us to prevent these pitfalls. When we use it, it spits out that `height is not defined`. Because it knows we've not declared it. So we have to use `var, let or const` to define that variable. 
+
+```
+var heyhey = function doodle() {
+    // do something
+    return 'heyhey';
+}
+heyhey();
+```
+
+If we run it, that's expected. But what if we run: `doodle()`? What will happen. We'll get a ReferenceError. Means that `doodle()` is nowhere to be seen in the scope chain. This is because the `doodle()` function is actually enclosed to its own scope. Has it's own EC variable environment. That's a low level gotcha where we can't access it on the global scope. Can only access it here. 
+
+# Function Scope VS Block Scope 
+
+Scope means what variables we have access to. JS has `function scope`. Most other programming languages have `block scope`. 
+
+With a `function scope` if we created an if statement, and a variable in it, because JS uses function scope, we can access the password globally. The variable is functionally scoped. We only create a new scope, a new environment when there is a function. If it was a function, then in that case, we couldn't access the `secret`.
+
+```
+if (5 > 4) {
+    var secret = '12345'
+}
+
+secret;
+```
+
+In other languages, they use block scope, which means basically whenever we see the curly braces, we create a new environment. JS saw this and said, I want to be able to do block scoping too, how can I do that? With ES6, they introduced `let` and `const` keywords, which allow us to do block scoping. 
+
+```
+if (5 > 4) {
+    let secret = '12345';
+}
+
+secret;
+// ReferenceError
+```
+
+Variables declared inside of a block scope, like an if statement or for loops, can be accessed from outside the curly brackets when we use `var`. But if we use `let` and `const`, we can't. Doesn't mean you should never use `var`. Most of the time you should use `let` and `const`. But they are alternatives to variable declarations. 
