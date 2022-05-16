@@ -327,3 +327,76 @@ In the `two()` EC, `isValid` is undefined.
 Each of these worlds carries information/data that we have access to. Once each EC is done, it pops off the stack and the memory space is gone. Until all the memory is gone from our program.
 
 This variable environment - the place where we store the info (some can be on the callstack, or it can be a reference to somewhere in the heap). Each EC has its own variable environment.
+
+# Scope Chain 
+
+```
+var x = 'x';
+function findName() {
+    console.log(x);
+    var b = 'b';
+    return printName();
+}
+
+function printName() {
+    var c = 'c'
+    return 'Andrew Neagoie'
+}
+
+function sayMyName() {
+    var a = 'a';
+    return findName();
+}
+
+sayMyName();
+// 'Andrei Neagoie' 
+```
+
+Another part of the EC we have not discussed. The other piece of the puzzle when it comes to EC, is that each world, each context has a link to its outside world. A link to its parent. This outer environment depends on where the function sits lexically. Lexically means where the function is written. 
+
+If we create a new `var x` each function will have access to that variable. All of the functions have access to the global scope. 
+
+They all have a global lexical environment. Gets attached to the window object. Have a little link, a `Scope Chain` that links and gives us access to variables that are in our parent environment. In this case, the global environment. It looks up the scope chain to `console.log(x)` because it's defined globally. 
+
+We can go down the scope chain. From child to parent, and then log it. 
+
+Scope, or static scope. 
+
+In js our lexical scope (available data + variables where the function was defined) determines our available variables. Not where the function is called (dynamic scope). 
+
+This idea of lexical scope, which is also called static scope, means that only by looking at the source code we can determine which variables and data are available in. Compiler looks at the code and attaches all these scope chains before it even runs the code, because we have lexical scope. Know what data can be accessed by each function. 
+
+Scope chain starts where the data is defined, and goes all the way down to the global context. 
+
+Scope means where can I access that variable? Where is it available in my code? 
+
+```
+function sayMyName() {
+    var a = 'a';
+    return function findName() {
+        var b = 'b';
+        return function printName() {
+            console.log(c);
+            var c = 'c';
+            return 'Andrei Neagoie' 
+        }
+    }
+}
+
+// sayMyName();
+// [function: findName]
+// sayMyName()();
+// [function: printName]
+// sayMyName()()();
+// Andrei Neagoie
+```
+
+Run the above, returns Function: findName. All lexically scoped differently. Previously they were all scoped to the lexical environment. How would you link the chains together? The links go to form a function lexical environment. Functions written within functions. The function lexical environment is within each one, so the scope chain goes down from `printName()` all the way to `sayMyName()`. 
+
+Can throw a `console.log(c)`, `(b)` and `(a)` within and print it out because it keeps looking up the scope chain to find it. 
+
+But we cannot `console.log(c)` within a different context, because it's defined below and not above. 
+
+Variables declared outside a function are in global scope, they can be accessed in any other scope. Local scope however, any scope local to a function, variables declared are accessible within, and scopes surrounding it. Scope just defines the accessibility of variables, what we can access and what we cannot. 
+
+`eval()`, `arguments`, `for in`, `with`, and `delete`, hidden classes and inline caching have problems because of scope chain. Can change how scope and scope chains work with some of these internally, which is difficult for us. Makes problem. 
