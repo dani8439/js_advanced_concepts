@@ -460,3 +460,22 @@ secret;
 ```
 
 Variables declared inside of a block scope, like an if statement or for loops, can be accessed from outside the curly brackets when we use `var`. But if we use `let` and `const`, we can't. Doesn't mean you should never use `var`. Most of the time you should use `let` and `const`. But they are alternatives to variable declarations. 
+
+# Excercise: Block Chain 
+
+```
+function loop() {
+    for (var i = 0; i < 5; i++) {
+        console.log(i);
+    }
+    console.log('final', i);
+}
+
+loop();
+0
+1
+2
+3
+4
+final 5
+```
