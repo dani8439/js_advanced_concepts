@@ -406,3 +406,20 @@ Variables declared outside a function are in global scope, they can be accessed 
 When a function is called, an environment is created for the little world it enters. That environment has a field that has its own variable environment, but also another place that points to the outer scope, and to the outer scope until it hits the global scope. The JS spec has this internally. [[scope]] or scopes. 
 
 If we created in dev tools, a `function a() {}` we can then go into the `window` object, we can then see `a()`. And we can go down in it and see `[[scopes]]` Which in this case is type global, because the scope in function a is global. 
+
+# Exercise: JS is Weird 
+
+```
+function weird() {
+    height = 50;
+    return height;
+}
+
+weird();
+```
+
+Where do you think this `height` variable is located? Is `height` being created in the variable environment `weird()`? No. This is called leakage of global behaviorals. 
+
+Underneath the hood, looks at `height` and says nothing has been declared. No var, let or const. So don't have it. Those keywords tell JS where to put them in the variable environment. So it goes to the global and asks is there such a thing as the height? Global env will say nope, I don't have it. But it's not throwing an error, because the global environment sees that it doesn't exist and will create it for us. 
+
+That's weird. Doesn't make any sense. This is something that in the past with JS you could do. Now we have something called, `use strict` which if we add it to the top of the page, it's introduced as a way to prevent JS from doing these weird unpredicable edge cases. No such thing as a perfect programming language. `use strict` allows us to prevent these pitfalls. 
