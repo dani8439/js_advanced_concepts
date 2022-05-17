@@ -479,3 +479,20 @@ loop();
 4
 final 5
 ```
+
+Declared a variable, set it to 0, looped through until it was 5. Then when `i` becomes 5, we skip over the block, and because `i` is now 5, our final value is 5. 
+
+What would happen if we change it from `var` to `let`? It would break. `i` is not defined. Get a reference error. Happens because we are trying to use `i` outside of its block scope. The environment that its in, it's in the curly brackets, and we can't really access it outside. It won't work. This may have unintended consequences. There are cases where the variable keyword is still useful. But we now have a way to do block scoping when we need it.
+
+Block scoping means declaring a variable not just inside of a function, but any curly brackets, like loops. Engine just won't allow you to access it when you use something like `let`, unlike with `var`. Gives you the power of block scoping. 
+
+# Global Variables 
+How evil they are. 
+
+Why don't we just do them all the time? Everything would have access to everything! No weird scope chains! 
+
+There's a few issues with polluting the global namespace and having too much data on global execution environment. We have limited space on our limited memory. Talked about how memory leaks happen when we have too much stuff in our memory and eventually it overflows and makes things slower until the browser crashes. That happens with global variables.
+
+Issue with them is we can have variable collision. Imagine if we have multiple `<script></script>` tags. And we have a `var z = 1`, in one, `var zz = 2` in another, and `var zzz = 3`, and `var zzzz = 1000` in another. If you look at `z` in console, you get 1000. As we have variable collision. Everything gets bunched up together in the global EC and they override each other if there are any duplicates. Creates possible bugs. 
+
+How do we solve this issue? 
