@@ -495,4 +495,142 @@ There's a few issues with polluting the global namespace and having too much dat
 
 Issue with them is we can have variable collision. Imagine if we have multiple `<script></script>` tags. And we have a `var z = 1`, in one, `var zz = 2` in another, and `var zzz = 3`, and `var zzzz = 1000` in another. If you look at `z` in console, you get 1000. As we have variable collision. Everything gets bunched up together in the global EC and they override each other if there are any duplicates. Creates possible bugs. 
 
-How do we solve this issue? 
+How do we solve this issue? By using scopes and scope chains to avoid the issue of global variables. 
+
+# IIFE
+
+Global variables are bad. We have ES modules, and module bundlers in modern JS. 
+
+IIFE. Immediately invoked function expression. 
+
+It is a function expression that looks like: 
+
+```
+(function() {
+
+})();
+```
+
+IFFE's are a common JS design pattern used by a lot of JS libraries. Using this pattern we can place all library code within local scope to avoid namespace collision.
+
+First thing is saying with the `()` is that it's not a function declaration, but a function expression. The JS engine won't see `function` as first item on line, but instead the (). Makes it a function expression. 
+
+After we've done that, we've created an anonymous function, that we immediately invoke with the other brackets `()`. If we run it right now, we get `undefined`.
+
+What if we create a function declaration and call it immediately like so?
+
+```
+funciton(){}()
+```
+
+We get a SyntaxError. Can't call a function declaration immediately after. A function expression you can. 
+
+What's the benefit in doing this? Since the anonymous within the IFFE is a function expression and it's not being assigned to any global variables. No global property is being created. All of the properties created within it, will only be available within the IFFE. Not outside. 
+
+Can't do this:
+
+```
+(function() {
+    var a = 1;
+})();
+
+a;
+// ReferenceError
+```
+
+`IFFE` allows us to call immediately as JS is executing. Creates a new EC that has our own variable scope. This allows us to attach private data right in there that can't be accessed by the global EC.
+
+If we move the brackets inside instead of outside (the ()), doesn't change anything either. 
+
+```
+(function() {
+    var a = 1;
+}());
+```
+
+Some big example in the video that I'm not writing down.
+
+Can attach jquery in the scripts tag in a library, and then use jquery afterwards in any subsequent script tags:
+
+
+```
+<h1>HELLOOOOOOOOOOOO</h1>
+<script src="https://code.jquery.com/jquery></script>
+<script>
+    var z = 1;
+    var script1 = (function () {
+        $('h1').click(function() {
+            $('h1').hide();
+        })
+        return {
+            a: a,
+        }
+    })()
+</script>
+<script>var zz = 2 </script>
+<script>var zzz = 3</script>
+<script>
+    var z = 10000
+    function a() {
+
+    }
+</script>
+```
+
+Here when we refresh the page and click the `h1` it disappears. Has access to the `$` because of jquery, and it's added it to the `window` object. Can do `window.$` and `window.jQuery`. 
+
+jQuery inside of the library has at one of variables. But inside of it we can create an IFFE that exposes everything we can use. 
+
+```
+<h1>HELLOOOOOOOOOOOO</h1>
+<script src="https://code.jquery.com/jquery></script>
+<script>
+    var z = 1;
+    var script1 = (function (OMG) {
+        OMG('h1').click(function() {
+            OMG('h1').hide();
+        })
+        return {
+            a: a,
+        }
+    })(jQuery)
+</script>
+<script>var zz = 2 </script>
+<script>var zzz = 3</script>
+<script>
+    var z = 10000
+    function a() {
+
+    }
+</script>
+```
+
+If we add `jQuery` within the parens, it will receive jQuery as the parameter, and then change it to `OMG`. It all still works. What we've done is added jQuery from the global namespace as a paremeter on the IFFE. This function when it's called, receives the parameter of jQuery, and assigning it a variable of `OMG` that receives everything we've given it. 
+
+Interesting thing is we have a bit of a performance benefit. When we looked at the `$` we had to look up in the global namespace to find it. But now that we've added `jQuery` as a parameter, it's in the local scope. No scope chain lookup. Have a bit of a speed boost! 
+
+```
+<h1>HELLOOOOOOOOOOOO</h1>
+<script src="https://code.jquery.com/jquery></script>
+<script>
+    var z = 1;
+    var script1 = (function ($) {
+        $('h1').click(function() {
+            $('h1').hide();
+        })
+        return {
+            $: 'hi'
+        }
+    })(jQuery)
+</script>
+<script>var zz = 2 </script>
+<script>var zzz = 3</script>
+<script>
+    var z = 10000
+    function a() {
+
+    }
+</script>
+```
+
+If we do this and run `script1.$` in the console, within the function, within the script, we've overwritten what was originally done. 
