@@ -384,3 +384,32 @@ d.say()()
 {name: 'jay', say: [Function]}
 
 ```
+
+# Exercise: `this` keyword 2
+
+```
+const character = {
+  name: 'Simon',
+  getCharacter() {
+    return this.name;
+  }
+};
+const giveMeTheCharacterNOW = character.getCharacter;
+ 
+//How Would you fix this?
+console.log('?', giveMeTheCharacterNOW()); //this should return 'Simon' bud doesn't
+```
+
+```
+const character = {
+  name: 'Simon',
+  getCharacter() {
+    return this.name;
+  }
+};
+const giveMeTheCharacterNOW = character.getCharacter.bind(character);
+ 
+//How Would you fix this?
+console.log('?', giveMeTheCharacterNOW()); 
+// ? Simon
+```
