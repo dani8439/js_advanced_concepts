@@ -351,3 +351,36 @@ let multiplyByTen = multiply.bind(this, 10)
 console.log(multiplyByTen(4))
 // 40
 ```
+
+# Exercise `this` keyword 
+
+```
+var b = {
+    name: 'jay',
+    say() {console.log(this)}
+}
+var c = {
+    name: 'jay',
+    say() {return function() {console.log(this)}}
+}
+var d = {
+    name: 'jay',
+    say() {return () => console.log(this)}
+}
+
+b.say()
+{ name: 'jay', say: [Function]}
+
+c.say()
+[Function]
+
+c.say()()
+Window 
+
+d.say()
+[Function]
+
+d.say()()
+{name: 'jay', say: [Function]}
+
+```
