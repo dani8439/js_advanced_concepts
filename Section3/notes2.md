@@ -322,3 +322,32 @@ function getMaxNumber(arr){
 getMaxNumber(array)
 // 3
 ```
+
+# `bind()` and currying
+
+Learned how we can do function borrowing with `apply()` and `call()`. Also learned how we can use `bind()` to do the same thing and call the function later on with a certain value to the `this` keyword. 
+
+Something else you can do with `bind()` which is called **function currying**. 
+
+```
+function multiply(a, b) {
+    return a * b
+}
+```
+**currying** refers to only partially giving a function a parameter. Why would this be useful? Because we can do something like this:
+
+```
+let multiplyByTwo = multiply.bind(this, 2)
+console.log(multiplyByTwo(4))
+// 8
+```
+initially `console.log(multiplyByTwo())` will give us `[Function]` BUT, we can pass in numbers to it to use it, and that will give us the answer by whatever number we pass in.
+
+```
+let multiplyByTwo = multiply.bind(this, 2)
+console.log(multiplyByTwo(4))
+// 8
+let multiplyByTen = multiply.bind(this, 10)
+console.log(multiplyByTen(4))
+// 40
+```
