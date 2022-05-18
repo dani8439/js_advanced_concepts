@@ -106,3 +106,91 @@ Second important use of `this` is that it executes code for multiple objects as 
 if we call `importantPerson()` we get `Sunny!`. If we call `obj1.importantPerson()` we get `Cassy!`, and `obj2.importantPerson()` we get `Jacob` as that's what it's being called on. 
 
 Gives methods access to their object, and executes same code for multiple objects. `this` is usually determined by asking hey, EC, what called the function? What called me? Can think of `this` as Who called me?. The `this` keyword acts as a placeholder and refer to whatever object called that method. 
+
+# Exercise Dynamic Scope vs Lexical Scope 
+
+```
+const a = function() {
+    console.log('a', this)
+    const b = function() {
+        console.log('b', this)
+        const c = {
+            hi: function() {
+                console.log('c', this)
+            }}
+        c.hi()
+    }
+    b()
+}
+a()
+```
+When we run `a()` it will execute all of it. 
+
+```
+a Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+b Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+c {hi: ƒ}
+```
+
+`c()` happens because of lexical scope inside of the object. 
+
+Another example:
+```
+const obj = {
+    name: 'Billy',
+    sing() {
+        console.log('a', this);
+        var anotherFunc = function() {
+            console.log('b', this)
+        }
+        anotherFunc()
+    }
+}
+obj.sing
+// a {name: "Billy", sing: f}
+// b Window {...}
+```
+Why is `b` referring to Window? Because the `this` keyword is not lexically scoped - means it doesn't matter where it's written but how it's actually called - what happened underneath the hood is that `obj.sing()` ran, and the `obj.sing()` function inside of the `sing()` `anotherFunc()` ran. `obj.sing()` did not call another function, the `sing()` function did. `this` keyword defaults to the window object in here, it's very confusing. Created a lot of problems for people as this error was so problem. 
+
+Remember, in JS our **lexical scope** (available data + where the function was defined) determines our available variables. Not where the function is called (**dynamic scope**). 
+
+There is a footnote to this statement. Everything in JS is actually lexically scoped, but how we write it is how we determine what's available, except for the `this` keyword, which is dynamically scoped. Doesn't matter where it's written, but how it's called. 
+
+*How can we avoid this pitfall?* 
+Can solve this issue using **arrow functions**, which we got in ES6. Arrow functions are lexically bound. Have a lexical `this` behavior. If we change it to arrow functions instead, it will lexically bind `this` to the surrounding object.
+
+```
+const obj = {
+    name: "Billy", 
+    sing() {
+        console.log('a', this);
+        var anotherFunc = () => {
+            console.log('b', this)
+        }
+        anotherFunc()
+    }
+}
+obj.sing
+// a {name: 'Billy', sing: f}
+// b {name: 'Billy', sing: f}
+```
+
+What did we do before arrow functions? We'd `return anotherFunc.bind(this)`. Return another function and then `bind` it to `this`. 
+
+Another way is to outside of the function itself, create a reference to `self`. 
+
+```
+const obj = {
+    name: "Billy", 
+    sing() {
+        console.log('a', this);
+        var self = this;
+        var anotherFunc = function() {
+            console.log('b', self)
+        }
+        return anotherFunc()
+    }
+}
+```
+
+What does `bind` really do? 
