@@ -297,3 +297,28 @@ Now it works!
 `bind()` allows us to store the `this` keyword, or this function borrowing for later use. `bind()` is like a bandaid to fix this idea of a dynamically scoped `this` keyword which ruins our lexical scoped discussion we've had. 
 
 **In review** `call` and `apply` are useful for borrowing methods from an object. `bind` is useful for us to call functions later on with a certian context or certain `this` keyword.
+
+# Exercise: `call()`, `apply()`:
+
+How would you implement this:
+
+```
+const array = [1,2,3];
+ 
+function getMaxNumber(arr){
+  //code here  
+}
+ 
+getMaxNumber(array) // should return 3
+```
+
+```
+const array = [1,2,3];
+ 
+function getMaxNumber(arr){
+  return Math.max.apply(null, arr)
+}
+ 
+getMaxNumber(array)
+// 3
+```
