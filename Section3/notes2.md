@@ -194,3 +194,106 @@ const obj = {
 ```
 
 What does `bind` really do? 
+
+# `call()`, `bind()`, `apply()`
+
+`call()` and `apply()` look a lot more intimidating than they are. 
+
+```
+function a() {
+    console.log('hi')
+}
+
+a.call()
+// hi
+```
+Underneath the hood in JS. When we do `a()` to invoke the function, all functions when created have the property `a.call()`. `a()` is just shorthand for `a.call()`. 
+
+`call()` and `apply()` do the same thing for now. 
+
+```
+const wizard = {
+    name; 'Merlin',
+    health: 100,
+    heal() {
+        return this.health = 100;
+    }
+}
+
+const archer = {
+    name: 'Robin Hood', 
+    health: 30
+}
+
+wizard.heal();
+// 100
+```
+
+Wouldn't it be nice if we could borrow the `heal()` function from the wizard? And heal the archer? How can we borrow it from another object? We can't just use `this.heal()` because the second object doesn't have it. Instead we can borrow it and use `call()` and `apply()` to do so. 
+
+```
+const wizard = {
+    name; 'Merlin',
+    health: 100,
+    heal(num1, num2) {
+        return this.health += num1 + num2;
+    }
+}
+
+const archer = {
+    name: 'Robin Hood', 
+    health: 30
+}
+
+console.log('1', archer)
+wizard.heal.call(archer, 50, 20)
+console.log('2', archer)
+// 1 {name: 'Robin Hood', health: 30}
+// 2 {name: 'Robin Hood', health: 110}
+```
+
+First parameter to `call()` is what wizard should be bound to. Hey, call `heal()` instead of using `wizard`, use `archer` so we can borrow it. 
+
+`call()` has other parameters it can receive. It can receive arguments. Say `heal()` took `num1, and num2`. 
+
+All `call()` is really useful for is this. 
+
+With `apply()` it does the same thing. Only difference between is that instead of `call()` that just takes an endless list of parameters, `apply()` takes an array of parameters: 
+
+```
+console.log('1', archer)
+wizard.heal.apply(archer, [100, 30])
+console.log('2', archer)
+// 1 {name: 'Robin Hood', health: 30}
+// 2 {name: 'Robin Hood', health: 160}
+```
+
+How you use `call()` and `apply()` depends on how you wish to pass the parameters to it. 
+
+What about `bind()`? What happens if we use it?
+
+Similar to `call()` and `apply()`, `bind()` allows us to use what we have here. Unlike those two which run immediately, `bind()` returns a new function with a certain context and parameters. Usually used when we want to call a function later on with a certain context, and certain `this` keyword. 
+
+```
+console.log('1', archer)
+wizard.heal.bind(archer, 100, 30)
+console.log('2', archer)
+// 1 {name: 'Robin Hood', health: 30}
+// 2 {name: 'Robin Hood', health: 30}
+```
+Doesn't run or work, archer isn't healed. Doesn't `run` the function, it `returns` a function, so that if we added it to a variable so we can use it later on. 
+
+```
+console.log('1', archer)
+const healArcher = wizard.heal.bind(archer, 100, 30)
+healArcher()
+console.log('2', archer)
+// 1 {name: 'Robin Hood', health: 30}
+// 2 {name: 'Robin Hood', health: 160}
+```
+
+Now it works!
+
+`bind()` allows us to store the `this` keyword, or this function borrowing for later use. `bind()` is like a bandaid to fix this idea of a dynamically scoped `this` keyword which ruins our lexical scoped discussion we've had. 
+
+**In review** `call` and `apply` are useful for borrowing methods from an object. `bind` is useful for us to call functions later on with a certian context or certain `this` keyword.
