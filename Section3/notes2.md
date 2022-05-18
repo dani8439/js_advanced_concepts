@@ -413,3 +413,11 @@ const giveMeTheCharacterNOW = character.getCharacter.bind(character);
 console.log('?', giveMeTheCharacterNOW()); 
 // ? Simon
 ```
+
+# Context vs Scope
+
+**Scope** is a function based thing. **Scope** means what is the variable access of a function when it is invoked? What is in the variable environment?
+
+**Context** on the other hand, is more about object based. **Context** says, what's the value of the `this` keyword? Which is a reference to the object that owns that current executing code. 
+
+Context and Scope is something that gets people confused. **Context** is most often determined by *how* a function is invoked with the value of `this` keyword. And **Scope** refers to the visibility of variables. 
