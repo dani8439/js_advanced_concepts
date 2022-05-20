@@ -96,3 +96,23 @@ Boolean(true).toString()
 Keep in mind that things like boolean, or string, exist in order for us to use some methods on these primitive values. Not everything in JS is an object, but there are a lot of built in objects we can use, so that if we do `typeof Math` that's an object. `typeof Infinity` that's a number. 
 
 Types can get a little tricky, most of the time you don't need to concern yourself with it. 
+
+# `Array.isArray()` 
+
+Arrays are objects. 
+
+```
+var array = [1, 2, 3];
+
+var array = {
+    0: 1,
+    1: 2,
+    2: 3
+}
+```
+
+Same thing pretty much. 
+
+That's why when we do `typeof []` we get an object. 
+
+How can we test if something we create is an array? Have something called `Array.isArray()`. Array constructor with dot notation to access a new property, `isArray()`. We can give it something and test: `Array.isArray([1, 2, 3])` // true. This is how we test in JS, otherwise it would be really hard to test it.
