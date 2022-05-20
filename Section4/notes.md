@@ -116,3 +116,17 @@ Same thing pretty much.
 That's why when we do `typeof []` we get an object. 
 
 How can we test if something we create is an array? Have something called `Array.isArray()`. Array constructor with dot notation to access a new property, `isArray()`. We can give it something and test: `Array.isArray([1, 2, 3])` // true. This is how we test in JS, otherwise it would be really hard to test it.
+
+# Pass by Reference vs Pass by Value
+Primitive types are immutable. We can't really change them. We have to completely remove the primitive type to do so. Can't really modify it, something new gets greated. In memory, contains the reference to it. This is called pass by value. Don't really know of each others existence. Objects on the other hand, are pass by reference. 
+
+```
+var a = 5;
+var b = a;
+
+b++;
+
+console.log(a)
+```
+
+a now has the address of where this primitive lives in memory, same thing goes for b. What if we do variable b = a. Remember primitive types are passed by value.
