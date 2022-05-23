@@ -126,7 +126,89 @@ var b = a;
 
 b++;
 
-console.log(a)
+console.log(a);
+console.log(b);
+// 5
+// 6
 ```
 
-a now has the address of where this primitive lives in memory, same thing goes for b. What if we do variable b = a. Remember primitive types are passed by value.
+a now has the address of where this primitive lives in memory, same thing goes for b. What if we do variable b = a. Remember primitive types are passed by value. a = 5, b = 6. When we do pass by value, if we do something like `b++` and then console.log both, we get 5, and 6. 
+
+This is because of pass by value. All we did, all JS engine did was copy the primitive type value 5, as if b = 5, so now b has a reference to the value primitive type 5. All we did was copy the value. 
+
+Copied the value, and put it into a new memory space in our machine. In our stack, we made a copy. No connection whatsoever between a and b. Pass by value means we copy the value, and we create that value somewhere else in memory. 
+
+Let's see how objects are different:
+
+```
+let obj = { name: 'Yao', password: '123'};
+let obj2 = obj1;
+
+obj2.password = 'easypeasy';
+
+console.log(obj1);
+console.log(obj2);
+
+// {name: 'Yao', password: 'easypeasy'}
+// {name: 'Yao', password: 'easypeasy'}
+```
+`obj2` and `obj1` should be the same. But what if we change the password of obj2. What will happen then? Whoa! Password has been changed for both! Both were updated. Why? Because of pass by reference. 
+
+Objects in JS are stored in memory and passed by reference. Mean we don't copy the values like we do with primitive types. We simply, when we assigned the objects, said hey this is where the object is in memory. Both are pointing somewhere in memory to a shelf that contains the information. Means that when we change `obj2.password` change password on this object in memory that also `obj1` is pointing to.
+
+*Why is this good?* It's kind of nice, by having 1 object, we're saving space in memory. We're not creating multiple versions. Just reference one location instead of loading up our memory heap. But why might this also be bad? Because unlike a primitive type, someone else can change a property on that reference object. Need to be careful of it. 
+
+Another example to prove that arrays are simply objects
+```
+var c = [1,2,3,4,5];
+var d = c;
+d.push(187282618);
+console.log(d)
+/// [1, 2, 3, 4, 5, 187282618]
+console.log(c)
+/// [1, 2, 3, 4, 5, 187282618]
+```
+Both `c` and `d` change as it's pass by reference. 
+
+Maybe there are times when we want to clone an object. How can we do that? With an array: `var d = [].concat(c)`. Objects are a little more difficult: 
+
+```
+let obj = {a: 'a', b: 'b', c: 'c'};
+let clone = Object.assign({}, obj)
+let clone2 = {...obj}
+
+obj.c = 5;
+console.log(clone)
+```
+
+`Object.assign()` first arg is where it's going, and second arg is what it's copying. 
+
+Another way is using the spread operator: `let clone2 = {...obj}`. New feature, very nice. Cloning is great. 
+
+But what will happen with the code we have, if we have an object within an object?:
+
+```
+let obj = {
+    a: 'a', 
+    b: 'b', 
+    c: {
+        deep: 'try and copy me'
+        }
+    };
+let clone = Object.assign({}, obj)
+let clone2 = {...obj}
+
+obj.c.deep = 'hahaha';
+console.log(obj)
+console.log(clone);
+console.log(clone2)
+```
+
+It all changes to `deep: 'hahahah'`. What happened? Each object gets passed by reference, so although we cloned the object initially, this is a shallow clone. It clones only the first level. But within this object there is another address to another object. This address never changed, always referenced this object. So when we change the attribute, it changed all of it. 
+
+How can we do deep cloning? It's a little funky. We use JSON. 
+
+```
+let superClone = JSON.parse(JSON.stringify(obj))
+```
+Turns it all into a string, then parses it back into an object. If you're doing a deep clone, should be careful. Because the JSON stuff can have some performance implications. It will take a long time to clone them. Should clone objects another way. 
