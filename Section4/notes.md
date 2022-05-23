@@ -253,3 +253,47 @@ console.log(number); // 100
 console.log(string); // Jay
 console.log(obj1.value); // a
 ```
+
+# Type Coercion
+
+If there's one thing that will make you pull out your hair in frustration, it's type coercion. There's a lot of funky stuff JS does. 
+
+What is it? It's something like this:
+
+```
+1 == '1'
+// true
+```
+
+Means that when the operands (things to the left and right of the operator) are different types, one of them will be converted into an equivalent value by the JS engine. 1 equals to string 1, I think you mean number 1! Based on that definition, type coercion means the language converting a certain type to another type.
+
+*Do all languages have type coercion?* Yes they do! Because we always need to convert types between programs to do things. In memory different types look completely different to what we type. It's all represented on the computer in 1's and 0's. But it just so happens that JS has a very heavy type coercion nature to it as it's dynamically typed.
+
+It happens when you use the double equals `==`. Double equals means compare, if they have 2 different types, coerce so we can compare. If we go back though and do same above logic with triple equals `===`. Means compare, don't coerce, be explicit. Will give use false. 
+
+Is there any time we should use double equals vs triple equals? No. (His opinion, not Dakota's 😂).
+
+Type coercion doesn't just happen with the equals sign. Can work with if statements. 
+
+```
+if (1) {
+    console.log(5)
+}
+
+// true
+```
+
+Website you can go to that shows `==`, vs `===`, vs `if()`. JS Comparison table. (https://dorey.github.io/JavaScript-Equality-Table/)[table].
+
+There's also a grid listed on MDN. 
+
+In JS there's a concept of `-0` and `+0`. 
+
+```
+-0 === +0 
+// true
+
+Object.is(-0, +0)
+// false 
+```
+Technically different things in JS. `Object.is` works pretty much the same as `===` save for a few cases. 
