@@ -212,3 +212,16 @@ How can we do deep cloning? It's a little funky. We use JSON.
 let superClone = JSON.parse(JSON.stringify(obj))
 ```
 Turns it all into a string, then parses it back into an object. If you're doing a deep clone, should be careful. Because the JSON stuff can have some performance implications. It will take a long time to clone them. Should clone objects another way. 
+
+# Exercise: Compare Objects. 
+
+```
+var user1 = {name : "nerd", org: "dev"};
+var user2 = {name : "nerd", org: "dev"};
+var eq = user1 == user2;
+alert(eq); // gives false
+
+var eq = Object.toJSON(user1) == Object.toJSON(user2);
+alert(eq); // gives true
+```
+lodash, `isEqual` does the same. 
