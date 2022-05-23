@@ -297,3 +297,17 @@ Object.is(-0, +0)
 // false 
 ```
 Technically different things in JS. `Object.is` works pretty much the same as `===` save for a few cases. 
+
+# Exercise: Type Coercion
+
+```
+false == ""  // true
+false == []  //  true 
+false == {}  // false
+"" == 0      // true
+"" == []   // true 
+"" == {}  // false   
+0 == []    // true  
+0 == {}      // false
+0 == null // false
+```
