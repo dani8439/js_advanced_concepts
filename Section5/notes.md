@@ -67,3 +67,39 @@ woohoo.call()
 ```
 
 What about objects? If we created an object would we have those properties on there? No. Don't have `call`, `bind`, `arguments`. Functions are objects and there a special type of objects, a callable objects with the bracket notation for invoking the function contains the code, has name, and also has some properties. Why do we care? Why is that important? Because functions are just objects, that means we can pass them around like objects, like things that contain data. So beside doing things for us and performing actions in our code, we can also store data and move them around and have some really interesting applications. 
+
+# First Class Citizens 
+
+Functions can be passed around like data, besides something that performs actions. Will hear people say functions are first class citizens in JS. What does that mean? 
+
+1. Functions can be assigned to variables and properties of objects, so we can do: 
+
+```Javascript
+var stuff = function(){}
+```
+
+2. Can also pass functions as arguments into a function:
+
+```Javascript 
+function a(fn) {
+    fn();
+}
+
+a(function() {console.log('hi there')})
+```
+
+Able to pass a function as a parameter to a function. Almost as if we're just passing it as a string. 
+
+3. Can return functions as values from other functions: 
+
+```Javascript 
+function b() {
+    return function c() {console.log('bye')}
+}
+b()
+// function c 
+b()()
+// bye
+```
+
+Those are the 3 properties that make functions a first class citizen in JS. Can assign, can pass these functions into arguments, can also return functions as values. Goes back to functions are data. Not only do they perform actions for us, but they are also pieces of data that can be passed around like first class citizens as if there were JS types. So anything you can do with other types, you can do with a function. As a matter of a fact, this idea of a first class citizen property in JS, introduces us to a whole world called **functional programming**. 
