@@ -356,3 +356,25 @@ Some cons. We just made our code a little bit more complex to read. Added anothe
 Dynamically typed langauges, you spend less time debugging in production. Much more interested as developers. Few other pros and cons and everyone has opinions on the topic. 
 
 Main idea is this, static typed usually prevent bugs and help keep errors from happening. Dynamic helps you be more flexible and write software faster. Typescript helps us write JS like a statically typed language. Makes JS extra safe. 
+
+# JTS: Weakly vs Strongly Typed 
+
+Lots of people use this idea incorrectly. You can have a weak language that's Dynamically typed, and a strong langauge that is statically typed. 
+
+JS is a dynamic language that is weakly typed. What does that mean? In JS can do:
+
+```
+var a = "boooyaaa"
+
+a + 17 
+"boooyaa17"
+```
+
+That's what a weakly typed dynamic language does. Can add a string to 17. So just going to turn the `17` into a string so it fits. This is called *Type Coercion*. Can annoy people. In a strongly typed language, you can't do this. Can't do this in Python. 
+
+```Python
+var = "boooyaa" 
+var + 17 
+// throws an error in Python 
+```
+Throws an error because it's strongly typed.
