@@ -8,14 +8,14 @@ What is it? `this` is the object that the function is a property of. Means that 
 
 EX:
 
-```
+```js
 this
 // Window
 ```
 
 `this` returns the window object in the dev console. Remember that `this` gets set as `Window` in the execution context initially. When the `Global Object` and `this` are created. 
 
-```
+```js
 function a() {
     console.log(this)
 }
@@ -28,7 +28,7 @@ Get `Window` once again. `this` = `Window`. `this` is the object that the functi
 
 When it comes to coding, we never want `this` to refer to the `Window` object. 
 
-```
+```js
 function b() {
     'use strict' 
     console.log(this);
@@ -39,7 +39,7 @@ b()
 
 `'use strict'` will help us avoid the common mistakes that can happen with JS. Allows us not to have this, `this` referring to the window object. Can be used at beginning of a function, or top of the file. ES6 have it automatically. 
 
-```
+```js
 const obj = {
     name: 'Billy', 
     sing: function() {
@@ -54,7 +54,7 @@ If we run `obj.sing()` we get `lalala Billy`.
 
 `this` is the object that the function is the property of. `this` refers to whatever is to the left of the `.`. With an object we access properties and methods of an obj (methods are functions that are inside of objects). The property and methods can be accessed with the `.` notation. All you really need to know about `this` is whatever is to the left of the dot. 
 
-```
+```js
 const obj = {
     name: 'Billy', 
     sing: function() {
@@ -78,7 +78,7 @@ Keeps things DRY.
 
 2. Can execute the same code for multiple objects. 
 
-```
+```js
 function importantPerson() {
     console.log(this.name + "!")
 }
@@ -109,7 +109,7 @@ Gives methods access to their object, and executes same code for multiple object
 
 # Exercise Dynamic Scope vs Lexical Scope 
 
-```
+```js
 const a = function() {
     console.log('a', this)
     const b = function() {
@@ -126,16 +126,16 @@ a()
 ```
 When we run `a()` it will execute all of it. 
 
-```
-a Window {window: Window, self: Window, document: document, name: '', location: Location, …}
-b Window {window: Window, self: Window, document: document, name: '', location: Location, …}
-c {hi: ƒ}
+```js
+// a Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+// b Window {window: Window, self: Window, document: document, name: '', location: Location, …}
+// c {hi: ƒ}
 ```
 
 `c()` happens because of lexical scope inside of the object. 
 
 Another example:
-```
+```js
 const obj = {
     name: 'Billy',
     sing() {
@@ -159,7 +159,7 @@ There is a footnote to this statement. Everything in JS is actually lexically sc
 *How can we avoid this pitfall?* 
 Can solve this issue using **arrow functions**, which we got in ES6. Arrow functions are lexically bound. Have a lexical `this` behavior. If we change it to arrow functions instead, it will lexically bind `this` to the surrounding object.
 
-```
+```js
 const obj = {
     name: "Billy", 
     sing() {
@@ -179,7 +179,7 @@ What did we do before arrow functions? We'd `return anotherFunc.bind(this)`. Ret
 
 Another way is to outside of the function itself, create a reference to `self`. 
 
-```
+```js
 const obj = {
     name: "Billy", 
     sing() {
@@ -199,7 +199,7 @@ What does `bind` really do?
 
 `call()` and `apply()` look a lot more intimidating than they are. 
 
-```
+```js
 function a() {
     console.log('hi')
 }
@@ -211,7 +211,7 @@ Underneath the hood in JS. When we do `a()` to invoke the function, all function
 
 `call()` and `apply()` do the same thing for now. 
 
-```
+```js
 const wizard = {
     name; 'Merlin',
     health: 100,
@@ -231,7 +231,7 @@ wizard.heal();
 
 Wouldn't it be nice if we could borrow the `heal()` function from the wizard? And heal the archer? How can we borrow it from another object? We can't just use `this.heal()` because the second object doesn't have it. Instead we can borrow it and use `call()` and `apply()` to do so. 
 
-```
+```js
 const wizard = {
     name; 'Merlin',
     health: 100,
@@ -260,7 +260,7 @@ All `call()` is really useful for is this.
 
 With `apply()` it does the same thing. Only difference between is that instead of `call()` that just takes an endless list of parameters, `apply()` takes an array of parameters: 
 
-```
+```js
 console.log('1', archer)
 wizard.heal.apply(archer, [100, 30])
 console.log('2', archer)
@@ -274,7 +274,7 @@ What about `bind()`? What happens if we use it?
 
 Similar to `call()` and `apply()`, `bind()` allows us to use what we have here. Unlike those two which run immediately, `bind()` returns a new function with a certain context and parameters. Usually used when we want to call a function later on with a certain context, and certain `this` keyword. 
 
-```
+```js
 console.log('1', archer)
 wizard.heal.bind(archer, 100, 30)
 console.log('2', archer)
@@ -283,7 +283,7 @@ console.log('2', archer)
 ```
 Doesn't run or work, archer isn't healed. Doesn't `run` the function, it `returns` a function, so that if we added it to a variable so we can use it later on. 
 
-```
+```js
 console.log('1', archer)
 const healArcher = wizard.heal.bind(archer, 100, 30)
 healArcher()
@@ -302,7 +302,7 @@ Now it works!
 
 How would you implement this:
 
-```
+```js
 const array = [1,2,3];
  
 function getMaxNumber(arr){
@@ -312,7 +312,7 @@ function getMaxNumber(arr){
 getMaxNumber(array) // should return 3
 ```
 
-```
+```js
 const array = [1,2,3];
  
 function getMaxNumber(arr){
@@ -329,21 +329,21 @@ Learned how we can do function borrowing with `apply()` and `call()`. Also learn
 
 Something else you can do with `bind()` which is called **function currying**. 
 
-```
+```js
 function multiply(a, b) {
     return a * b
 }
 ```
 **currying** refers to only partially giving a function a parameter. Why would this be useful? Because we can do something like this:
 
-```
+```js
 let multiplyByTwo = multiply.bind(this, 2)
 console.log(multiplyByTwo(4))
 // 8
 ```
 initially `console.log(multiplyByTwo())` will give us `[Function]` BUT, we can pass in numbers to it to use it, and that will give us the answer by whatever number we pass in.
 
-```
+```js
 let multiplyByTwo = multiply.bind(this, 2)
 console.log(multiplyByTwo(4))
 // 8
@@ -354,7 +354,7 @@ console.log(multiplyByTen(4))
 
 # Exercise `this` keyword 
 
-```
+```js
 var b = {
     name: 'jay',
     say() {console.log(this)}
@@ -387,7 +387,7 @@ d.say()()
 
 # Exercise: `this` keyword 2
 
-```
+```js
 const character = {
   name: 'Simon',
   getCharacter() {
@@ -400,7 +400,7 @@ const giveMeTheCharacterNOW = character.getCharacter;
 console.log('?', giveMeTheCharacterNOW()); //this should return 'Simon' bud doesn't
 ```
 
-```
+```js
 const character = {
   name: 'Simon',
   getCharacter() {

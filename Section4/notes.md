@@ -14,7 +14,7 @@ The different types we have in JS. Luckily there aren't that many. Only 7
 
 Luckily for us, JS has an operator called `typeof` which tells us the type of an item. 
 
-```
+```js
 // Primitive
 typeof 5
 // number
@@ -53,7 +53,7 @@ Where are Arrays? `typeof []` is an `object`.
 
 There clearly is a typeof function. Technically though no. Technically, Arrays and functions are types of objects. But actually they are, because we can do this:
 
-```
+```js
 function a() {
     return 5;
 }
@@ -73,7 +73,7 @@ In JS, all types, other than object types, are primitives. A **Primitive type** 
 
 A **Non-Primitive type** doesn't include the actual value directly. Say do this:
 
-```
+```js
 const obj1 = {
     a: 'Tom'
 }
@@ -83,13 +83,13 @@ This `obj1` doesn't actually contain the value here directly. Instead it has a r
 The idea of JS built-in object. Can see them on MDN. In built-in objects, don't mean global objects. Standard built-in objects come with the language, `infinity`, `NaN`, `undefined`, `Map`, `Error`... etc. Built in objects that come with JS. Everything in JS is an object. Gets a little tricky. Many things we interact with directly such as strings, numbers, booleans, which are not objects, get a little bit complicated by the fact that these primitives have object wrappers, like `String` or `Number` or `Boolean`.  
 
 Ex:
-```
+```js
 true.toString()
 // true
 ```
 Why is this primitive type acting like an object using dot notation and toString? Because it silently creates a wrapper around true:
 
-```
+```js
 Boolean(true).toString()
 ```
 
@@ -101,7 +101,7 @@ Types can get a little tricky, most of the time you don't need to concern yourse
 
 Arrays are objects. 
 
-```
+```js
 var array = [1, 2, 3];
 
 var array = {
@@ -120,7 +120,7 @@ How can we test if something we create is an array? Have something called `Array
 # Pass by Reference vs Pass by Value
 Primitive types are immutable. We can't really change them. We have to completely remove the primitive type to do so. Can't really modify it, something new gets greated. In memory, contains the reference to it. This is called pass by value. Don't really know of each others existence. Objects on the other hand, are pass by reference. 
 
-```
+```js
 var a = 5;
 var b = a;
 
@@ -140,7 +140,7 @@ Copied the value, and put it into a new memory space in our machine. In our stac
 
 Let's see how objects are different:
 
-```
+```js
 let obj = { name: 'Yao', password: '123'};
 let obj2 = obj1;
 
@@ -158,8 +158,9 @@ Objects in JS are stored in memory and passed by reference. Mean we don't copy t
 
 *Why is this good?* It's kind of nice, by having 1 object, we're saving space in memory. We're not creating multiple versions. Just reference one location instead of loading up our memory heap. But why might this also be bad? Because unlike a primitive type, someone else can change a property on that reference object. Need to be careful of it. 
 
-Another example to prove that arrays are simply objects
-```
+Another example to prove that arrays are simply objects:
+
+```js
 var c = [1,2,3,4,5];
 var d = c;
 d.push(187282618);
@@ -172,7 +173,7 @@ Both `c` and `d` change as it's pass by reference.
 
 Maybe there are times when we want to clone an object. How can we do that? With an array: `var d = [].concat(c)`. Objects are a little more difficult: 
 
-```
+```js
 let obj = {a: 'a', b: 'b', c: 'c'};
 let clone = Object.assign({}, obj)
 let clone2 = {...obj}
@@ -187,7 +188,7 @@ Another way is using the spread operator: `let clone2 = {...obj}`. New feature, 
 
 But what will happen with the code we have, if we have an object within an object?:
 
-```
+```js
 let obj = {
     a: 'a', 
     b: 'b', 
@@ -208,14 +209,14 @@ It all changes to `deep: 'hahahah'`. What happened? Each object gets passed by r
 
 How can we do deep cloning? It's a little funky. We use JSON. 
 
-```
+```js
 let superClone = JSON.parse(JSON.stringify(obj))
 ```
 Turns it all into a string, then parses it back into an object. If you're doing a deep clone, should be careful. Because the JSON stuff can have some performance implications. It will take a long time to clone them. Should clone objects another way. 
 
 # Exercise: Compare Objects. 
 
-```
+```js
 var user1 = {name : "nerd", org: "dev"};
 var user2 = {name : "nerd", org: "dev"};
 var eq = user1 == user2;
@@ -228,7 +229,7 @@ lodash, `isEqual` does the same.
 
 # Exercise: Pass by Reference
 
-```
+```js
 const number = 100
 const string = "Jay"
 let obj1 = {
@@ -260,7 +261,7 @@ If there's one thing that will make you pull out your hair in frustration, it's 
 
 What is it? It's something like this:
 
-```
+```js
 1 == '1'
 // true
 ```
@@ -275,7 +276,7 @@ Is there any time we should use double equals vs triple equals? No. (His opinion
 
 Type coercion doesn't just happen with the equals sign. Can work with if statements. 
 
-```
+```js
 if (1) {
     console.log(5)
 }
@@ -289,7 +290,7 @@ There's also a grid listed on MDN.
 
 In JS there's a concept of `-0` and `+0`. 
 
-```
+```js
 -0 === +0 
 // true
 
@@ -300,7 +301,7 @@ Technically different things in JS. `Object.is` works pretty much the same as `=
 
 # Exercise: Type Coercion
 
-```
+```js
 false == ""  // true
 false == []  //  true 
 false == {}  // false
@@ -324,13 +325,13 @@ There are a ton of programming languages out there. Although JS is the dominant 
 
 What does that mean? A Dynamically typed language allows us not to have to say what type of variable a variable is going to be. 
 
-```
+```js
 var a = 100;
 ```
 
 In a statically typed language, we'd have to do something like this: 
 
-```
+```js
 int a;
 a = 100;
 ```
@@ -342,7 +343,7 @@ Disagreement in the community of which type is better. Not going to get into tha
 
 With a statically typed language, we get documentation. 
 
-```
+```js
 function sum(a: number, b: number) {
     return a + b;
 }
@@ -363,7 +364,7 @@ Lots of people use this idea incorrectly. You can have a weak language that's Dy
 
 JS is a dynamic language that is weakly typed. What does that mean? In JS can do:
 
-```
+```js
 var a = "boooyaaa"
 
 a + 17 

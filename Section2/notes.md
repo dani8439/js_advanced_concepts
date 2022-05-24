@@ -2,7 +2,7 @@
 
 V-8 Engine. JS Single threaded. Uses a callback queue. JS is an interpreted language. 
 
-```
+```Javascript
 const isHappy = true;
 ```
 
@@ -22,7 +22,7 @@ AST Explorer.net shows how the Abstract Syntax Tree looks like.
 
 Once in the AST form, goes through an interpreter, profiler, compiler. Gives us some code that our CPU will understand to give it instructions. Can think of the whole process as this:
 
-```
+```Javascript
 function jsengine(code) {
     return code.split(/\s+/)
 }
@@ -42,7 +42,7 @@ In program there are generally 2 ways of translating to something our computer c
 
 Translate and read the files line by line on the fly. 
 
-```
+```Javascript
 // interpreter vs compiler 
 function someCalculation(x, y) {
     return x + y;
@@ -114,7 +114,7 @@ In order to help the JS engine want to be careful with:
 
 Main reasons why these things can make our code less optimized. **inline caching**
 
-```
+```Javascript
 // inline caching 
 function findUser(user) {
     return `found ${user.firstName} ${user.lastName}`
@@ -134,7 +134,7 @@ will become 'found Johnson Junior'
 
 Other thing are **Hidden Classes**. 
 
-```
+```Javascript
 // hidden classes 
 function Animal(x, y) {
     this.x = x;
@@ -149,7 +149,7 @@ Compiler will look at this and see we're creating 2 objects.
 
 But if say:
 
-```
+```Javascript
 obj1.a = 30;
 obj1.b = 100;
 obj2.b = 30;
@@ -184,7 +184,7 @@ Stack a place to keep track of where we are in the code so we can run it in orde
 
 With these two things the JS engine can do that. 
 
-```
+```Javascript
 // Call stack + Memory Heap 
 const number = 610; // allocate memory for number 
 const string = "some text" // allocate memory for a string 
@@ -222,7 +222,7 @@ Whatever is on top of the call stack is what JS is running. How cool is that?
 # Stack Overflow 
 What happens if we keep calling functions nested inside of functions? So we keep growing stack until it gets larger and larger and larger and we can't do it anymore? That's called stack overflow. It can be caused very easily. 
 
-```
+```Javascript
 function inception() {
     inception()
 }
@@ -246,7 +246,7 @@ In JS, they use the mark and sweep algorithm to GC. Mark what we need, and sweep
 
 # Memory Leaks 
 
-```
+```Javascript
 let array = [];
 // infinite loop
 for (let i = 5; i > 1; i++) {
@@ -264,7 +264,7 @@ Memory leaks are pieces of memory our app has used in the past, but is not neede
 - Event Listeners: not removing event listeners after they're finished, especially in SPA's navigating back and forth and they are constantly running in the background. 
 - Using set interval: keeps running and running unless we clear it. 
 
-```
+```Javascript
 // Memory Leaks 
 // Global Variable 
 var a - 1;
@@ -323,7 +323,7 @@ Web API's are **Asynchronous**. Meaning we can instruct them to do stuff in the 
 
 What are the other two things? **Event Loop** and **Callback Queue**? They are what happen underneath the hood. Have items on the call stack, as soon as something comes up like `setTimeout()` that's not part of JS but part of the Web API, the call stack says I have something here that's not for me, for the Web API, you take care of it. The Web API says I know what that is. I'll do it in the background. Once it's done, it'll send the data to a callback. And the Event loop will say as soon as the call stack is free, I have something for you here,w ould you like to add it ontot he stack. If the stack is empty, it will push the callback onto the stack. 
 
-```
+```Javascript
 console.log('1');
 setTimeout(() => { console.log('2')}, 1000);
 console.log('3');
@@ -335,7 +335,7 @@ Philip Roberts has an amazing talk about the JS event loop. Created a tool calle
 
 Even if you run the same code above with a timeout of 0, same pattern happens.
 
-```
+```Javascript
 console.log('1');
 setTimeout(() => { console.log('2')}, 0);
 console.log('3');
@@ -365,7 +365,7 @@ V8 engine, and event loop, our callback queue. It does a little more than our we
 
 # Exercise: Fix This Code: 
 
-```
+```Javascript
 //fill array with 60000 elements
 const list = new Array(60000).join('1.1').split('.');
  
@@ -380,7 +380,7 @@ function removeItemsFromList() {
 removeItemsFromList();
 ```
 
-```
+```Javascript
 //fill array with 60000 elements
 const list = new Array(60000).join('1.1').split('.');
  
@@ -403,7 +403,7 @@ Learned about JS engine and all the steps of how we can send a js file through t
 
 What happens here? 
 
-```
+```Javascript
 setTimeout(() => { console.log('1', 'is the loneliest number')}, 1000);
 setTimeout(() => { console.log('2', 'can be as bad as one)}, 10)
 console.log('3','is a crowd');
@@ -414,7 +414,7 @@ console.log('3','is a crowd');
 // 1 is the loneliest number
 ```
 
-```
+```Javascript
 setTimeout(() => { console.log('1', 'is the loneliest number')}, 0);
 Promise.resolve('hi').then(() => console.log('2'));
 console.log('3','is a crowd');

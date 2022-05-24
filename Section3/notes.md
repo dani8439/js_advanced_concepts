@@ -4,7 +4,7 @@
 
 How do we run code in JS? We assign variables and run functions.
 
-```
+```Javascript
 function printName() {
     return 'Andrei Neagoie'
 }
@@ -65,7 +65,7 @@ Hoisting is the behavior of moving the variables or function declarations to the
 
 Variables are partially hoisted, and function declarations are hoisted. 
 
-```
+```Javascript
 console.log('1----------');
 console.log(teddy);
 console.log(sing());
@@ -88,7 +88,7 @@ The compiler isn't actually moving these lines of code. It's not moving `teddy` 
 
 We have function declarations (`function` is on the first line). Or function expressions, where we create a variable function: `var sing2 = function() { console.log('uhhh la la la')}`
 
-```
+```Javascript
 console.log('1----------');
 console.log(teddy);
 console.log(sing());
@@ -111,7 +111,7 @@ With our global EC, we have a few things that happen, the global object, and the
 
 # Exercise Hoisting 
 
-```
+```Javascript
 var one = 1;
 var one = 2;
 
@@ -119,7 +119,7 @@ console.log(one);
 // 2
 ```
 
-```
+```Javascript
 a();
 
 function a() {
@@ -136,7 +136,7 @@ Last in becomes what it is. During hoisting phase, we look at the function, comp
 
 # Exercise Hoisting 2
 
-```
+```Javascript
 var favoriteFood = "grapes";
 
 var foodThoughts = function () {
@@ -166,7 +166,7 @@ If we're no longer using hoisting, we have to rewrite the code to make more sens
 
 # Exercise 3
 
-```
+```Javascript
 function bigBrother(){
   function littleBrother() {
     return 'it is me!';
@@ -191,7 +191,7 @@ We have function expression and function declarations.
 
 Expression starts with `var`, declaration starts with `function` keyword. Declarations get hoisted, expressions don't. 
 
-```
+```Javascript
 // Function Expression 
 var canada = function() {
     console.log('cold');
@@ -205,7 +205,7 @@ function india() {
 
 Can also write a function expression with an arrow function and it will have the same effect:
 
-```
+```Javascript
 // Function Expression 
 var canada = () => {
     console.log('cold');
@@ -214,7 +214,7 @@ var canada = () => {
 
 Our functions, we can call them. Terms sometimes vary. Telling our JS engine, hey run our function. Run with curly brackets, as soon as JS engine sees this, creates an execution context.
 
-```
+```Javascript
 // Function Invocation/Call/Execution
 canada();
 india();
@@ -226,7 +226,7 @@ These functions when executed have another piece to them. When a function is inv
 
 It's another keyword in JS. 
 
-```
+```Javascript
 function marry(person1, person2) {
     console.log('arguments', arguments)
     return `${person1} is now married to ${person2}`
@@ -250,7 +250,7 @@ Some cases where we might want to iterate or loop through arguments. One way to 
 
 Another method is to use Rest Parameters: 
 
-```
+```Javascript
 function marry2(...args) {
     console.log('arguments', args);
     console.log(Array.from(arguments));
@@ -269,7 +269,7 @@ The arguments object is something we get on each execution context.
 
 If we go back to the `india()` function, if we console.log(arguments) inside of it, what will we get? 
 
-```
+```Javascript
 function india() {
     console.log(arguments);
     console.log('warm')
@@ -292,7 +292,7 @@ Each EC is like its own universe. Don't really know of each other.
 
 What type of thing do we have in this variable environment?
 
-```
+```Javascript
 function two() {
     var isValid; // undefined
 }
@@ -330,7 +330,7 @@ This variable environment - the place where we store the info (some can be on th
 
 # Scope Chain 
 
-```
+```Javascript
 var x = 'x';
 function findName() {
     console.log(x);
@@ -370,7 +370,7 @@ Scope chain starts where the data is defined, and goes all the way down to the g
 
 Scope means where can I access that variable? Where is it available in my code? 
 
-```
+```Javascript
 function sayMyName() {
     var a = 'a';
     return function findName() {
@@ -409,7 +409,7 @@ If we created in dev tools, a `function a() {}` we can then go into the `window`
 
 # Exercise: JS is Weird 
 
-```
+```Javascript
 function weird() {
     height = 50;
     return height;
@@ -424,7 +424,7 @@ Underneath the hood, looks at `height` and says nothing has been declared. No va
 
 That's weird. Doesn't make any sense. This is something that in the past with JS you could do. Now we have something called, `use strict` which if we add it to the top of the page, it's introduced as a way to prevent JS from doing these weird unpredicable edge cases. No such thing as a perfect programming language. `use strict` allows us to prevent these pitfalls. When we use it, it spits out that `height is not defined`. Because it knows we've not declared it. So we have to use `var, let or const` to define that variable. 
 
-```
+```Javascript
 var heyhey = function doodle() {
     // do something
     return 'heyhey';
@@ -440,7 +440,7 @@ Scope means what variables we have access to. JS has `function scope`. Most othe
 
 With a `function scope` if we created an if statement, and a variable in it, because JS uses function scope, we can access the password globally. The variable is functionally scoped. We only create a new scope, a new environment when there is a function. If it was a function, then in that case, we couldn't access the `secret`.
 
-```
+```Javascript
 if (5 > 4) {
     var secret = '12345'
 }
@@ -450,7 +450,7 @@ secret;
 
 In other languages, they use block scope, which means basically whenever we see the curly braces, we create a new environment. JS saw this and said, I want to be able to do block scoping too, how can I do that? With ES6, they introduced `let` and `const` keywords, which allow us to do block scoping. 
 
-```
+```js
 if (5 > 4) {
     let secret = '12345';
 }
@@ -463,7 +463,7 @@ Variables declared inside of a block scope, like an if statement or for loops, c
 
 # Excercise: Block Chain 
 
-```
+```js
 function loop() {
     for (var i = 0; i < 5; i++) {
         console.log(i);
@@ -505,7 +505,7 @@ IIFE. Immediately invoked function expression.
 
 It is a function expression that looks like: 
 
-```
+```js
 (function() {
 
 })();
@@ -519,7 +519,7 @@ After we've done that, we've created an anonymous function, that we immediately 
 
 What if we create a function declaration and call it immediately like so?
 
-```
+```js
 funciton(){}()
 ```
 
@@ -529,7 +529,7 @@ What's the benefit in doing this? Since the anonymous within the IFFE is a funct
 
 Can't do this:
 
-```
+```js
 (function() {
     var a = 1;
 })();
@@ -542,7 +542,7 @@ a;
 
 If we move the brackets inside instead of outside (the ()), doesn't change anything either. 
 
-```
+```js
 (function() {
     var a = 1;
 }());
@@ -552,8 +552,7 @@ Some big example in the video that I'm not writing down.
 
 Can attach jquery in the scripts tag in a library, and then use jquery afterwards in any subsequent script tags:
 
-
-```
+```html
 <h1>HELLOOOOOOOOOOOO</h1>
 <script src="https://code.jquery.com/jquery></script>
 <script>
@@ -581,7 +580,7 @@ Here when we refresh the page and click the `h1` it disappears. Has access to th
 
 jQuery inside of the library has at one of variables. But inside of it we can create an IFFE that exposes everything we can use. 
 
-```
+```html
 <h1>HELLOOOOOOOOOOOO</h1>
 <script src="https://code.jquery.com/jquery></script>
 <script>
@@ -609,7 +608,7 @@ If we add `jQuery` within the parens, it will receive jQuery as the parameter, a
 
 Interesting thing is we have a bit of a performance benefit. When we looked at the `$` we had to look up in the global namespace to find it. But now that we've added `jQuery` as a parameter, it's in the local scope. No scope chain lookup. Have a bit of a speed boost! 
 
-```
+```html
 <h1>HELLOOOOOOOOOOOO</h1>
 <script src="https://code.jquery.com/jquery></script>
 <script>
