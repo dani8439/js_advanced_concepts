@@ -378,3 +378,21 @@ var + 17
 // throws an error in Python 
 ```
 Throws an error because it's strongly typed.
+
+# JTS: Static typing in JavaScript 
+
+TypeScript. Many ways to introduce static typing into JS. Different tools like `Flow`, `Reasonml` and `Flow`. They all do the same thing, all try to make JS a statically typed language, somehow. 
+
+Reasonml created by facebook. A language in its own but similar enough to JS that's easy to pick up. Half the messenger code is written in reason. 
+
+All of the tools goals is to make writing JS nicer, less buggy, and introduce static typing. 
+
+**Flow** is a static type checker. Is able to add types to JS by writing some code that works with it, then putting it through a compiler like babel that spits out JS. Flow checks everything and it relies on Babel to remove that @@flow types we've added into our code before putting it into production. Flow comes built into `create-react-app`. 
+
+**Typescript** differs from *flow* as it has its own compiler. Not like flow that depends on babel to remove all this extra code. Typescript is what we call a superset of JS. That is that it adds functionality on top of JS. JS is Typescript. Typescript simply adds a few extra features on top of JS. Difference between reason and typescript is that reason is a separate language on its own. It's not a superset like Typescript.
+
+**Elm** is just like Reasonml in that it's own language that spits stuff out. Elm and Reasonml are both fairly new. 
+
+Growth of Typescript outweighs growth of all others. Big part is because Angular is built using typescript. A lot of the react community is starting to use typescript. Typescript is overtaking flow's popularity. Once you learn the 1 method, it's quite easy to pick up in flow. 
+
+As developers we must decide for ourselves what works for our projects and our teams. 
