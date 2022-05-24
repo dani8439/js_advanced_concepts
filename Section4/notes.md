@@ -311,3 +311,48 @@ false == {}  // false
 0 == {}      // false
 0 == null // false
 ```
+
+# JTS: Dynamic vs Static typing
+
+There are a ton of programming languages out there. Although JS is the dominant one on the web, there's loads of languages that are suitable to their domains and abilities. If we had to categorize them somehow, it would be something like Dynamic vs Static and Strong vs Weak.
+
+*Dynamically and statically typed* 
+
+**Dynamic** Perl, PHP, VB, JavaScript, Erlang, Clojurr, Groovy, Python, Ruby. 
+
+**Static** C, C++, C#, Java, Scala, F#, Haskell
+
+What does that mean? A Dynamically typed language allows us not to have to say what type of variable a variable is going to be. 
+
+```
+var a = 100;
+```
+
+In a statically typed language, we'd have to do something like this: 
+
+```
+int a;
+a = 100;
+```
+Have to specifiy the type the variable is in a statically typed language. Don't have to do that with a dynamically typed language. Have to declare them explicitly with statically typed. Dynamic are not bound to this constraint, not bound to a particular type. 
+
+In Dynamically typed languages, type checking is done during runtime. Meaning in runtime. JIT (with JS). Compiles as its running. 
+
+Disagreement in the community of which type is better. Not going to get into that. 
+
+With a statically typed language, we get documentation. 
+
+```
+function sum(a: number, b: number) {
+    return a + b;
+}
+
+sum('hello', null) // this will error out. 
+```
+Static typed languages are self documenting. You can come onto a project and immediately see what kind of parameters it expects. Second pro of these types of languages, because of these features, with our IDE's or text editor's, this helps with autocompletion. Can download plugins that say hey, even before you run this, it should be a number. You get less bugs in statically typed languages. Less bugs will go into production, we catch everything really early, in production. 
+
+Some cons. We just made our code a little bit more complex to read. Added another layer to the program, and it takes time to learn. Extra layer of complexity, which is always a concern with programming. Other cons or argument against them, is that, why can't you just write better tests? People forget about writing good unit tests. With a statically typed language, you have a slower development process because there's an extra step to make sure there are not any type errors. This slows it down, and how fast code can be created, run, and then shipped to production.
+
+Dynamically typed langauges, you spend less time debugging in production. Much more interested as developers. Few other pros and cons and everyone has opinions on the topic. 
+
+Main idea is this, static typed usually prevent bugs and help keep errors from happening. Dynamic helps you be more flexible and write software faster. Typescript helps us write JS like a statically typed language. Makes JS extra safe. 
