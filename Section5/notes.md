@@ -498,3 +498,6 @@ for (let i = 0; i < array.length; i++) {
     })(i)
 }
 ```
+
+# Closures Review 
+Learned that a closure is a combination of a function and a lexical environment in which it's declared. Closures allow a function to access variables from an enclosing scope or outer scope, even after it leaves the scope that it's declared. JS really popularized the idea of closures and it's now everywhere. It's adopted and added into different languages like `Python` and `Ruby`. 
