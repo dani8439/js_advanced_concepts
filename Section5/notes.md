@@ -262,3 +262,72 @@ const multiplyBy = (num1) => (num2) => return num1 * num2
 
 multiplyBy(4)(6) // 24
 ```
+
+# Closures 
+
+The first pillar of JS. **Closures** (other is **Prototypes**)
+
+Have these things called Closures in JS because of two reasons.
+
+1. Functions are first class citizens. Can pass functions around like data and any other type. 
+2. Lexical scope. JS engine knows based on where code is written before it's even written, what variables each functions have access to. 
+
+Closure = combination of function + lexical environment where it was declared. Closures allow a function to access variables from an enclosing scope or environment, even after it leaves the scope in which it was declared. Sounds confusing, eh? It is. 
+
+```js 
+function a() {
+    let grandpa = 'grandpa';
+    return function b() {
+        let father = 'father';
+        return function c() {
+            let son = 'son';
+            return `${grandpa} > ${father} > ${son}`
+        }
+    }
+}
+
+a() // Function: b
+a()() // Function: c 
+a()()() // grandpa > father > son
+```
+
+`function a()` and `function b()` are higher order functions that return other functions. `function c()` is a regular old function that returns a piece of string.
+
+How did `son` of all people remember what `grandpa` was? 
+
+```
+const one = a();
+```
+Function a got popped off the stack. We removed the variable environment. Shouldn't `let grandpa` be garbage collected and removed from the stack? Somehow `son` has access to `grandpa` and `father`. This is what Closure is. 
+
+With a closure when we run the `a()` function first, its pushed onto the stack and we create a variable environment. And this context execution has `grandpa` as a variable. This `grandpa` once we call function a, we have the chain that gives us a link to the global scope. If any variables there, we get access to them. Pops off the stack, but `grandpa` still remains? Why? Because it goes up into the box of closure. Because technically that's where the memory is. As soon as we don't need things, it'll be removed. But when the garbage collector comes and sees `grandpa`, it sees it's in the special closure box which can't be cleaned up, because there's something else referencing `grandpa` from inside of it. 
+
+The next `b()` function is called, a new variable environment is created, and we have `father`. b() gets popped off the stack, and `father` gets put into the closure box. 
+
+`c()` comes around, finally gets called, and we have `son`. When we return the statement of grandpa, father son, it looks into the variable environment for `father`. Can't find it. Instead of looking up globally, it looks into the closure box, sees both `grandpa` and `father`. JS does something unique here. The JS engine will make sure the function has access to all of the variables outside of the function with this closure. Closure is a feature of JS. It creates the closure because of `function c()`. 
+
+If we placed another random variable b, but it's not referenced in `c()`, it doesn't keep it around. But it keeps anything that's still being referenced by a child function. So c needs `father` and `grandpa`. 
+
+Closures are also called **lexical scoping**. Lexical = where it's written. Scoping = What variable we have access to. By that definition, means the JS engine before we run any code, already knows which functions has access to what variables, because JS is lexically scoped or statically scoped. It sees during the first phase when looking through the code, to keep grandpa and father around because it creates the scope chains. 
+
+This all works because the values are not on the call stack, they're on the heap. Not garbage collected. 
+
+```js
+function boo(string) {
+    return function(name) {
+        return function(name2) {
+            console.log(`${string} ${name} ${name2}`)
+        }
+    }
+}
+
+// rewritten as arrow function:
+const boo = (string) => (name) => (name2) => 
+    console.log(`${string} ${name} ${name2}`)
+
+boo('hi')('tim')('becca'); // hi tim becca 
+constbooString = boo('hi');
+// could hypothetically wait 5 years before calling below if JS engine is running. And still get the right answer. 
+const booStringName = booString();
+```
+Can have hidden powers now. 
