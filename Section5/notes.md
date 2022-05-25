@@ -389,3 +389,28 @@ getHeavyDuty(800);
 Now we've created closure, and have a reference to `bigArray`. Maintained our closure scope without doing all that creation and descrution work. 
 
 2. Allows us to do encapsulation 
+
+```js
+const makeNuclearButton = () => {
+    let timeWithoutDestruction = 0;
+    const passTime = () => timeWithoutDestruction++;
+    const totalPeaceTime = () => timeWithoutDestruction;
+    const launch = () => {
+        timeWithoutDestruction = -1;
+        return '💥'
+    }
+    setInterval(passTime, 1000);
+    return {
+        // launch: launch, remove as don't want people to have access to it. 
+        totalPeaceTime: totalPeaceTime
+    }
+}
+
+const ohno = makeNuclearButton(); // 0
+ohno.totalPeaceTime(); // 12 
+ohno.totalPeaceTime(); // 18 
+ohno.totalPeaceTime(); // 24
+ohno.launch(); // 💥
+```
+
+We used closures here. The `timeWithoutDestruction` is something that the function has access to. Don't want people to have access of `launch()` so we remove it. And can no longer launch. Encapsulation is this, it's hiding of information that is unnecessary to be seen by the outside world and be manipulated. Gets into the idea of **Principle of least Privilege** a big security principle when it comes to programming. Don't want to give anyone access to your API. Using closures we're able to access things that we don't want anyone else touching. But at the same time want people to have access to other things like `totalPeaceTime`. This is one of the main benefits of closure and data encapsulation. Some data should just not be directly exposed. Later on, will see modules use this pattern. 
