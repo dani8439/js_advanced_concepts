@@ -413,4 +413,43 @@ ohno.totalPeaceTime(); // 24
 ohno.launch(); // 💥
 ```
 
-We used closures here. The `timeWithoutDestruction` is something that the function has access to. Don't want people to have access of `launch()` so we remove it. And can no longer launch. Encapsulation is this, it's hiding of information that is unnecessary to be seen by the outside world and be manipulated. Gets into the idea of **Principle of least Privilege** a big security principle when it comes to programming. Don't want to give anyone access to your API. Using closures we're able to access things that we don't want anyone else touching. But at the same time want people to have access to other things like `totalPeaceTime`. This is one of the main benefits of closure and data encapsulation. Some data should just not be directly exposed. Later on, will see modules use this pattern. 
+We used closures here. The `timeWithoutDestruction` is something that the function has access to. Don't want people to have access of `launch()` so we remove it. And can no longer launch. Encapsulation is this, it's hiding of information that is unnecessary to be seen by the outside world and be manipulated. Gets into the idea of **Principle of least Privilege** a big security principle when it comes to programming. Don't want to give anyone access to your API. Using closures we're able to access things that we don't want anyone else touching. But at the same time want people to have access to other things like `totalPeaceTime`. This is one of the main benefits of closure and data encapsulation. Some data should just not be directly exposed. Later on, will see modules use this pattern.
+
+# Exercise: Closures 2 
+
+Using closures, can you turn this function into something that can only be run once? 
+
+```js 
+let view 
+function initialize() {
+    view = '⛰️';
+    console.log('view has been set!');
+}
+
+initialize();
+initialize();
+initialize();
+console.log(view);
+```
+
+```js 
+let view 
+
+function initialize() {
+    let called = 0;
+    return function() {
+        if (called > 0) {
+            return 
+        } else {
+            view = '⛰️';
+            called++;
+            console.log('view has been set!');
+        }
+    }
+}
+
+const startOnce = initialize();
+startOnce(); // view has been set! ⛰️
+startOnce(); // doesn't work.
+console.log(view);
+```
