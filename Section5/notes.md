@@ -344,3 +344,48 @@ function callMeMaybe() {
 
 callMeMaybe();
 ```
+
+# Closures and Memory
+
+Closures have 2 really important main benefits. 
+
+1. Memory efficient 
+
+```js
+function heavyDuty(index) {
+    const bigArray = new Array(7000).fill('😊')
+    console.log('created!')
+    return bigArray[index];
+}
+
+heavyDuty(); // lots of 😊.
+heavyDuty(688); // 😊
+heavyDuty(688);
+heavyDuty(688);
+heavyDuty(688);
+```
+
+Example seems silly, but let's say the function is doing a very heavy operation. Let's say this index `688` is someplace in a database, someplace that gets accessed a lot. What happens if we call the function many times. Creating it every time. We create the memory, then we return it, then it's destroyed over and over and over. That doesn't sound very efficient. Wouldn't it be great if there was a way to create the array once and just have it in memory so we can constantly access it instead of creating all that work? 
+
+How can we do that with closures? 
+
+```js 
+function heavyDuty2() {
+    const bigArray = new Array(7000).fill('😊')
+    console.log('created Again!')
+    return function(index) {
+        return bigArray[index];
+    }
+}
+
+const getHeavyDuty = heavyDuty2();
+getHeavyDuty(688);
+getHeavyDuty(700);
+getHeavyDuty(800);
+// created Again! 
+// 😊
+```
+
+Now we've created closure, and have a reference to `bigArray`. Maintained our closure scope without doing all that creation and descrution work. 
+
+2. Allows us to do encapsulation 
