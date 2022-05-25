@@ -145,3 +145,108 @@ function a(param=6) {
 a() // 6
 ```
 Good to have default parameters set on a function as a way to avoid edge cases. 
+
+# Higher Order Functions
+
+**Higher Order Functions** are simply functions that can take other functions as arguments Or a function that returns another function. The big problem is that most people know what a HOF are but don't understand why we care/what they're used for. 
+
+```js
+// A simple function 
+function letAdamLogin() {
+    let array = [];
+    for (let i = 0; i < 1000000; i++) {
+        array.push(i)
+    }
+    return 'Access Granted to Adam'
+}
+
+function letEvaLogin() {
+    let array = [];
+    for (let i = 0; i < 1000000; i++) {
+        array.push(i)
+    }
+    return 'Access Granted to Eva'
+}
+
+letAdamLogin();
+letEvaLogin();
+```
+What's the problem with this code? It's not DRY. We've created some code that's not very flexible. For each user we have, we have to copy and paste code and repeat ourself. Imagine how inefficient it would be for hundreds of employees? How can we fix this? 
+
+```js
+// A function that acceps some parameters 
+
+const giveAccessTo = (name) => 
+    'Access Granted to ' + name
+
+
+function letUserLogin(user) { // ++ we now tell the function WHAT DATA to use when we call it
+    let array = [];
+    for (let i = 0; i < 1000000; i++) {
+        array.push(i)
+    }
+    return giveAccessTo(user);
+}
+
+letUserLogin('Eva');
+// Access Granted to Eva
+```
+
+What superhero power did we just gain here? We leveled up by telling the function what data to use when we call it. Now we have a more generic function. We have the ability when we call the function to define the data. Have a bit more flexibility. Can delay telling what needs to be done until Execution Time. Also kept our code dry. 
+
+What if we had instead of just a user, an admin? Someone with a lot higher privileges. Would have to create a separate login function for admin. Have to go through a bit more security procedures. 
+
+```js
+function letAdminLogin(admin) { 
+    let array = [];
+    for (let i = 0; i < 5000000; i++) {
+        array.push(i)
+    }
+    return giveAccessTo(admin);
+}
+```
+
+What did we do here? We copied more code. Not being very dry. Imagine if we had many more roles within the company? This is where Higher Order Functions are going to come into play. Can give it the data and also tell the function what to do when we actually invoke it. 
+
+```js
+const giveAccessTo = (name) => 
+    'Access Granted to ' + name
+
+function authenticate(verify) {
+    let array = [];
+    for (let i = 0; i < verify; i++) {
+        array.push(i)
+    }
+    return giveAccessTo(person.name);
+}
+
+function sing(person) {
+    return 'lalalala my name is ' + person.name;
+}
+
+function letPerson(person, fn) { // ++ tell it what data to use + what function to use as well. 
+    if (person.level === 'admin') {
+        return fn(person)
+    } else if (person.level === 'user') {
+        return fn(person)
+    }
+}
+
+letPerson({level: 'user', name: 'Tim'}, authenticate)
+letPerson({level: 'admin', name: 'Sally'}, authenticate)
+letPerson({level: 'admin', name: 'Sally'}, sing)
+```
+
+Gain all the power with the code above. Also DRY. And general. Higher order functions returns other functions.
+
+Kind of broke the code by removing 100000, and 500000 in the `letPerson()` function, but maybe can write some kind of logic into authenticate to change that. 
+
+We're able to tell the function what to do during invocation. DRY, and more flexible this way.
+
+```js
+const multiplyBy() {
+}
+
+multiplyByTwo()
+multiplyByTen()
+```
