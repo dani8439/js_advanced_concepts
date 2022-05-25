@@ -331,3 +331,16 @@ constbooString = boo('hi');
 const booStringName = booString();
 ```
 Can have hidden powers now. 
+
+# Exercise: Closures 
+
+```js
+function callMeMaybe() {
+    const callMe = 'Hi! I am now here!';
+    setTimeout(function() {
+        console.log(callMe);
+    }, 4000);
+}
+
+callMeMaybe();
+```
