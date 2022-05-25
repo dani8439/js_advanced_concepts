@@ -174,7 +174,7 @@ letEvaLogin();
 What's the problem with this code? It's not DRY. We've created some code that's not very flexible. For each user we have, we have to copy and paste code and repeat ourself. Imagine how inefficient it would be for hundreds of employees? How can we fix this? 
 
 ```js
-// A function that acceps some parameters 
+// A function that accepts some parameters - function with parameters
 
 const giveAccessTo = (name) => 
     'Access Granted to ' + name
@@ -243,10 +243,22 @@ Kind of broke the code by removing 100000, and 500000 in the `letPerson()` funct
 
 We're able to tell the function what to do during invocation. DRY, and more flexible this way.
 
+# Exercise: Higher Order Functions 
+
 ```js
-const multiplyBy() {
+const multiplyBy() = function(num1) {
+    return function(num2) {
+        return num1 * num2
+    }
 }
 
-multiplyByTwo()
-multiplyByTen()
+const multiplyByTwo = multiplyBy(2);
+const multiplyBySix = multiplyBy(6);
+```
+The higher order function here is the `multiplyBy()` as it returns another function. Can write it in a cleaner way with arrow functions: 
+
+```js 
+const multiplyBy = (num1) => (num2) => return num1 * num2
+
+multiplyBy(4)(6) // 24
 ```
