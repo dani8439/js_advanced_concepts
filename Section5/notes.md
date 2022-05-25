@@ -453,3 +453,48 @@ startOnce(); // view has been set! ⛰️
 startOnce(); // doesn't work.
 console.log(view);
 ```
+
+# Exercise Closures 3 
+
+```js
+const array = [1,2,3,4]
+for (var i = 0; i < array.length; i++) {
+    setTimeout(function() {
+        console.log('I am at index' + array[i])
+    }, 3000)
+}
+
+// => 4 
+// I am at index 4 
+// I am at index 4
+// I am at index 4 
+// I am at index 4
+```
+
+Easiest way to solve this is to change `var` to `let`, because `let` allows us to use block scoping. So that the block creates a separate scope for each loop, and `i` is scoped within each one. `var` scopes globally, so it's always from the final return after exiting out of the function.
+
+```js
+const array = [1,2,3,4]
+for (let i = 0; i < array.length; i++) {
+    setTimeout(function() {
+        console.log('I am at index' + array[i])
+    }, 3000)
+}
+// => 4 
+// I am at index 1 
+// I am at index 2 
+// I am at index 3 
+// I am at index 4
+
+```
+Another way to solve is to use closures and an IFFE. We can reference `i` then in each iteration of the loop and it won't lose it. Pass in parameter of `i` so we can see, 0, 1, 2, 3. 
+```js
+const array = [1,2,3,4]
+for (let i = 0; i < array.length; i++) {
+    (function(closureI) {
+        setTimeout(function() {
+            console.log('I am at index' + array[closureI])
+        }, 3000)
+    })(i)
+}
+```
