@@ -583,3 +583,69 @@ dragon.isPrototypeOf(lizard) // true
 ```
 
 Hypothetically we can use whatever methods this base object has. Use `isPrototypeOf()` says hey is `dragon` a `prototype` of `lizard` that is does `lizard` inherit from `dragon`? Yes. true. But if we change it around, to `lizard.isPrototypeOf(dragon)` we get false as it's not. 
+
+# Prototypal Inheritance 3
+
+```js
+let dragon = {
+    name: 'Tanya',
+    fire: true,
+    fight() {
+        return 5
+    },
+    sing() {
+        if (this.fire) {
+            return `I am ${this.name}, the breather of fire`
+        }
+    }
+}
+
+dragon.sing()
+dragon.fight()
+
+let lizard = {
+    name: 'Kiki',
+    fight() {
+        return 1
+    }
+}
+
+// create a prototype chain up to dragon 
+lizard.__proto__ = dragon 
+for (let prop in lizard) {
+    if (lizard.hasOwnProperty(prop)) {
+        // only log whatever lizard has as its own property. 
+        console.log(prop)
+    }
+}
+
+// name 
+// fight 
+// fire 
+// sing
+```
+
+if we loop through intially without the `hasOwnProperty(prop)` logic, then we console log all the properties. But if we put it in and only log the properties that lizard has itself, then it shortens to only `name` and `fight` as those are the only two properties `lizard` has on its own. Other properties are inherited up the prototype chain, so we're not just copying these properties from the dragon. 
+
+The beauty is that js looks for you through the prototype chain automatically. Don't have to do any weird `__proto__` to use `hasOwnProperty()` does it automatically. This isn't the same as the scope chain. Prototype chain vs scope chain work in a similar fashion but are two different things. 
+
+`__proto__` shouldn't really use it. Should never use it. It's bad for performance and there's different ways we want to inherit when it comes to prototypal inheritance. It messes up the JS compiler pretty badly.
+
+Why is this useful? The fact that objects share prototypes, means you can have objects that point to the same place in memory and be more efficient that way. JS engine just looks up the prototype chain to this one instance. Interesting. 
+
+Whenever we get `undefined` on something, because js goes up the prototype chain and finds nothing. 
+
+```js
+lizard.ahhha() // type error 
+lizard.ahahah // undefined 
+```
+
+```js 
+const obj = {}
+obj.__proto__
+// {constructor...}
+obj.__proto__.__proto__ 
+// null
+```
+
+`null` means there's nothing there. When JS was created as a language, `undefined` was created for we don't have that variable it's not defined. `null` means, no there's absolutely nothing there. Because of its prototypal inheritance nature, we needed some way to say hey, pass the base object, there's nothing there, there's `null`. Some would call this a null pointer, pointing to null. End of the chain, I've got nothing for you, sorry. Nothing there. 
