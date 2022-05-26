@@ -532,3 +532,54 @@ obj1.__proto__
 // {constructor: f....} base object again 
 ```
 Get the base object with `__proto__`. This is what prototypal inheritance is. It's a concept we'll understand why it's so useful to us. It's quite unique and not that common in other languages like c# or java, they use classical inheritance. In JS we have the class keyword, but it's syntactic sugar. There are no classes in JS, we only have prototypal inheritance. 
+
+# Prototypal Inheritance 2
+
+```js
+let dragon = {
+    name: 'Tanya',
+    fire: true,
+    fight() {
+        return 5
+    },
+    sing() {
+        if (this.fire) {
+            return `I am ${this.name}, the breather of fire`
+        }
+    }
+}
+
+dragon.sing()
+dragon.fight()
+
+let lizard = {
+    name: 'Kiki',
+    fight() {
+        return 1
+    }
+}
+
+const singLizard = dragon.sing.bind(lizard)
+console.log(singLizard())
+// I am Kiki, the breather of fire
+```
+
+If we wanted to borrow a method from the `dragon` object, we've learned how to do that before. Can use `bind`. But we don't have fire set to true, so Kiki won't read it once we move the fire into an if statement. We want to inherit a bunch of these properties for the lizard as well to make it more powerful. What if we created a prototype chain? Hey I want Lizard to inherit all these properties and methods from dragon. How? We can do this:
+
+```js
+lizard.__proto__ = dragon;
+lizard.sing() // I am Kiki, the breather of fire 
+lizard.fire // true 
+lizard.fight // 1 
+```
+
+Creating that chain up from `lizard` to `dragon`. Inherit everything, but we already have `fight()` so the power is `1` because that's what we originally set it to. Through the prototype chain, we can inherit the properties and methods of the dragon, and overwrite anything that we've already declared. So `name` and `fight` stay with us. But as soon as we say something like `sing()`, the JS engine goes up the prototype chain and finds it there. 
+
+What would happen if we called something else like `lizard.dance()` and it doesn't exist? We get a `TypeError: lizard.dance is not a function`. Because we go up the prototype chain, and it doesn't exist all the way up to the tippy top to `Object`. 
+
+```js 
+dragon.__proto__ // {} base object
+dragon.isPrototypeOf(lizard) // true 
+```
+
+Hypothetically we can use whatever methods this base object has. Use `isPrototypeOf()` says hey is `dragon` a `prototype` of `lizard` that is does `lizard` inherit from `dragon`? Yes. true. But if we change it around, to `lizard.isPrototypeOf(dragon)` we get false as it's not. 
