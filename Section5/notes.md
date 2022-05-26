@@ -649,3 +649,5 @@ obj.__proto__.__proto__
 ```
 
 `null` means there's nothing there. When JS was created as a language, `undefined` was created for we don't have that variable it's not defined. `null` means, no there's absolutely nothing there. Because of its prototypal inheritance nature, we needed some way to say hey, pass the base object, there's nothing there, there's `null`. Some would call this a null pointer, pointing to null. End of the chain, I've got nothing for you, sorry. Nothing there. 
+
+# Prototypal Inheritance 4
