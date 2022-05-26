@@ -501,3 +501,34 @@ for (let i = 0; i < array.length; i++) {
 
 # Closures Review 
 Learned that a closure is a combination of a function and a lexical environment in which it's declared. Closures allow a function to access variables from an enclosing scope or outer scope, even after it leaves the scope that it's declared. JS really popularized the idea of closures and it's now everywhere. It's adopted and added into different languages like `Python` and `Ruby`. 
+
+# Prototypal Inheritance 
+
+Second pillar. Very tough. 🤯
+
+Remember `Array` and `Functions` are just `Objects` in JS. JS uses something called prototypal inheritance. What does that mean? Inheritance is an object getting access to the properties and methods of another object. The `Array[]` object gets access to the properties and methods of the `Object {}`, as does `Function()` through prototypal inheritance. 
+
+```js
+const array = [];
+array.__proto__ 
+// [constructor: f] ... lots of info
+array.__proto__.__proto__
+// base object everything in JS gets created from. 
+```
+
+Do `__proto__` and you see all these things that come with, comes with all sorts of methods `reduce`, `push`, `pop`. The new Array was created from the Array constructor, which contained an empty array, and we got all of this stuff from `Object`. The underscore underscore went up the prototype chain to the object. 
+
+If we go up and do `__proto__.__proto__` we go up to `Object` and see all the base logic that everything in JS has. `toString()`. Anything that is a decendent of an object will get the `toString()` method. So an array has the `toString()` method on it because of the prototype chain. 
+
+```js 
+function a() {}
+a.__proto__ 
+// f () { [native code]} base function that all functions are created from 
+a.__proto__.__proto__ 
+// base object that all objects are created from 
+
+const obj1 = {}
+obj1.__proto__ 
+// {constructor: f....} base object again 
+```
+Get the base object with `__proto__`. This is what prototypal inheritance is. It's a concept we'll understand why it's so useful to us. It's quite unique and not that common in other languages like c# or java, they use classical inheritance. In JS we have the class keyword, but it's syntactic sugar. There are no classes in JS, we only have prototypal inheritance. 
