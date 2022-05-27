@@ -854,3 +854,6 @@ Function.prototype.bind = function(whoIsCallingMe) {
     };
 }
 ```
+
+# Section Review 
+Finally finished our 2 Pillars of JS. Concepts that are quite complex but powerful. Now have the tools on top of our foundations to start talking about programming paradigms. 
