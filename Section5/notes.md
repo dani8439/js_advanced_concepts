@@ -813,3 +813,31 @@ String.prototype
 ```
 
 To review, everything in JS is an object. Arrays and functions in JS are objects. They inherit through the prototype chain from the base object. Can go up the prototype chain, that also has the `__proto__` property that links higher up to the `prototype`. *Only functions have the prototype property.* At the end of the day, this was useful for us because using prototypes we avoid repeating ourself, and being inefficient with our memory. 
+
+# Exercise: Prototypal Inheritance 
+
+```js
+//Exercise - extend the functionality of a built in object
+
+//#1
+//Date object => to have new method .lastYear() which shows you last year 'YYYY' format.
+
+Date.prototype.lastYear = function() {
+    return this.getFullYear() - 1;
+}
+new Date('1900-10-10').lastYear()
+//'1899'
+
+
+//#Bonus
+// Modify .map() to print '🗺' at the end of each item.
+Array.prototype.map = function() {
+    let arr = [];
+    for (let i = 0; i < this.length; i++) {
+        arr.push((this[i] + '🗺'))
+    }
+    return arr;
+}
+console.log([1,2,3].map())
+//1🗺, 2🗺, 3🗺
+```
