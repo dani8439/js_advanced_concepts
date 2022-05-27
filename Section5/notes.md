@@ -745,3 +745,71 @@ console.log(human.isPrototypeOf(socrates))
 ```
 
 `true` because we've inherited from human. This is how to do it without using `__proto__`. Named it this way so no one accidentally messes with the prototype chain. 
+
+# Prototypal Inheritance 6 
+One last piece of info that's going to blow your mind. 
+
+*Only functions have the prototype property* is true. What does that mean? Remember how `__proto__` points to the `prototype: {}` object? The thing that contains the prototype: object is always a function. 
+
+```js
+function multiplyBy5(num) {
+    return num * 5
+}
+multiplyBy5.prototype 
+// { constructor: f} have a prototype. It's pretty empty
+```
+
+When we create a function like this, we don't really use the `prototype` that comes with it. Although they're a property on all functions, only time we use prototypes is when we use **constructor functions**. Usually start with a capital letter, and contain the blue print that we use. 
+
+```js 
+multiplyBy5.__proto__ 
+// f () { [native code] }
+Function.prototype 
+// f () { [native code] } equal the same thing.
+multiplyBy5.__proto__.__proto__
+// {constructor: f..} the object constructor 
+Object.prototype
+// {constructor: f..} get the same thing, the object constructor. 
+multiplyBy5.__proto__.__proto__.__proto__
+// null 
+typeof Object 
+// function
+```
+
+The `Object` is something we've talked about before. It's the base object. 
+
+In order for us to perform an action in a program, we have to have a function to manipulate the data. When we do something like `const obj = {}` underneath the hood, JS has to create that object. In order to do so, it uses the Object constructor. 
+
+```js 
+typeof {}
+// "object" 
+typeof Object 
+// "function"
+```
+Can get pretty hairy and complicated. Every function has a prototype property. And it references to an object used to attach properties that will be inherited by objects further down the prototype chain. The last object in the chain is the built in `Object.prototype`. `Object` is a function because it has the `prototype`. `Object.prototype` is what we call the base object, the very last piece/last object we can look for properties on before we poing to `null`. 
+
+If we created an `obj = {}` will we be able to access `obj.prototype`? 
+
+```js
+const obj = {}
+obj.prototype 
+// undefined
+```
+
+No. It's `undefined` it's not a function. How about an array? No, it's not available either. It's not a function. What about a string.prototype? Because that's just a primary type.
+
+```js 
+const arr = []
+array.prototype 
+// undefined 
+'string'.prototype 
+// undefined
+```
+Functions have a prototype.
+
+```js
+String.prototype 
+// String {""...}
+```
+
+To review, everything in JS is an object. Arrays and functions in JS are objects. They inherit through the prototype chain from the base object. Can go up the prototype chain, that also has the `__proto__` property that links higher up to the `prototype`. *Only functions have the prototype property.* At the end of the day, this was useful for us because using prototypes we avoid repeating ourself, and being inefficient with our memory. 
