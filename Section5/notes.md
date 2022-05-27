@@ -720,3 +720,28 @@ array.__proto__
 ```
 
 Arrays and Functions are objects in JS. Key is `__proto__` points up the chain to `prototype`. And `__proto__` lives in the `prototype`. 
+
+# Prototypal Inheritance 5
+Let's explore how we can create our own prototypes. We shouldn't really use `__proto__`. Shouldn't use it because of performance reasons. So what's a safe way to do this? 
+
+```js
+let human = {
+    mortal: true 
+}
+let socrates = Object.create(human)
+console.log(socrates)
+// {}
+socrates.age = 45 
+console.log(socrates)
+// { age: 45 }
+console.log(socrates.mortal)
+// true 
+```
+Because we've created using `Object.create()` a prototype chain up to `human`. 
+
+```js 
+console.log(human.isPrototypeOf(socrates))
+// true 
+```
+
+`true` because we've inherited from human. This is how to do it without using `__proto__`. Named it this way so no one accidentally messes with the prototype chain. 
