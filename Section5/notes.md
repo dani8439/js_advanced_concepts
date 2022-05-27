@@ -651,3 +651,72 @@ obj.__proto__.__proto__
 `null` means there's nothing there. When JS was created as a language, `undefined` was created for we don't have that variable it's not defined. `null` means, no there's absolutely nothing there. Because of its prototypal inheritance nature, we needed some way to say hey, pass the base object, there's nothing there, there's `null`. Some would call this a null pointer, pointing to null. End of the chain, I've got nothing for you, sorry. Nothing there. 
 
 # Prototypal Inheritance 4
+
+```js
+const obj = {
+    name: 'Sally'
+}
+obj.hasOwnProperty('name');
+// true 
+obj.hasOwnProperty('hasOwnProperty')
+// false 
+```
+
+`obj` itself doesn't have `hasOwnProperty` as a property, it has it up the prototype chain. 
+
+```js
+function a() {}
+a.hasOwnProperty('call')
+// false 
+a.hasOwnProperty('bind')
+// false 
+a.hasOwnProperty('apply')
+// false 
+a.hasOwnProperty('name')
+// true 
+a.name 
+// "a"
+```
+
+Our `call`, `apply` and `bind` are not part of it, but `name` is. A Function is a special type of callable object. We have code that can be invoked, an optional name, and properties. We have `call` `apply` and `bind` as properties. Technically not correct. These properties aren't on the function. They are up the prototype chain.
+
+```js
+function multiplyBy5(num) {
+    return num * 5
+}
+multiplyBy5.__proto__
+// f () { [native code] } base function that all functions are created from. Can capture it by right clicking in dev console, and click store as global variable temp1
+temp1. // see all these properties and methods that come with it. So that's what happening here.
+```
+
+When we do `multiplyBy5` we have the `proto` property that links upward to the Function that has `call`, `bind` and `apply`. `__proto__` links to everything, links all the way up if you dig deep enough to to the base object and where `null` lives. `__proto__` links to `prototype`. 
+
+`multiplyBy5` which is a callable object that has `Code()` that's available, `Name` (optional), `properties`, `__proto__`, and `prototype: {}`. That `__proto__` links up to the function, that is a callable object that has it's own `Code ()`, `__proto__`, `Properties`, and it's own `prototype: {call, apply, bind`} that has call, apply, and bind. `__proto__` actually lives inside ithe `prototype` object. 
+
+```js 
+multiplyBy5.__proto__  // points to function.prototype 
+// f () { [native code] }
+Function.prototype 
+// f () { [native code] }
+Object.prototype 
+// {constructor: f...}  Base Object. 
+Object.prototype.__proto__
+// null
+```
+
+`__proto__` is simply a reference to up the chain the `prototype` object. 
+
+```js 
+const array = []
+// undefined 
+[].hasOwnProperty('map')
+// false 
+array.__proto__.hasOwnProperty('map')
+// true 
+Array.prototype 
+// [constructor...] Base Array 
+array.__proto__
+// [constructor] Base Array
+```
+
+Arrays and Functions are objects in JS. Key is `__proto__` points up the chain to `prototype`. And `__proto__` lives in the `prototype`. 
