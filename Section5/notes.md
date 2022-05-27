@@ -841,3 +841,16 @@ Array.prototype.map = function() {
 console.log([1,2,3].map())
 //1🗺, 2🗺, 3🗺
 ```
+
+# Exercise: Prototypal Inheritance with `this`
+
+```js
+// How would you be able to create your own .bind() method using call or apply? 
+
+Function.prototype.bind = function(whoIsCallingMe) {
+    const self = this;
+    return function() {
+        return self.apply(whoIsCallingMe, arguments);
+    };
+}
+```
