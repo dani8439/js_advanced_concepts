@@ -92,3 +92,5 @@ const sam= createElf('Sam', 'fire')
 sam.attack() // attack with fire
 ```
 We've moved up the step to OOP, and avoided repetitive code. Still a problem. Factory functions are great, but what if we had 1000 elves? Need to store the data in memory, like `name` and `weapon`, but the methods are copied somewhere else. So 1000 `attack()` functions in different places in memory for each elf. Not that great, is it? JS has this interesting thing, we can use that to our advantage to improve this (prototypal inheritance) so we can share functionality across objects. 
+
+# OOP: `Object.create()`
