@@ -93,7 +93,7 @@ sam.attack() // attack with fire
 ```
 We've moved up the step to OOP, and avoided repetitive code. Still a problem. Factory functions are great, but what if we had 1000 elves? Need to store the data in memory, like `name` and `weapon`, but the methods are copied somewhere else. So 1000 `attack()` functions in different places in memory for each elf. Not that great, is it? JS has this interesting thing, we can use that to our advantage to improve this (prototypal inheritance) so we can share functionality across objects. 
 
-# OOP: `Object.create()`
+# OOP2: `Object.create()`
 
 We know about prototypal inheritance in JS, and we can use that to our advantage to move a little closer to OOP in functional programming. How can we fix the elf example? 
 
@@ -155,3 +155,5 @@ function createElf(name, weapon) {
 ```
 
 `Object.create()` creates the prototype chain for us, all the way up so we can use `attack`. Solves our problems, it's all working, we're done. Right? No. This is true prototypal inheritance here. But you won't really see this out in most code bases. It's not standard or accepted by JS community. 
+
+# OOP3: Constructor Functions
