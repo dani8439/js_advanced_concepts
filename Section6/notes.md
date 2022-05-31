@@ -21,3 +21,74 @@ OOP has been around since the 70s. It's a style of programming that's very commo
 In the dragon example we had some OOP principles, data and methods. In OOP, this data can also be called `state`. We wrapped the dragon in an object, to model a real world data. The attributes, or properties allow us to keep track of state of the object. The methods allow us to manipulate the state of the object like in the real world. 
 
 With OOP, there's class based programming languages, and prototype based programming languages. In JS we have prototypal inheritance. 
+
+# OOP: Factory Functions 
+
+Naive approach:
+```js 
+const elf = {
+    name: 'Orwell',
+    weapon: 'bow',
+    attack() {
+        return 'attack with ' + elf.weapon
+    }
+}
+
+elf.name // Orwell
+elf.attack // attack with bow
+```
+
+What should we do if we want to add another elf? Copy and pase the code, with different name:
+
+```js
+const elf2 = {
+    name: 'Sallyl',
+    weapon: 'bow',
+    attack() {
+        return 'attack with ' + elf.weapon
+    }
+}
+elf2.attack() // attack with bow
+```
+
+The benefit of what we just did, is we have encapsulation. We've grouped functionality together. Have state/data within the objects, and functions/methods acting on that state. So the methods can interact with the state and modify it too even. That's our first step with OOP, to encapsulate functionality that can be maintained into these containers. The problem is that it's repetitive. Most likely we have way more code elves can do, and we're not keeping it DRY. 
+
+
+Step 2 of OOP - **Factory Functions**: Functions that behave like factories and create objects for us. 
+```js
+// factory functions - programmatically creating elves
+function createElf(name, weapon) {
+    return {
+        name: name,
+        weapon: weapo,
+        attack() {
+            return 'attack with ' + weapon
+        }
+    }
+}
+
+const peter = createElf('Peter', 'stones')
+peter.attack() // attack with stones
+```
+
+This works, and we've created a *factory function*. Can simplify it a little bit using ES6 syntax:
+
+```js 
+...
+return {
+    name,
+    weapon,
+    attack() {
+        return 'attack with ' + weapon
+    }
+}
+```
+Beauty with factory functions is if we want to create another elf, we can. Function does it for us. 
+
+```js
+const peter = createElf('Peter', 'stones')
+peter.attack() // attack with stones
+const sam= createElf('Sam', 'fire')
+sam.attack() // attack with fire
+```
+We've moved up the step to OOP, and avoided repetitive code. Still a problem. Factory functions are great, but what if we had 1000 elves? Need to store the data in memory, like `name` and `weapon`, but the methods are copied somewhere else. So 1000 `attack()` functions in different places in memory for each elf. Not that great, is it? JS has this interesting thing, we can use that to our advantage to improve this (prototypal inheritance) so we can share functionality across objects. 
