@@ -11,3 +11,13 @@ OOP is like building a robot. Build it all togetehr. FP says give me that data, 
 Idea is to use both paradigms in unison to make our code easy to read, clear, more understandable, more efficient, easy to extend.
 
 The two pillars Closures and Prototypes all us to learn about these topics. Without them, we wouldn't be able to learn about either (Closures for FP and Prototypes for OOP).
+
+# OOP Introduction 
+
+*Object Oriented Programming* the `this` keyword, `new` keyword, Prototype, ES6 CLasses, Java, Inheritance, `Object.create()` Private vs Public, 4 Principles of OOP. 
+
+OOP has been around since the 70s. It's a style of programming that's very common (C#, Python, Ruby, Java). In OOP, an object is a box containing information and operations that refer to the same concept. Like we're modeling real world objects. 
+
+In the dragon example we had some OOP principles, data and methods. In OOP, this data can also be called `state`. We wrapped the dragon in an object, to model a real world data. The attributes, or properties allow us to keep track of state of the object. The methods allow us to manipulate the state of the object like in the real world. 
+
+With OOP, there's class based programming languages, and prototype based programming languages. In JS we have prototypal inheritance. 
