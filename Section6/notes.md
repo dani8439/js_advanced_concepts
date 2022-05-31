@@ -94,3 +94,64 @@ sam.attack() // attack with fire
 We've moved up the step to OOP, and avoided repetitive code. Still a problem. Factory functions are great, but what if we had 1000 elves? Need to store the data in memory, like `name` and `weapon`, but the methods are copied somewhere else. So 1000 `attack()` functions in different places in memory for each elf. Not that great, is it? JS has this interesting thing, we can use that to our advantage to improve this (prototypal inheritance) so we can share functionality across objects. 
 
 # OOP: `Object.create()`
+
+We know about prototypal inheritance in JS, and we can use that to our advantage to move a little closer to OOP in functional programming. How can we fix the elf example? 
+
+One way would be to take out the `attack()` function, and place it in some kind of a store with functionality:
+```js
+const elfFunctions = {
+    attack() {
+        return 'attack with ' + this.weapon
+    }
+}
+
+function createElf(name, weapon) {
+    return {
+        name, 
+        weapon
+    }
+}
+
+const peter = createElf('Peter', 'stones')
+peter.attack = elfFunctions.attack
+peter.attack // attack with stones
+const sam= createElf('Sam', 'fire')
+sam.attack() = elfFunctions.attack
+sam.attack // attack with fire
+```
+Not too bad, have functionality, but still a lot of work. JS gives us a tool called `Object.create()` which we can clean it up with. Instead of manually having to attach the methods on each elf. Can use `Object.create()` to create the link - prototype chain. 
+
+```js
+const elfFunctions = {
+    attack() {
+        return 'attack with ' + this.weapon
+    }
+}
+
+function createElf(name, weapon) {
+    let newElf = Object.create(elfFunctions)
+    newElf.name = name;
+    newElf.weapont = weapon;
+    return newElf;
+}
+
+const peter = createElf('Peter', 'stones')
+console.log(peter.attack) // attack with stones
+const sam= createElf('Sam', 'fire')
+console.log(sam.attack) // attack with fire
+```
+
+Now it works! Why? Because we used `Object.create()`. What it does, is create a link between the `elfFunctions` and the `newElf` we created. Doing prototypal inheritance here. If we throw in a `console.log(newElf)` into the `createElf()` function, we see it creates an empty object for us (`{}`). 
+
+```js
+function createElf(name, weapon) {
+    let newElf = Object.create(elfFunctions)
+    // console.log(newElf) // {}
+    console.log(newElf.__proto__) // { attack: [Function] }
+    newElf.name = name;
+    newElf.weapont = weapon;
+    return newElf;
+}
+```
+
+`Object.create()` creates the prototype chain for us, all the way up so we can use `attack`. Solves our problems, it's all working, we're done. Right? No. This is true prototypal inheritance here. But you won't really see this out in most code bases. It's not standard or accepted by JS community. 
