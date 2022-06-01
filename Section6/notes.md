@@ -292,3 +292,17 @@ Elf.prototype.build = function() {
 What is the problem with what we have? Are we at OOP nirvana? No, not really. Problem with the code is `prototype` is a bit weird. Looks ugly. Not really understandable if you don't understand prototype inheritance. Can get very confusing very fast. Not a lot of people like this. Problem is OOP is all about classes. 
 
 If we wanted to get closer to OOP, `Object.create()` is less OO than what we have. We can improve it a lot. 
+
+# Funny Thing about JS
+```js
+var a = new Number(5)
+typeof a // object
+var b = 5 
+typeof b // number 
+a === b // false 
+
+b.toString() 
+```
+JS sees you want to use object methods with something like `toString()`. Have all these methods available even though typeof B is just a number, and numbers are primitive types. In JS when we assign a variable, internally it's going to construct Number we've added so we have access to all these methods. That's how we can use `toFixed` or `toString` even on string values and primitives. It automatically assumes you meant an object instead of a primitive in order to run object methods. This is how things like `new Date()` work as well. Internally these objects have built in prototypes, so on these dates we can run different sorts of methods. 
+
+Technically in JS everything is an object, everything has a constructor function for it, except for `null` and `undefined`, we have constructor functions for everything else and methods we can use. 
