@@ -224,3 +224,71 @@ Elf.prototype.attack = () => {
 ```
 
 **GOTCHA** `this` in this case is the global object. Not bound to the object itself. By using a regular function, which is dynamically scoped (doesn't matter where it's written it's who it calls it), `this` changes based on who calls it. One gotcha of why you sometimes don't want to use arrow functions, don't want lexically scoped `this`. 
+
+# More Constructor Functions 
+Constructor functions are a little tricky. 
+
+```js
+// Constructor Functions 
+function Elf(name, weapon) {
+    // console.log('this', this) // this Elf {}
+    this.name = name;
+    this.weapon = weapon;
+    // console.log('this', this) // this Elf { name: 'Peter', weapon: 'stones'}
+}
+
+Elf.prototype.attack = function() {
+    return 'attack with ' + this.weapon
+}
+
+const peter = new Elf('Peter', 'stones')
+const sam = new Elf('Sam', 'fire')
+sam.attack 
+```
+if we `console.log('this', this)` at top, we see that `this` is an empty object (`console.log('this', this) // this Elf {}`). Whereas if we put it lower, then we see all the properties within it. (`console.log('this', this) // this Elf { name: 'Peter', weapon: 'stones'}`). 
+
+If we threw in a `var a = 5` it doesn't get added to the object. Need the `this` keyword for that to happen. 
+
+Also constructor functions change the prototype chain for us. Let's test that out. 
+
+```js
+const peter = new Elf('Peter', 'stones')
+console.log(peter.prototype) // undefined
+console.log(peter.__proto__) // Elf { attack: [Function]}
+console.log(Elf.prototype) //  Elf { attack: [Function]}
+const sam = new Elf('Sam', 'fire')
+sam.attack 
+```
+Every function we create gets this prototype property. Only constructor functions have use for it though. 
+
+`console.log(peter.prototype)` gives us `undefined`, because `peter` is not a function. 
+
+One of the biggest gotchas is if we use `build`. 
+
+```js
+Elf.prototype.build = function() {
+    // return 'house'
+    function building() {
+        return this.name + ' builds a house'
+    }
+    building()
+}
+
+// undefined
+```
+
+**GOTCHA** Why does `build()` give `undefined`? Because functions inside of methods/functions, means `this` is not assigned to the object itself but actually to the `Window` object. Can `return building.bind(this)` to fix that. Or even easier `const self = this`; at the top, and `this` can be turned into `self`. 
+
+```js
+Elf.prototype.build = function() {
+    const self = this;
+    function building() {
+        return self.name + ' builds a house';
+    }
+    return building()
+}
+```
+
+What is the problem with what we have? Are we at OOP nirvana? No, not really. Problem with the code is `prototype` is a bit weird. Looks ugly. Not really understandable if you don't understand prototype inheritance. Can get very confusing very fast. Not a lot of people like this. Problem is OOP is all about classes. 
+
+If we wanted to get closer to OOP, `Object.create()` is less OO than what we have. We can improve it a lot. 
