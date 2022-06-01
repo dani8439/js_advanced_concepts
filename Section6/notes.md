@@ -157,3 +157,70 @@ function createElf(name, weapon) {
 `Object.create()` creates the prototype chain for us, all the way up so we can use `attack`. Solves our problems, it's all working, we're done. Right? No. This is true prototypal inheritance here. But you won't really see this out in most code bases. It's not standard or accepted by JS community. 
 
 # OOP3: Constructor Functions
+
+Didn't have `Object.create()` in the beginning of the js language. Want to use Constructor Functions. It's still a function, except we create an `elf()` function that takes in our attributes, and remove other code so it becomes this. Not `returning` anything, just using `this`. 
+
+```js
+// Constructor Functions 
+function Elf(name, weapon) {
+    this.name = name;
+    this.weapon = weapon;
+}
+
+const peter = elf('Peter', 'stones')
+// console.log(peter.attack())
+const sam = lf('Sam', 'fire')
+sam.name // typeError cannot read name of undefined. 
+// console.log(sam.attack())
+```
+
+In order to use a constrcutor function, need to use the `new` keyword, so need to add it in, so it becomes this:
+
+```js
+const peter = new Elf('Peter', 'stones')
+// console.log(peter.attack())
+const sam = new Elf('Sam', 'fire')
+sam.name // Sam
+```
+The `new` keyword in JS automatically returns the object for us that we have here. It creates the elf constructor. It runs the code, constructs the elf function for us, and now we have access to `peter` and `sam`. Any function that is invoked using the `new` keyword, is called a *constructor function*. We've seen constructor functions before, `Number(), Object() Function()`. You invoked them by using the `new` keyword. As a rule, all constructor functions should start with a capital letter, to let other people know you need to call this function using the `new` keyword.
+
+```js
+const Elf1 = new Function('name', 'weapon',     
+`this.name = name; 
+this.weapon = weapon;`)
+
+const sarah = new Elf('Sarah', 'fireworks') // { name: 'Sarah', weapon: 'fireworks'}
+```
+Constructor functions allow us to use the `new` keyword and create these objects for us. Because we've used the `new` keyword and it automatically returns the elf object and creates the elf constructor, we've created a new object and a new function has been called, and we've created a new execution context. Because this is a function we're running, we automatically get the `this` variable attached to it. Every function that we call gets the `this` and the `arguments` parameter. 
+
+Interesting is when we use the `this` keyword, instead of pointing to the `Window` object as `this` does automatically, the `new` keyword changes what `this` is pointing to when a new EC is pointing to. It's saying, point `this` to the object that we just created, so that `this` now becomes `peter` or `sam`. If we remove `new` and click run, can't read property of undefined, because without the `new` keyword, we're not creating the object, returning it, or assigning `this` to the object that calls it. The `new` keyword does a lot of work under the hodd and behind the scenes. Why it's so powerful, is because it's a function, every function in JS gets automatically a prototype property. 
+
+Remember a function is a special type of object. Get the prototype property. It's absolutely useless, until we have constructor functions. Native constructor functions come with `call, apply, and bind`. We can also add our own to the prototype. 
+
+```js
+// Constructor Functions 
+function Elf(name, weapon) {
+    this.name = name;
+    this.weapon = weapon;
+}
+
+Elf.prototype.attack = function() {
+    return 'attack with ' + this.weapon
+}
+
+const peter = new Elf('Peter', 'stones')
+const sam = new Elf('Sam', 'fire')
+sam.attack // attack with fire
+```
+
+We're able to use constructor functions instead of `Object.create()` to create this magical function that creates a new object. Because it's a constructor function, also has a prototype property that we can attach things to. So both `peter` and `sam` can use attack from the same location in memory (goes up the prototype chain to look and find `attack()`). All in the same memory space. Can just keep adding functionality here. 
+
+It doesn't work if we change it to an arrow function, because arrow functions are lexically scoped (define `this` based on where they are written). So this doesn't work:
+
+```js
+Elf.prototype.attack = () => {
+    return 'attack with ' + this.weapon
+}
+```
+
+**GOTCHA** `this` in this case is the global object. Not bound to the object itself. By using a regular function, which is dynamically scoped (doesn't matter where it's written it's who it calls it), `this` changes based on who calls it. One gotcha of why you sometimes don't want to use arrow functions, don't want lexically scoped `this`. 
