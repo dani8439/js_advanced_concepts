@@ -343,3 +343,7 @@ Finally have OOP. Right? No. Not really. This is all called **syntactic sugar**.
 In JS classes are still just objects. Does JS have classes? Yes they do as syntactic sugar, but `class` keyword is still just prototypal inheritance. Some people call this `pseudoclassical inheritance` as it's not really classical inheritance. 
 
 Why is `attack()` outside of the constructor? Because the constructor runs each time we instantiate it. If we moved `attack()` inside, it would take up a lot of memory. We just want one. One function in one location that all the instances can access. 
+
+# `Object.create()` vs Class
+
+Some people love classes, others hate them. Just personal preference. No right or wrong. We can accomplish all of what we did in previous lecture with `Object.create()`. Some people call using `Object.create()` as pure prototypal inheritance. Most do not use `Object.create()`. At the end of the day it's up to you. 
