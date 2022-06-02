@@ -347,3 +347,50 @@ Why is `attack()` outside of the constructor? Because the constructor runs each 
 # `Object.create()` vs Class
 
 Some people love classes, others hate them. Just personal preference. No right or wrong. We can accomplish all of what we did in previous lecture with `Object.create()`. Some people call using `Object.create()` as pure prototypal inheritance. Most do not use `Object.create()`. At the end of the day it's up to you. 
+
+# `this` 4 Ways
+
+```js
+// new binding this - allows us to assign the this to the object we're instantiating. 
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+const person1 = new Person('Xavier', 55)
+person1
+
+// implicit binding - just implied
+const person = {
+    name: 'Karen', 
+    age: 40,
+    hi() {
+        console.log('hi ' + this.name)
+    }
+}
+
+// explicit binding when we dictate exactly what the this keyword should refer to, using call, bind or apply.
+const person3 = {
+    name: 'Karen', 
+    age: 40,
+    hi: function() {
+        console.log('hi ' + this.setTimeout)
+    }.bind(window)
+}
+
+person3.hi() // get setTimeout function from the window 
+
+// Arrow functions - unlike all the other times when this is dynamically scoped (gets determined when its called) we can do lexical scoping. Remember a function within a function is the biggest gotcha with this. 
+const person4 = {
+    name: 'Karen',
+    age: 40, 
+    hi: function() {
+        var inner = () => {
+            console.log('hi ' + this.name)
+        }
+        return inner()
+    }
+}
+
+person4.hi()
+```
