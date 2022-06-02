@@ -306,3 +306,40 @@ b.toString()
 JS sees you want to use object methods with something like `toString()`. Have all these methods available even though typeof B is just a number, and numbers are primitive types. In JS when we assign a variable, internally it's going to construct Number we've added so we have access to all these methods. That's how we can use `toFixed` or `toString` even on string values and primitives. It automatically assumes you meant an object instead of a primitive in order to run object methods. This is how things like `new Date()` work as well. Internally these objects have built in prototypes, so on these dates we can run different sorts of methods. 
 
 Technically in JS everything is an object, everything has a constructor function for it, except for `null` and `undefined`, we have constructor functions for everything else and methods we can use. 
+
+# OOP4: ES6 Classes
+With ES6 JS finally got the `class` keyword. OOP was created with the class idea in mind, the class being a blueprint of what we want created.  
+
+The constructor is enacted every time the class is run. Everything is contained in a nice object/container. All of our methods are enclosed within it.
+
+```js
+// ES6 Class
+class Elf() {
+    constructor(name, weapont) {
+        this.name = name;
+        this.weapon = weapon;
+    }
+    attack() {
+        return 'attack with ' + this.weapon
+    }
+}
+
+const peter = new Elf('Peter', 'stones')
+console.log(peter.attack()) // attack with stones
+const sam = new Elf('Sam', 'fire')
+console.log(sam.attack()) // attack with fire
+```
+
+True beauty of OOP. Modeling real life scenarios. Can just keep adding things to one location that holds this entire `Elf` object. Anytime we want to update something, we do it in the class and all instances of the elf get that update. `instance` is a common term with OOP. An `instance` happens when we call the class and create an object. `peter` is an instance of `Elf`. 
+
+```js
+console.log(peter instanceof Elf) // true 
+```
+
+`instanceof` is language we can use with OOP. With the `new` keyword is called `instantiation`. We're instantiating the class. 
+
+Finally have OOP. Right? No. Not really. This is all called **syntactic sugar**. Underneath the hood, we're using prototypal inheritance. This is the closest JS is going to get to classes. Still using the `new` keyword with the `prototype` underneath the hood. Classes aren't necessarily the answers to everything. 
+
+In JS classes are still just objects. Does JS have classes? Yes they do as syntactic sugar, but `class` keyword is still just prototypal inheritance. Some people call this `pseudoclassical inheritance` as it's not really classical inheritance. 
+
+Why is `attack()` outside of the constructor? Because the constructor runs each time we instantiate it. If we moved `attack()` inside, it would take up a lot of memory. We just want one. One function in one location that all the instances can access. 
