@@ -466,3 +466,54 @@ shrek // returns shrek object
 shrek.attack // attack with club
 shrek.makeFort // strongest fort in the world made
 ```
+
+# Inheritance 2 
+
+When we created `makeFort()` just for the ogre class, underneath the hood we extended the prototype. It's like saying `Ogre.prototype.makeFort()`. Underneath the hood JS created it for us because we used the class keyword. Also using the prototypal inheritance of JS to create our objects. 
+
+```js 
+class Character {
+    constructor(name, weapon) {
+        this.name = name;
+        this.weapon = weapon;
+    }
+    attack() {
+        return 'attack with ' + this.weapon;
+    }
+}
+
+class Elf extends Character {
+    constructor(name, weapon, type) {
+        super(name, weapon); 
+        this.type = type 
+    }
+}
+
+class Ogre extends Character {
+    constructor(name, weapon, color) {
+        super(name, weapon);
+        this.color = color;
+    }
+    makeFort() {
+        return 'strongest fort in the world made'
+    }
+}
+
+const dobby = new Elf('Dobby', 'cloth', 'house');
+dobby.attack()
+const shrek = new Ogre('Shrek', 'club', 'green')
+shrek.makeFort()
+
+console.log(Ogre.isPrototypeOf(shrek)) // false Ogre is a constructor function, we want to check Ogre.prototype. 
+console.log(Ogre.prototype.isPrototypeOf(shrek)) // true 
+console.log(Character.prototype.isPrototypeOf(Ogre)) // false 
+console.log(Character.prototype.isPrototypeOf(Ogre.prototype)) // true 
+```
+
+Better to use the `instanceof` keyword:
+
+```js
+console.log(dobby instanceof Elf) // true
+console.log(dobby instanceof Ogre) // false 
+console.log(dobby instanceof Character) // true 
+```
