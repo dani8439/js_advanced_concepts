@@ -394,3 +394,75 @@ const person4 = {
 
 person4.hi()
 ```
+
+# Inheritance 
+Inheritance means passing knowledge down. Say we want a new player, an ogre. How would we go about creating it? Could copy and paste the `Elf` code and create a new class. But want to avoid that as it's not dry.
+
+```js 
+class Elf {
+    constructor(name, weapon) {
+        this.name = name;
+        this.weapon = weapon;
+    }
+    attack() {
+        return 'attack with ' + this.weapon;
+    }
+}
+
+const fiona = new Elf('Fiona', 'ninja stars');
+const ogre = {...fiona}
+ogre // {name: Fiona, weapon...}
+ogre.__proto__ // {}
+fiona.__proto__ // Elf {}
+console.log(fiona === ogre) // false 
+```
+
+Cloned the object, but `ogre` no longer has `Elf` as the underlying base class. The objects are not referencing the same place in memory, they're completely different things. Lost the prototypal inheritance chain. Can't even do `ogre.attack()`. How can we extend this? 
+
+Change name from Elf to Character class. Then create an Elf class that extends Character. This is called **Subclassing** in OOP. We have a base class or a super class, and a subclass. We want to inherit from the character class all these properties and methods and create something new out of it.
+
+```js 
+class Character {
+    constructor(name, weapon) {
+        this.name = name;
+        this.weapon = weapon;
+    }
+    attack() {
+        return 'attack with ' + this.weapon;
+    }
+}
+
+class Elf extends Character {
+    constructor(name, weapon, type) {
+        super(name, weapon); 
+        this.type = type 
+    }
+}
+
+const dobby = new Elf('Dobby', 'cloth', 'house');
+dobby.attack() // attack with cloth
+```
+Keyword `super` for the `super()` class that goes up and calls `this.name`, and `this.weapon`. It's just a standard, where `super` is referring to the super class. 
+
+When we do `class Elf extends Character` means extend, and set the prototype (`__proto__`) to point to `Character`, so `Elf` now has a prototype chain up the `Character`. The `constructor` is our own constructor just for the `Elf` class, only gets run there. In there, we can leave it as is, or we can add to it. If we want to set any property that uses the `this` keyword, have to use `super` and the super class so it knows what to do with the `this` keyword. If we try to `console.log(this)` before `super()`, we get an error. Have to do it after. `super()` must be called. 
+
+`this` keyword simply says, who am I? Who is calling me? 
+
+```js
+//// continued from above
+
+class Ogre extends Character {
+    constructor(name, weapon, color) {
+        super(name, weapon);
+        this.color = color;
+    }
+    makeFort() {
+        return 'strongest fort in the world made'
+    }
+}
+
+const shrek = new Ogre('Shrek', 'club', 'green')
+shrek // returns shrek object
+shrek.attack // attack with club
+shrek.makeFort // strongest fort in the world made
+```
