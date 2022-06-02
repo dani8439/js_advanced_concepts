@@ -517,3 +517,31 @@ console.log(dobby instanceof Elf) // true
 console.log(dobby instanceof Ogre) // false 
 console.log(dobby instanceof Character) // true 
 ```
+
+# Public vs Private
+
+In any OO languages, the idea of public vs private fields are important. Don't really have them in JS. Before, anything that was private that shouldn't be accessed from class or an object, we add an underscore to (`_`) to let people know it's a private method and you shouldn't call it. 
+
+```js
+shrek._attack = false 
+shrek._attack // false 
+```
+
+Languages like Java have keywords like private, that make things private for us. Can solve this issue in JS with something called weak maps, but it's a little hacky. 
+
+Class field declarations for JS. 
+
+```js 
+class Character {
+    #age = 54;
+    constructor(name, weapon) {
+        this.name = name;
+        this.weapon = weapon;
+    }
+    private attack() {
+        return 'attack with ' + this.#age;
+    }
+}
+```
+
+Can add the pound sign `#` to make something private. (Could be old from when this video was recorded)
