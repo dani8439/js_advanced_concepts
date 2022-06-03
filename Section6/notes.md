@@ -644,6 +644,7 @@ class Queen extends Character {
 const victoria = new Queen('Victoria', 'army', 'hearts'); // create a new instace with the queen having (name, weapon, type). Type inlcudes: 'hearts', 'clubs', 'spades', 'diamonds'
 
 victoria.attack() // will console.log the attack() method in Character class AND will return another string: 'I am the Victoria of hearts, now bow down to me! '
-
-
 ```
+
+# Reviewing OOP
+Learned about `this`, `new`, Prototypes, ES6 Classes, languages that are class based like Java or C++, Inheritance, `Object.create()`, Private vs Public, and the 4 Principles of OOP (Encapsulation, Abstraction, Inheritance and Polymorphism)
