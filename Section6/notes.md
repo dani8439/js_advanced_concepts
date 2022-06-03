@@ -576,3 +576,41 @@ class Toggle extends React.Component {
 ```
 
 `class`, `constructor`, `handleClick()` methods all these things are OOP. 
+
+# 4 Pillars of OOP
+
+1. **Encapsulation** Before OOP, we had procedural programming. OOP puts things in an object/container, and organizing things into units that model real world application. Wrap code into boxes that are related so these boxes can just react with each other using methods and properties that are available to each other. Nice little class packages we can just use whenever we want. 
+
+2. **Abstraction** Hiding the complexity from the user. Creating simpler interfaces. Such as I'll take care of the class and all you do is instantiate. Idea of abstraction says here are the methods and properties you can use, don't worry about anything else, I'll do it all behind the scenes. Just see the methods and understand what the class can do. Abstraction helps with private methods and variables.
+
+3. **Inheritance** By inheriting from other classes we avoid having to rewrite the same code. Also save memory space by having shared methods. Very powerful and important. 
+
+4. **Polymorphism** Means many forms. Definition of polymorphism is heavily debated. Idea is the ability to call the same method on different objects, and each object responds in different ways. For example in `Elf` and `Ogre` class, if they both had different ways of attacking (`attack()`):
+
+```js
+class Elf extends Character {
+    // some code
+    attack(cry) {
+        return 'attack with ' + cry;
+    }
+}
+
+class Ogre extends Character {
+    // some code
+    attack() {
+        return 'arghhhhhh'; 
+    }
+}
+
+dobly.attack('weee') // attack with weee
+shrek.attack() // arghhhhh
+```
+
+Basic explanation, but the idea to appear in many forms. Idea with polymorphism in OOP, is that it has the ability to process objects differently depending on their data type or class. Because js is a dynamically typed language, it limits the amount of polymorphism we have. But the ability to redefine methods for classes, allowing us to reuse some of the functionality and customize them to their own objects and classes. Great because we don't have to copy and paste over code, we can reuse and adapt to our needs. 
+
+OOP is: 
+- Clear + Understandable 
+- Easy to Extend 
+- Easy to Maintain
+- Memory Efficient
+- DRY
