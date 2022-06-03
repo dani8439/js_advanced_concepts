@@ -545,3 +545,34 @@ class Character {
 ```
 
 Can add the pound sign `#` to make something private. (Could be old from when this video was recorded)
+
+# OOP in React.js
+
+Can now spot OOP in the wild, even if you don't realize it. In `React`, they use OOP. 
+
+```jsx
+class Toggle extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {isToggleOn: true};
+    
+        // This binding is necssary to make `this` work in the callback
+        this.handleClick = this.handleClick.bind(this)
+    }
+    handleClick() {
+        this.setState(state => {(
+            isToggleOn: !state.isToggleOn
+        )});
+    }
+
+    render() {
+        return (
+            <button onClick={this.handleClick}>
+            {this.state.isToggleOn ? 'ON' : 'OFF'}
+            </button>
+        );
+    }
+}
+```
+
+`class`, `constructor`, `handleClick()` methods all these things are OOP. 
