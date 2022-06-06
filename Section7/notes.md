@@ -4,29 +4,4 @@
 
 Have a very important Pillar with FP. **Pure Functions**. There's a separation between the data of a program and the behavior. All objects created in FP are immutable. Once something is created, it cannot be changed. Avoid shared state, adhere to principle of pure functions. 
 
-# Exercise: Amazon
-
-```js
-// Amazon shopping 
-const user = {
-    name: 'Kim', 
-    active: true,
-    cart: [],
-    purchases: []
-}
-
-function purchaseItem(user, item) {
-    this.user.cart.push(item);
-}
-
-const items = [{ id: 1, name: 'book', price: 10.00 }, {id: 2, name: 'dvd', price: 15.00}]
-// Implement a cart feature:
-// 1. Add items to cart. 
-// 2. Add 3% tax to the item in cart 
-// 3. But item: cart ==> purchases 
-// 4. Empty cart 
-
-// Bonus:
-// accept refunds.
-// track user history
-```
+# Pure Functions 
