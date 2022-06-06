@@ -5,3 +5,29 @@
 Have a very important Pillar with FP. **Pure Functions**. There's a separation between the data of a program and the behavior. All objects created in FP are immutable. Once something is created, it cannot be changed. Avoid shared state, adhere to principle of pure functions. 
 
 # Pure Functions 
+
+What are pure functions? There's 2 main things. A function has to always return the same output given the same input. The function cannot modify anything outside of itself. No side effects. 
+
+```js
+// No side effects 
+// input --> output
+
+const array = [1, 2, 3];
+
+function mutateArray(arr) {
+    arr.pop();
+}
+
+function mutateArray2(arr) {
+    arr.forEach(item => {
+        arr.push(1)
+    })
+}
+mutateArray(array);
+mutateArray2(array);
+console.log(array) // [1, 2]
+```
+
+The function above has *side-effects*. Meaning, does the function modify anything outside of itself? It does. When we run it, the array changes from `[1, 2, 3]` to `[1, 2]`. If we call it again, then the array is modified again. 
+
+With side effects, we're using shared state that can interact with anything. One of the troubles of this. Order of the function calls matter, this can cause a lot of bugs. How can we write something that has no side effects?
