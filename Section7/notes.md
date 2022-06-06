@@ -31,3 +31,56 @@ console.log(array) // [1, 2]
 The function above has *side-effects*. Meaning, does the function modify anything outside of itself? It does. When we run it, the array changes from `[1, 2, 3]` to `[1, 2]`. If we call it again, then the array is modified again. 
 
 With side effects, we're using shared state that can interact with anything. One of the troubles of this. Order of the function calls matter, this can cause a lot of bugs. How can we write something that has no side effects?
+
+# Pure Functions 2
+
+How can we make the code not have any side effects and not change what the array is? We can create a new array. 
+
+```js
+const array = [1, 2, 3]
+function removeLastItem(arr) {
+    const newArray = [].concat(arr);
+    newArray.pop()
+    return newArray 
+}
+
+function multiplyBy2(arr) {
+   return arr.map(item => item*2)
+}
+
+const array2 = removeLastItem(array); // 1, 2
+const array 3 = multiplyBy2(array) // 2, 4, 6
+console.log(array); // 1, 2, 3
+console.log(array2, array3)
+```
+
+Created a new state or data, but it's a local variable. Not modifying anything outside of it. Not effecting the outside world, that's the beauty with no side effects. Doesn't effect the outside world, and so konw what to expect from it. 
+
+No side effects for `multiplyBy2` as well. If we `console.log()` it all, see different arrays living on their own. What happens if we have a `function a()` is it a pure function? 
+
+```js
+function a() {
+    console.log('hi');
+}
+```
+
+No, it's not. It's window specific, using the browser to log to the browser. Effecting the outside world, modifying something outside of itself, so it's not a pure function. Has side effects *Input should always result in the same output*  Yes. it's always the same with it. 
+
+```js
+function a(num1, num2) {
+    return num1 + num2
+}
+
+a(3, 4) // 7
+```
+Click many times and it's always 7. This is what we call **Referential Transparency**, means if I completely change the function to the number 7, will it effect any part of the program? 
+
+```js
+function b(num) {
+    return num*2
+}
+
+b(a(3,4)) //14 
+```
+
+*Referential transparency* says if we change `b(a(3,4))` to `b(7)` will it have any effect on the program? As it is, no. Always gives the same output of `14`. These functions also have no side effects, not touching hte outside world. Only touching their own parameters. 
