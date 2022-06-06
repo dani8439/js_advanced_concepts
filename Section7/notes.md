@@ -84,3 +84,5 @@ b(a(3,4)) //14
 ```
 
 *Referential transparency* says if we change `b(a(3,4))` to `b(7)` will it have any effect on the program? As it is, no. Always gives the same output of `14`. These functions also have no side effects, not touching hte outside world. Only touching their own parameters. 
+
+The biggest thing in functional programming, idea with pure functions, is that it makes functions very easy to test, to compose, and avoids a lot of bugs. No mutations, no shared state, have these predictable functions that minimize the bugs in our code. Is it possible to have pure functions everywhere? Can you have 100% pure functions? 
