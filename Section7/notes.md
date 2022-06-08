@@ -86,3 +86,13 @@ b(a(3,4)) //14
 *Referential transparency* says if we change `b(a(3,4))` to `b(7)` will it have any effect on the program? As it is, no. Always gives the same output of `14`. These functions also have no side effects, not touching hte outside world. Only touching their own parameters. 
 
 The biggest thing in functional programming, idea with pure functions, is that it makes functions very easy to test, to compose, and avoids a lot of bugs. No mutations, no shared state, have these predictable functions that minimize the bugs in our code. Is it possible to have pure functions everywhere? Can you have 100% pure functions? 
+
+# Can Everything be Pure? 
+
+Learned about a pure function where we have no side effects and the same input gives the same output. Can we do anything without side effects? `console.log()` is a side effect. `input/output` is a side effect. Communicating with the outside world in any way which is what input/output is, is not pure. With just pure functions, that outside world knows nothing about, philisophically, doesn't do anything.
+
+A program doesn't exist without side effects. Can't run basic code, websites, without interacting with the browser. Browsers have to make `fetch` calls, to http, interact with the DOM, to achieve anything. Idea is just to minimize side effects. 
+
+Purity is more of a confidence level. Cannot be 100%. Side effects and impurity is not necessarily bad. Idea is to organize your code in a way that you put side effects to a certain place in the code so it becomes predictable and easier to debug. 
+
+At its core, essence of functional programming, want to build programs that are very small, very usable, pure functions. How do we build the perfect function? A perfect function should do 1 task and 1 task only, should have a `return` statement, pure, no shared state, Immutable state (can modify within our functions, but always return a new copy of the output no matter the input), composable, and predicatable. 
