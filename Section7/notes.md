@@ -96,3 +96,21 @@ A program doesn't exist without side effects. Can't run basic code, websites, wi
 Purity is more of a confidence level. Cannot be 100%. Side effects and impurity is not necessarily bad. Idea is to organize your code in a way that you put side effects to a certain place in the code so it becomes predictable and easier to debug. 
 
 At its core, essence of functional programming, want to build programs that are very small, very usable, pure functions. How do we build the perfect function? A perfect function should do 1 task and 1 task only, should have a `return` statement, pure, no shared state, Immutable state (can modify within our functions, but always return a new copy of the output no matter the input), composable, and predicatable. 
+
+# Idempotence 
+
+**Idempotence** means given the same input a function will alway returns or does what we expect it to do. Little bit different. Would be the same if we switched `return Math.random(num)` with `console.log(num)`. Another idea that would be idempotenct, is deleting a user from a database. Can delete the user once, but if we keep calling the function, going to return the same empty field, as there's no more users. See idempotence with http GET requests in API calls. 
+
+Why do we care about it? The idea to call something 1000 times and always getting the same result is extremely valuable. Makes our code predictable. 
+
+Another idea is to be able to call yourself over and over and still get the same result. (`Math.abs(Math.abs(-50))`). With all of this we have the guarantee of code being predictable. 
+
+```js
+function notGood(num) {
+    return Math.random(num)
+}
+
+notGood(); // 0.94639010101010
+
+Math.abs(Math.abs(-50))
+```
