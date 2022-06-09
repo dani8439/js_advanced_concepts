@@ -243,3 +243,25 @@ curriedMultiplyBy5(4) // 20
 `curriedMultiply` has access to `a` and `b` because of closure. Give the function one parameter at a time, because if you gave it two at once `curriedMultiply(5,3)` it wouldn't work. 
 
 Even if we call `curriedMultiplyBy5(4)` many times, it only runs the `(b) => a * b` part again and again. 
+
+# Partial Application 
+
+Partial application is a way for us to partially apply a function. It's the process of producing a function with a smaller number of parameters. Taking a function, applying some of its arguments in the function so it remembers those parameters then uses closures when it's called with the rest of the arguments. 
+
+Partial application says we want to apply part of the parameters, lets say a, and then the next time I call that function, I want to apply the rest of the arguments. 
+
+```js
+const multiply = (a, b, c) => a*b*c; 
+// curried version has another arrow function in it:
+const curriedMultiply = (a) => (b) => (c) => a*b*c;
+curriedMultiply(3)(4)(10) // 120
+```
+
+Partial application says no no no, call the function once, and then apply the rest of the arguments to it. How do we do that? 
+
+```js 
+const multiply = (a, b, c) => a*b*c; 
+const partialMultiplyBy5 = multiply.bind(null, 5)
+partialMultiplyBy5(4, 10) // 200
+```
+Main diff between currying and partial application. On the second call, expect all the arguments. Currying, one argument at a time. 
