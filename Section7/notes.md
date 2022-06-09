@@ -139,3 +139,33 @@ Not telling the program what to do or how to do it.
 Another classic example is jquery. Is a lot more imperative than what we have now, like react, angular or vue. With it, we told our website exactly what to do. Hey if x happens, do this. React on the other hand is declarative. Takes in some parameters and returns something else, don't tell how to display it, etc. 
 
 Functional programming helps us be more declarative. Important to remember when we talk about declarative and imperative, declarative is compiled down or processed by something imperative. At the end of the day we can't avoid side effects or data manipulation. Something has to do it.
+
+# Immutability 
+
+**Immutability** means not changing the data or the state. Instead, making copies of the state and returning a new state every time.
+
+Pure function, clones the object. 
+
+```js
+const obj = {name: 'Andrei'}
+function clone(obj) {
+    return {...obj}; // this is pure
+}
+obj.name = 'Nana';
+```
+
+As soon as we change the `obj.name` we are mutating the state. Immutability is very important, we can change things inside of our function, but we don't want to effect the outside world. Our function is pure, but we have a lot of mutation in it. Ideally, we'd create a function to change the name:
+
+```js
+function updateName(obj) {
+    const obj2 = clone(obj)
+    obj2.name = 'Nana';
+    return obj2
+}
+
+updateName(obj) 
+const updatedObj = updateName
+console.log(obj, updatedName) // { name: 'Andrei'} {name: 'Nana'}
+```
+
+Maintained immutability by making copies. Doesn't seem very memory efficient though. If we're just copying things over and over, doesn't that just fill up our memory? Something called structural sharing, when it comes to functional programming a lot of things implement it. Under the hood, only the changes to the state are copied. Everything else is still there in memory. 
