@@ -114,3 +114,28 @@ notGood(); // 0.94639010101010
 
 Math.abs(Math.abs(-50))
 ```
+
+# Imperative vs Declarative
+
+**Imperative** code tells the machine what to do and how to do it.
+
+**Declarative** code tells the computer what to do and what should happen. Doesn't tell the computer how to do things. 
+
+A computer is better at being imperative. Needs to know how to do things. That is, it needs to know how to do things. We as humans are more declarative. If you ask someone for a jug of water, they know how to do it, don't have to instruct. 
+
+Machine code is imperative, and very descriptive. VS going higher up the chain, that becomes more declarative (js). Don't need to tell computer where to store the variable etc. 
+
+Imperative, very instructive. 
+```js
+for (let i = 0; i < 1000; i++) {
+    console.log(i)
+}
+```
+How can we make it more declarative?
+Not telling the program what to do or how to do it.
+```js
+[1,2,3].forEach(item => console.log(item))
+```
+Another classic example is jquery. Is a lot more imperative than what we have now, like react, angular or vue. With it, we told our website exactly what to do. Hey if x happens, do this. React on the other hand is declarative. Takes in some parameters and returns something else, don't tell how to display it, etc. 
+
+Functional programming helps us be more declarative. Important to remember when we talk about declarative and imperative, declarative is compiled down or processed by something imperative. At the end of the day we can't avoid side effects or data manipulation. Something has to do it.
