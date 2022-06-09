@@ -169,3 +169,56 @@ console.log(obj, updatedName) // { name: 'Andrei'} {name: 'Nana'}
 ```
 
 Maintained immutability by making copies. Doesn't seem very memory efficient though. If we're just copying things over and over, doesn't that just fill up our memory? Something called structural sharing, when it comes to functional programming a lot of things implement it. Under the hood, only the changes to the state are copied. Everything else is still there in memory. 
+
+# Higher Order Functions and Closures 
+
+In js functions are first class citizens. Higher order functions and closures. 
+
+HOF mean it's a function that does 1 of 2 things, either takes 1 or more functions as arguments, or returns a function as a result, often called a callback. 
+
+Closure is a mechanism to maintain some bit of state. Easy to create. Define a function within another function, and then expose it. 
+
+```js 
+// HOF 
+const hof = () => () => 5;
+hof(); // [Function]
+hof()() // 5
+
+const hof = (fn) => fn(5);
+hof(function a(x) {return x})
+
+// Closure 
+const closure = function() {
+    let count = 0;
+    return function increment() {
+        count++
+        return count
+    }
+}
+
+closure() // [Function: increment]
+const incrementFn = closure();
+incrementFn() // 1
+incrementFn() // 2
+incrementFn() // 3
+```
+
+Because of closure, the incremement function remembers the variable declared in the outer scope. The variable used by the inner function is available. We're modifying the state outside of our function. 
+
+When it comes to functional programming, we can definitely still use closures, and they're still very powerful. Closures only make the function impure, if we modified the closed over variable. If instead our increment is just: 
+
+```js 
+const closure = function() {
+    let count = 55;
+    return function getCounter() {
+        return count;
+    }
+}
+
+const getCounter = closure();
+getCounter()
+getCounter()
+getCounter
+```
+
+Not modifying. Created private variables. Used closures to create data privacy. Can't modify the count as a user, it's always the same. 
