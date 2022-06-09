@@ -222,3 +222,24 @@ getCounter
 ```
 
 Not modifying. Created private variables. Used closures to create data privacy. Can't modify the count as a user, it's always the same. 
+
+# Currying 
+
+Currying is the technique of translating the evaluation of a function that takes multiple arguments, into taking a sequence of functions each with a single argument. Take a function can take multiple parameters, instead using currying to modify it to a function that takes one arg at a time. 
+
+
+```js
+const multiply = (a, b) => a * b;
+multiple(3,4) // 12
+
+const curriedMultiply = (a) => (b) => a * b;
+const curriedMultiplyBy5 = curriedMultiply(5)
+
+curriedMultiply(5)(3) // 15
+
+curriedMultiplyBy5(4) // 20
+```
+
+`curriedMultiply` has access to `a` and `b` because of closure. Give the function one parameter at a time, because if you gave it two at once `curriedMultiply(5,3)` it wouldn't work. 
+
+Even if we call `curriedMultiplyBy5(4)` many times, it only runs the `(b) => a * b` part again and again. 
