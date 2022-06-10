@@ -307,3 +307,29 @@ console.log('2', memoizedAddTo80(5)) // 2 85
 ```
 
 What is memoization exactly? It's a specific form of caching that involves caching the return value of a function, based on its parameters. If the parameters of the function is not changed like with console.log 1 and console.log 2, it uses the cache, that's calculated the same thing before with the same parameter and already calculated, uses the cache. Memoization is a way to remember a solution to a solve problem so you don't have to calculate it again.
+
+# MCI: Memoization 2
+
+Is there a way to improve the functions from the previous example a little? Ideally, don't want to fill the cache in the global scope. Ideally, it's good practice to have memory for the cache to live inside of the function, not polluting the global scope. Can use closures in JS.
+
+Problem once we put cache inside, it gets reset each time function is called. So can use a closure instead to get around it. 
+
+```js 
+function memoizedAddTo80() {
+    let cache = {};
+    return function(n){
+        if (n in cache) {
+            return cache[n];
+        } else {
+            console.log('long time');
+            cache[n] = n + 80;
+            return cache[n]
+        }
+    }
+}
+
+const memoized = memoizedAddTo80();
+
+console.log('1', memoized(5)) // long time ...... 1 85
+console.log('2', memoized(6)) // long time ...... 2 86
+```
