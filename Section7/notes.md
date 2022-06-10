@@ -402,6 +402,7 @@ purchaseItem(
     addItemToCart
 )(user, {name: 'laptop', price: 200})
 
+let amazonHistory = [];
 const compose = (f, g) => (...args) => f(g(...args));
 
 function purchaseItem(...fns) {
@@ -409,11 +410,13 @@ function purchaseItem(...fns) {
 }
 
 function addItemToCart(user, item) {
+    amazonHistory.push(user);
     const updateCart = user.cart.concat([item])
     return Object.assign({}, user, { cart: updateCart })
 }
 
 function applyTaxToItems(user) {
+    amazonHistory.push(user);
     const {cart} = user;
     const taxRate = 1.3; 
     const updatedCart = cart.map(item => {
@@ -438,4 +441,26 @@ function emptyCart(user){
 // 2. Add 3% tax to item in cart 
 // 3. Buy item: cart --> purchases 
 // 4. Empty cart
+
+function refundItem() {
+    //// can do so
+}
+
+amazonHistory // returns entire history of what Kim did.
+```
+
+Can play back history now using the code above. Can go back in time and see what happened. Need logs to see what user might've done. Using our FP paradigm, we have the ability to travel forward and back in time. 
+
+Idea of FP is to minimize the mutations. 
+
+With pipe instead it would be left to right: 
+
+```js
+const pipe = (f, g) => (...args) => g(f(...args));
+purchaseItem(
+    addItemToCart,
+    applyTaxToItems,
+    buyItem,
+    emptyCart
+)(user, {name: 'laptop', price: 200})
 ```
