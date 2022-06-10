@@ -265,3 +265,45 @@ const partialMultiplyBy5 = multiply.bind(null, 5)
 partialMultiplyBy5(4, 10) // 200
 ```
 Main diff between currying and partial application. On the second call, expect all the arguments. Currying, one argument at a time. 
+
+# MCI: Memoization I
+
+In order how to understand how dynamic programming works, need to understand how caching works. **Caching** is a way to store values, so you can use them later on. Ideally you can think of caching as a backpack you take to school. Instead of going all the way home when you need something, having a small box that holds items that you need, so when you go to school, you can just reuse them. Hold a piece of data in a box. 
+
+**Memoization** is a specific form of caching. We use it a lot in dynamic programming. 
+
+```js 
+function addTo80(n) {
+    console.log('long time')
+    return n + 80;
+}
+
+addTo80(5) // 85
+addTo80(5) // 85
+addTo80(5) // 85
+```
+What if the operation took a really long time? What if there was a `console.log('long time')` and it took a long time. Every time we run the function, have to run `long time` 3 times, it will take a long time even though we've run the calculation 3 times. 
+
+Is there a way to optimize it? This is where to use memoization or caching. 
+
+```js 
+
+let cache = {
+};
+
+function memoizedAddTo80(n) {
+    if (n in cache) {
+    //similar to doing cache.n  
+        return cache[n];
+    } else {
+        console.log('long time');
+        cache[n] = n + 80;
+        return cache[n]
+    }
+}
+
+console.log('1', memoizedAddTo80(5)) // long time, 1 85
+console.log('2', memoizedAddTo80(5)) // 2 85
+```
+
+What is memoization exactly? It's a specific form of caching that involves caching the return value of a function, based on its parameters. If the parameters of the function is not changed like with console.log 1 and console.log 2, it uses the cache, that's calculated the same thing before with the same parameter and already calculated, uses the cache. Memoization is a way to remember a solution to a solve problem so you don't have to calculate it again.
