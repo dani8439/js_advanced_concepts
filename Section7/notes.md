@@ -371,3 +371,10 @@ const multiplyBy3AndAbsolute = compose(multiplyBy3, makePositive);
 multiplyBy3AndAbsolute(-50)
 ```
 Will see them changed interchangeably, they produce the same result. 
+
+# Arity 
+**Arity** simply means the number of arguments a function takes. 
+
+compose has an arity of 2. MultiplyByThree has an arity of 1. (from previous lecture).
+
+Good idea fewer number of parameters there are in a function, the easier it is to use that function. More parameters a function has, harder it is to compose it. With arity there is no hard right or wrong. Like to stick to less (personal preference).
