@@ -333,3 +333,41 @@ const memoized = memoizedAddTo80();
 console.log('1', memoized(5)) // long time ...... 1 85
 console.log('2', memoized(6)) // long time ...... 2 86
 ```
+
+# Compose and Pipe 
+
+data --> function --> data --> fn --> 
+
+Want a number -50 * 3 and then take the absolute value (remove negative sign from it). 
+
+`compose` doesn't exist in js. But there are libraries. One of the best libraries is Ramda. Use it like `R.compose(...)`. For now don't want to use a library, just want to build our own. 
+
+```js
+const compose = (f, g) => (data) => f(g(data))
+const multiplyBy3 = (num) => num*3
+const makePositive = (num) => Math.abs(num);
+const multiplyBy3AndAbsolute = compose(multiplyBy3, makePositive)
+
+multiplyBy3AndAbsolute(-50)
+```
+
+We've made our own compose assembly line, that can be selected and assembled in various combinations. Can build functions this way. 
+
+Also another thing called `Pipe`. 
+
+Pipe is essentially the same thing, instead of going right to left, it goes left to right. 
+
+```js
+// fn1(fn2(fn3(50)));
+// compose(fn1, fn2, fn3)(50)
+// pipe(fn3, fn2, fn1)(50)
+
+const compose = (f, g) => (data) => f(g(data));
+const pipe = (f, g) => (data) => g(f(data));
+const multiplyBy3 = (num) => num*3;
+const makePositive = (num) => Math.abs(num);
+const multiplyBy3AndAbsolute = compose(multiplyBy3, makePositive);
+
+multiplyBy3AndAbsolute(-50)
+```
+Will see them changed interchangeably, they produce the same result. 
