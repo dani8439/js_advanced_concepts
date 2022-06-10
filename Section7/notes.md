@@ -378,3 +378,7 @@ Will see them changed interchangeably, they produce the same result.
 compose has an arity of 2. MultiplyByThree has an arity of 1. (from previous lecture).
 
 Good idea fewer number of parameters there are in a function, the easier it is to use that function. More parameters a function has, harder it is to compose it. With arity there is no hard right or wrong. Like to stick to less (personal preference).
+
+# Is FP the Answer to Everything? 
+
+Idea of FP is the idea of separation of data and functions, data and the effects. Keeping functions small, pure, and composable. Doing one thing and doing it well. Allows us to have a predictable program that minimizes bugs as everything is so simple. As long as we can even out the bugs, can build really complex programs out of these smaller ones. But times where OP is better. 
