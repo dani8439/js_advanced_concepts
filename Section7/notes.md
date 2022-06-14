@@ -488,3 +488,24 @@ If we know some of the inheritance principles are bad, how can we fix it with Co
 # OOP VS FP
 
 Both paradigms. In OP group things as an object. Things happen to state (Methods). In FP, code is essentially a combination of functions, data is immutable. Leads to writing programs with no side effects and pure functions. Benefits are in the application of these ideas. Choice which you use is just what makes more sense for your project and what language you're using.
+
+# OOP VS FP 2
+
+FP is all about performing many different operations from which the data is fixed.
+OOP is about few operations on common data. 
+
+In a FP we have the idea of stateless. We don't modify state. State is immutable. 
+In OOP, it is stateful. We are modifying state. A feature of Objects, an objects procedures can modify data fields. `this` and `self` and they can be modified in classes. 
+
+In FP, our functions are pure, no side effects. Don't make an impact on the code running outside of that function.
+In OOP there are side effects. Methods manipulate our internal state. 
+
+FP is declarative. 
+OOP is about how we want it to be done (imperative).
+
+When should you use one over the other? FP is quite good at processing data for large applications. Works really well for high performance, can run on multiple processors. 
+If you have many things like characters in a game with not too many operations, OOP might be a better solution. 
+
+Can use the ideas of both to write your code. EX React uses classes to extend components. Also have methods we create onto the class. If we go to our components in it, they're like FP. Pure functions. Without state. 
+
+In all programs there are 2 primary components, the data and the behaviors. OOP says to bring together the data and the behavior in the same location, object/class. FP says that data and behavior are distinctly different things and should be kept separate for clarity.
