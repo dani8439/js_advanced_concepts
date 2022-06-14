@@ -484,3 +484,7 @@ Leads to the other problem of *fragile bass class problem* Because parent class 
 Also the *hierarchy* problem. What if things change? Messes up the whole hierarchy. What if it inherits all these things it doesn't need? *Gorilla banana problem* just want the banana under it, not the entire gorilla.
 
 If we know some of the inheritance principles are bad, how can we fix it with Composition? First thing is to remove all the methods.
+
+# OOP VS FP
+
+Both paradigms. In OP group things as an object. Things happen to state (Methods). In FP, code is essentially a combination of functions, data is immutable. Leads to writing programs with no side effects and pure functions. Benefits are in the application of these ideas. Choice which you use is just what makes more sense for your project and what language you're using.
