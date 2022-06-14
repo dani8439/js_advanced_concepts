@@ -464,3 +464,23 @@ purchaseItem(
     emptyCart
 )(user, {name: 'laptop', price: 200})
 ```
+
+# Composition VS Inheritance 
+
+**Inheritance** is a superclass that is extended to smaller pieces that overwrite things.
+
+**Composition** is smaller pieces to create something bigger. (Compose)
+
+Debate between both is pretty heavy. A lot of people prefer composition over inheritance. Can do both in FP. But there are drawbacks to both. 
+
+*Inheritance* Structuring our classes around what things are. What it is.
+
+*Composition* We structure our code over what it is (it's abilities).
+
+*Tight coupling problem*- coupling between child and parent with inheritance is a very tight form of coupling. Opposite of reusable modular code. Ripling effects to all subclasses when we make a change in parent class. Idea of a tightly coupled inheritance where you can change things in one place and have rippling effects can be a benefit where don't keep code DRY, but can also cause a lot of problems. Have to make sure when you change something, it doesn't break anything on subclasses.
+
+Leads to the other problem of *fragile bass class problem* Because parent class changes subclasses, can be very fragile and break our code down the path.
+
+Also the *hierarchy* problem. What if things change? Messes up the whole hierarchy. What if it inherits all these things it doesn't need? *Gorilla banana problem* just want the banana under it, not the entire gorilla.
+
+If we know some of the inheritance principles are bad, how can we fix it with Composition? First thing is to remove all the methods.
