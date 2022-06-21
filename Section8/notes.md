@@ -47,3 +47,23 @@ element.addEventListener('click', () => {
 ```
 
 When is asynchronous happening? It happens a lot, when you talk between machines (databases), reading files, etc. It is a single-threaded language that can be non-blocking. Single callstack and does one thing at a time. In order to be non-blocking it can be asynchronous with callback functions. These callback functions get run in the background through the callback queue and then the event loop to bring them back into the callstack.
+
+# Promises 
+A promise is an object that may produce a single value sometime in teh future. Either a resolved value, or a reason that it's not resolved (rejected).
+
+A promise may be in one of three possible states, fulfilled, rejected, or pending. 
+
+Have to understand callbacks first. 
+
+```js
+// callback pyramid of doom 
+movePlayer(100, 'Left', function() {
+    movePlayer(400, 'Left', function() {
+        movePlayer(10, 'Right', function() {
+            movePlayer(330, 'Left', function() {
+
+            });
+        });
+    });
+});
+```
