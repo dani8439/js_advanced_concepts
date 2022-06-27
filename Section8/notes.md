@@ -56,6 +56,7 @@ A promise may be in one of three possible states, fulfilled, rejected, or pendin
 Have to understand callbacks first. 
 
 ```js
+el.addEventListener("click", submitForm)
 // callback pyramid of doom 
 movePlayer(100, 'Left', function() {
     movePlayer(400, 'Left', function() {
@@ -67,3 +68,178 @@ movePlayer(100, 'Left', function() {
     });
 });
 ```
+
+When something is done, execute this code. Pyramid of doom in above code. With callbacks you'll get this nested function and really complicated code. Hard to read. More realistic example is:
+
+```js
+grabTweets('twitter/andreineagoie', (error, andreiTweets) => {
+    if(error) {
+        throw Error;
+    }
+    displayTweets(andreiTweets)
+    grabTweets('twitter/elonmusk', (error, elonTweets) => {
+        if(error) {
+            throw Error;
+        }
+        displayTweets(elonTweets)
+        grabTweets('twitter/vitalikbuterin', (error, vitalikTweets) => {
+            if(error) {
+                throw Error;
+            }
+            displayTweets(vitalikTweets)
+        })
+    })
+})
+```
+
+Doesn't look very pretty does it? Have to do the same thing, nested, and reptition. Promises serve the same purpose as callbacks. Why do we have two things? They are new in ES6, and a little more powerful. 
+
+```js
+el.addEventListener("click", submitForm)
+
+movePlayer(100, 'Left', function() {
+    movePlayer(400, 'Left', function() {
+        movePlayer(10, 'Right', function() {
+            movePlayer(330, 'Left', function() {
+
+            });
+        });
+    });
+});
+
+movePlayer(100, 'Left')
+    .then(() => movePlayer(400, 'Left'))
+    .then(() => movePlayer(10, 'Right'))
+    .then(() => movePlayer(350, 'Left'))
+```
+
+How to create a **Promise** 
+
+```js
+const promise = new Promise((resolve, reject) => {
+    if (true) {
+        resolve('Stuff Worked');
+    } else {
+        reject('Error, it broke');
+    }
+})
+
+// to run 
+// promise.then(result => console.log(result))
+
+// Stuff Worked
+// Promise {<fulfilled>: undefined}
+
+promise
+    .then(result => result + '!')
+    .then(result2 => {
+        console.log(result2);
+    })
+
+// Stuff Worked!
+// Promise {<fulfilled>: undefined}
+
+// What if there was an error? 
+promise
+    .then(result => result + '!')
+    .then(result2 => {
+        throw Error
+        console.log(result2);
+    })
+    .catch(() => console.log('error!'))
+
+// What if the error happened higher up and we move it? 
+promise
+    .then(result => {
+        throw Error
+        result + '!'})
+    .then(result2 => {
+        console.log(result2);
+    })
+    .catch(() => console.log('error!'))
+
+// error! 
+// Promise... 
+```
+
+`.catch()` catches any errors that occur. 
+
+```js
+promise
+    .then(result => result + '!')
+    .then(result2 => result2 + '?')
+    .catch(() => console.log('error!'))
+    .then(result3 => {
+        console.log(result3 + '!')
+    })
+// Stuff Worked!?!
+// Promise...
+```
+`.catch` only works if something fails inbetween. Where you put the catch statement, it will check and run if anything before it fails. That's how you create a promise, with resolve or reject. With a promise we can give it to a variable and run it asynchronously. Can keep chaining it, and also chain our errors. 
+
+A promise is something we have now and can use around the code. When would it be a good thing? Promises are great for asynchronous programming. When you don't want JS to block the running of your code, you use a promise so the task happens in the background. When it gets resolved or rejected, you'll get the response. 
+
+Something else they can do which makes them very powerful:
+
+```js
+const promise = new Promise((resolve, reject) => {
+    if (true) {
+        resolve('Stuff Worked');
+    } else {
+        reject('Error, it broke');
+    }
+})
+
+const promise2 = new Promise((resolve, reject) => {
+    setTimeout(resolve, 100, 'HIII')
+})
+
+const promise3 = new Promise((resolve, reject) => {
+    setTimeout(resolve, 1000, 'POOKIE')
+})
+
+const promise4 = new Promise((resolve, reject) => {
+    setTimeout(resolve, 30000, 'Is it me you are looking for?')
+})
+
+Promise.all([promise, promise2, promise3, promise4])
+    .then(values => {
+        console.log(values);
+    })
+
+// Promise {<pending>}
+// (4) ['Stuff Worked', 'HIII', 'POOKIE', 'Is it me you are looking for?']
+```
+Waited until all promises were resolved and then logged out all the values. 
+
+```js
+const urls = [
+    'https://jsonplaceholder.typicode.com/users',
+    'https://jsonplaceholder.typicode.com/posts',
+    'https://jsonplaceholder.typicode.com/albums'
+
+]
+
+Promise.all(urls.map(url => {
+    return fetch(url).then(resp => resp.json())
+})).then(results => {
+    console.log(results[0])
+    console.log(results[1])
+    console.log(results[2])
+})
+
+// Promise {<pending>}
+// VM875:11 (10) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+// VM875:12 (100) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+// VM875:13 (100) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+
+Promise.all(urls.map(url => {
+    return fetch(url).then(resp => resp.json())
+})).then(results => {
+    console.log(results[0])
+    console.log(results[1])
+    console.log(results[2])
+}).catch(() => console.log('error'))
+// error
+```
+fetch simply returns a promise. At their most basic, promises are like event listeners. Except it can only succeed or fail once, not twice.  
