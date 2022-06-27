@@ -242,4 +242,12 @@ Promise.all(urls.map(url => {
 }).catch(() => console.log('error'))
 // error
 ```
-fetch simply returns a promise. At their most basic, promises are like event listeners. Except it can only succeed or fail once, not twice.  
+fetch simply returns a promise. At their most basic, promises are like event listeners. Except it can only succeed or fail once, not twice. 
+
+# ES8 Async Await
+
+Async/Await is part of ES8. Built on top of promises. 
+
+```js
+// ASYNC/AWAIT
+```
