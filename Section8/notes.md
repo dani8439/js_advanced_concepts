@@ -246,8 +246,83 @@ fetch simply returns a promise. At their most basic, promises are like event lis
 
 # ES8 Async Await
 
-Async/Await is part of ES8. Built on top of promises. 
+Async/Await is part of ES8. Built on top of promises. Underneath the hood, an async function is a function that returns a promise. Benefit is that it makes code easier to read. 
 
 ```js
 // ASYNC/AWAIT
+movePlayer(100, 'Left')
+    .then(() => movePlayer(400, 'Left'))
+    .then(() => movePlayer(10, 'Right'))
+    .then(() => movePlayer(330, 'Left'))
 ```
+
+This is asynchronous code. One happens then the next, then the next... With async/await, it loks something like this:
+
+```js 
+async function playerStart() {
+    const firstMove = await movePlayer(100, 'Left'); // pause 
+    const second = await movePlayer(400, 'Left'); // pause 
+    await movePlayer(10, 'Right'); // pause
+    await movePlayer(330, 'Left'); // pause
+}
+```
+
+Benefit of `async/await` is to make code look synchronous and easier to read. A promise in js is kind of like an iou. I promise to return something to you in the future. Instead of waiting around on them, want to continue on with our lives while it works in the background. This is how js works. Promises help us solve js being single threaded. 
+
+async/await code are just promises underneath the hood. We call that syntactic sugar. Still does the same thing, but just different syntax to make it look prettier. Promises have the `.then()` you keep having to chain. Asynch has `async/await`. 
+
+First declare a function as `async function playerStart()`. Can now do anything we want inside of it, but have access to a new word as we defined with `async`. The `await` keyword says hey, pause this function until I have something for you. We're awaiting the response. Can use it in front of any function that returns a promise. Once the promise is resolved, function moves to the next line and awaits next move, and so on and so on. Instead of chaining it, can assign a variable first to await it, and can assign a second, etc. `first` and `second` will have the result of each function in a variable so it looks very synchronous. 
+
+More realistic example:
+
+```js
+fetch('https://jsonplaceholder.typicode.com/users')
+    .then(resp => resp.json())
+    .then(console.log)
+// promise pending
+//// info.....
+```
+How can we turn this into an async function?
+
+```js 
+async function fetchUsers() {
+    const resp = await fetch('https://jsonplaceholder.typicode.com/users')
+    const data = await resp.json();
+    console.log(data);
+}
+// promise pending...
+// data....
+```
+
+Nothing different, and works the same. Is it prettier than what we had before? Up to you. 
+
+```js
+const urls = [
+    'https://jsonplaceholder.typicode.com/users',
+    'https://jsonplaceholder.typicode.com/posts',
+    'https://jsonplaceholder.typicode.com/albums'
+
+]
+
+// convert this to async/await
+Promise.all(urls.map(url => {
+    return fetch(url).then(resp => resp.json())
+})).then(array => {
+    console.log('users', array[0])
+    console.log('posts', array[1])
+    console.log('albums', array[2])
+}).catch(() => console.log('oops'))
+
+const getData = async function() {
+    try {
+    const [ users, posts, albums ] = await Promise.all(urls.map(url =>  fetch(url).then(resp => resp.json())))
+    console.log('users', users)
+    console.log('posts', posts)
+    console.log('albums', albums)
+    } catch (err){
+        console.log('oops', err)
+    }
+}
+```
+
+`try/catch` block to catch and display erros. 
