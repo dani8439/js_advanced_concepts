@@ -325,4 +325,4 @@ const getData = async function() {
 }
 ```
 
-`try/catch` block to catch and display erros. 
+`try/catch` block to catch and display errors. 
