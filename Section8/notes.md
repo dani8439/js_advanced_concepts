@@ -558,7 +558,6 @@ race().then(console.log)
 // race is done: a
 // parallel is done: a b c
 // sequence is done a b c
-
 ```
 
 3 things quite crucial to decide with mutliple promises. For example you had 3 promises you need to handle, there are a few ways we can manage this. 
