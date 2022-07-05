@@ -630,6 +630,9 @@ Out of p1, p2 and p3, whichever resolves first is taken by Promise.any().
   console.log(result); // Prints "A", "B" or "C"
 })();
 
+// A
+// A
+Promise {<fulfilled>: undefined}Promise {<fulfilled>: undefined}
 ```
 
 What if none of the promises resolve? In that case Promise.any() throws an error!
