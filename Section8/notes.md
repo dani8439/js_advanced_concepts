@@ -565,3 +565,43 @@ race().then(console.log)
 1. Parallel - execute them all at the same time
 2. Sequential - run the first one, if it succeeds the second, etc and so one. 
 3. Race - call three things, whichever one comes back first, do that one and ignore the rest. 
+
+# ES2020: `allSettled()`
+
+```js
+const promiseOne = new Promise((resolve, reject) => setTimeout(resolve, 3000));
+const promiseTwo = new Promise((resolve, reject) => setTimeout(reject, 3000));
+
+Promise.all([promiseOne, promiseTwo]).then(data => console.log(data));
+
+// Promise {<pending>}
+// Uncaught (in promise) undefined
+```
+`Promise.all()` only resolves if both promises do. In order to have it work, have to do a catch statement: 
+
+```js
+Promise.all([promiseOne, promiseTwo]).then(data => console.log(data))
+    .catch(e => console.log('something failed', e));
+
+// Promise {<pending>}
+// something failed undefined
+```
+
+With new ES2020 feature, have something called `allSettled()`, as it suggests, is a little bit different. 
+
+```js
+const promiseOne = new Promise((resolve, reject) => setTimeout(resolve, 3000));
+const promiseTwo = new Promise((resolve, reject) => setTimeout(reject, 3000));
+
+Promise.allSettled([promiseOne, promiseTwo]).then(data => console.log(data))
+    .catch(e => console.log('something failed', e));
+
+// Promise {<pending>}
+// (2) [{…}, {…}]
+// 0: {status: 'fulfilled', value: undefined}
+// 1: {status: 'rejected', reason: undefined}
+// length: 2
+// [[Prototype]]: Array(0)
+```
+
+What did it do? `Promise.allSettled()` doesn't care about resolve or reject. `allSettled()` runs all promises regardless of whether they reject or not. All Promises come back complete. allSettled just checks until all promises are returned. 
