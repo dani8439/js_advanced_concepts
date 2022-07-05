@@ -636,3 +636,29 @@ Promise {<fulfilled>: undefined}Promise {<fulfilled>: undefined}
 ```
 
 What if none of the promises resolve? In that case Promise.any() throws an error!
+
+# Threads, Concurrency, Parallelism
+
+JS is single threaded, but with async ability, can do all sorts of complex things in the background. With the async model, even if requests take a long time, they don't block the main thread. Where do these requests go? Tasks in a web browser, or in Node, look into a data base. Still executed in threads and hidden from us. Often running on own separate background threads. 
+
+A new thread, is every time we open a new tab.
+
+Browser has web workers that work in the background for me. Web worker is a js program, running in parallel on a different thread. How can we create that? 
+
+```js
+var worker - new Worker('worker.js')
+worker.postMessage('Helllooooo')
+
+addEventListener('message')
+```
+Most of the time we won't be working with web workers, just wanted to show how they're created/work. Web workers communicate through the messages just shown, but don't really have access to the browser web API's. Do have some abilities like setTimeout and location.
+
+Using `fetch()` on the browser (a facade function - calls onto the Web API). Don't have to worry about creating our own threads. Make it easier for us. 
+
+Diagram for concurrency vs parallelism. (can't screen shot).
+
+*Concurrency*, works on 1 thread, as soon as it has time, or a pause, can go to another thread, then goes back and forth between 2 threads, only allowing 1 thread to run at a time. Can only eat with one mouth (one CPU). Can grab with two hands to get something else, but mouth can only have one thing at once. 
+
+*Concurrency + parallelism* Can only work on multi-core CPU's allow us to execute different threads at a time because they're running in parallel on different CPU's. Can't really do this in JS, not really built into the language. 
+
+Concurrency is something we can achieve in js. Using it when we work on our single threaded js, but in the background we use Node or web browsers to allow us to do things on other threads. Can only do that when main callstack is done with our work. 
