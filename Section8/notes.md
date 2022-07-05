@@ -482,3 +482,36 @@ getData2();
 Once called get all the users, posts, and the albums. Exact same thing as above with the `async/await`. Just another way of writing it. Only thing the `for/await/of` feature does, is allows us to loop through the multiple promises almost as if we're writing synchronous code. 
 
 To review: Have the `finally()` function we can run at the end of a promise. Have the for/await/of that takes each item from an array of promises that returns to us in the correct order all the responses. 
+
+# Job Queue
+
+Lied about the original model of JS runtime with the call stack, memory heap, Web API (Dom, fetch, setTimeout), the event loop and the callback queue, actually has a missing piece. It's missing because the diagram was how it was originally like. As of ES6, came a newer piece of JS runtime that doesn't get mentioned in older resources. 
+```js
+// Callback Queue -- also called the Task Queue
+setTimeout(() => {console.log('1', 'is the loneliest number')}, 0)
+setTimeout(() => { console.log('2', 'can be as bad as one')}, 10)
+
+//2
+// Job Queue - Microtask Queue 
+Promise.resolve('hi').then((data) => console.log('2', data))
+
+// 3
+console.log('3', 'is a crowd')
+
+// 3 is a crowd
+// 2 hi
+// undefined
+// 1 is the loneliest number
+// 2 can be as bad as one
+```
+Promises are new to JS. Or they were added quite recently. To accomodate this new addition had to change the event loop. The event loop had the callback queue, which we've talked about. callback queue also called the task queue. 
+
+With Promises we had this thing natively in js now. INstead of just using callbacks, had a native way to handle asynchronous code using promises. Not part of the web API, part of JS. ECMA script said, we need another queue for our promises. To accomodate this addition, we need another queue called the **Job queue**.  or as some people would call it, the **Microtask queue**. 
+
+This queue is similar to the callback queue, but a little smaller, and has a higher priority. Means the Event Loop is going to check the job queue first and make sure that there's nothing in that queue before it starts to look at the callback queue. 
+
+(`setTimeout()` is a facade function. Not really js, just looks like js. Underneath the hood it's a Web API - the timer API.
+
+Because of the new job queue, even though `setTimeout` was before the `Promise.then()` the job queue gets checked first as it has higher priority. The naming is a little confusing. Often a lot of confusion around it. ECMA script standards calls it a Microtask or Jobs, where the other names come from. 
+
+It's implemented by the browser, and we have different browsers. Still get few weird kinks because browser's implement it differently. Some legacy browser's might not have the job queue, and might only have the callback queue.
