@@ -515,3 +515,54 @@ This queue is similar to the callback queue, but a little smaller, and has a hig
 Because of the new job queue, even though `setTimeout` was before the `Promise.then()` the job queue gets checked first as it has higher priority. The naming is a little confusing. Often a lot of confusion around it. ECMA script standards calls it a Microtask or Jobs, where the other names come from. 
 
 It's implemented by the browser, and we have different browsers. Still get few weird kinks because browser's implement it differently. Some legacy browser's might not have the job queue, and might only have the callback queue.
+
+# Parallel, Sequence, and Race
+
+```js
+// have a promisify function that takes an item and a delay. Simply returns a new promise. Doesn't do anything except resolve with the delay we specify, wrapped in a setTimeout so we have the delay.
+const promisify = (item, delay) =>
+  new Promise((resolve) =>
+    setTimeout(() =>
+      resolve(item), delay));
+
+const a = () => promisify('a', 100);
+const b = () => promisify('b', 5000);
+const c = () => promisify('c', 3000);
+console.log(a,b,c) // [function] [function] [function] if we call the functions and run them... console.log(a(), b(), c())... we see that we have 3 promises: Promise {} Promise {} Promise {}
+
+// Parallel version. Asynch function called parallel. will have all 3 promises. Then use the await Promise.all to run all these promises at the same time and have all 3 outputs. 
+async function parallel() {
+  const promises = [a(), b(), c()];
+  const [output1, output2, output3] = await Promise.all(promises);
+  return `parallel is done: ${output1} ${output2} ${output3}`
+}
+
+async function race() {
+  const promises = [a(), b(), c()];
+  const output1 = await Promise.race(promises);
+  return `race is done: ${output1}`;
+}
+
+async function sequence() {
+  const output1 = await a();
+  const output2 = await b();
+  const output3 = await c();
+  return `sequence is done ${output1} ${output2} ${output3}`
+}
+
+sequence().then(console.log)
+parallel().then(console.log)
+race().then(console.log)
+
+// Promise {<pending>}
+// race is done: a
+// parallel is done: a b c
+// sequence is done a b c
+
+```
+
+3 things quite crucial to decide with mutliple promises. For example you had 3 promises you need to handle, there are a few ways we can manage this. 
+
+1. Parallel - execute them all at the same time
+2. Sequential - run the first one, if it succeeds the second, etc and so one. 
+3. Race - call three things, whichever one comes back first, do that one and ignore the rest. 
