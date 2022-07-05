@@ -374,3 +374,111 @@ objectSpread(tiger, lion, rest)
 
 ```
 Object spread operator just means we can do it with objects as well as arrays. 
+
+# ES9 (ES2018) - Async
+Two ES2018 new features. 
+
+```js
+const urls = [
+    'https://swapi.dev/api/people/1',
+    'https://swapi.dev/api/people/2',
+    'https://swapi.dev/api/people/3',
+    'https://swapi.dev/api/people/4'
+]
+
+Promise.all(urls.map(url => {
+    return fetch(url).then(people => people.json())
+}))
+    .then(array => {
+        console.log('1', array[0])
+        console.log('2', array[1])
+        console.log('3', array[2])
+        console.log('4', array[3])
+    })
+    .catch(err => console.log('ughhhhh fix it!', err))
+
+// Promise {<pending>}
+// 1 {name: 'Luke Skywalker', height: '172', mass: '77', hair_color: 'blond', skin_color: 'fair', …}
+// 2 {name: 'C-3PO', height: '167', mass: '75', hair_color: 'n/a', skin_color: 'gold', …}
+// 3 {name: 'R2-D2', height: '96', mass: '32', hair_color: 'n/a', skin_color: 'white, blue', …}
+// 4 {name: 'Darth Vader', height: '202', mass: '136', hair_color: 'none', skin_color: 'white', …}
+```
+
+`finally` allows us to do something after a promise is finished. Added at the end. No matter what after it is done, it will be called whether a promise is resolved or rejected.
+
+```js
+const urls = [
+    'https://swapi.dev/api/people/1',
+    'https://swapi.dev/api/people/2',
+    'https://swapi.dev/api/people/3',
+    'https://swapi.dev/api/people/4'
+]
+
+Promise.all(urls.map(url => {
+    return fetch(url).then(people => people.json())
+}))
+    .then(array => {
+        console.log('1', array[0])
+        console.log('2', array[1])
+        console.log('3', array[2])
+        console.log('4', array[3])
+    })
+    .catch(err => console.log('ughhhhh fix it!', err))
+    .finally(data => console.log('extra', data));
+
+// Promise {<pending>}
+// 1 {name: 'Luke Skywalker', height: '172', mass: '77', hair_color: 'blond', skin_color: 'fair', …}
+// 2 {name: 'C-3PO', height: '167', mass: '75', hair_color: 'n/a', skin_color: 'gold', …}
+// 3 {name: 'R2-D2', height: '96', mass: '32', hair_color: 'n/a', skin_color: 'white, blue', …}
+// 4 {name: 'Darth Vader', height: '202', mass: '136', hair_color: 'none', skin_color: 'white', …}
+// extra undefined
+```
+`finally` doesn't really receive a parameter, usually empty. But can call it even though the `.then()` finished. What happens if we throw an error and the `catch()` block gets called? Still get it eve if we add a `throw Error;` within the `.then()` block.
+
+`finally()` is great if you want to run a piece of code no matter what after a promise. Many ways to use it. 
+
+**for await of** feature
+```js
+// for await of 
+const urls = [
+    'https://jsonplaceholder.typicode.com/users',
+    'https://jsonplaceholder.typicode.com/posts',
+    'https://jsonplaceholder.typicode.com/albums'
+
+]
+
+const getData = async function() {
+    try {
+    const [ users, posts, albums ] = await Promise.all(urls.map(url =>  fetch(url).then(resp => resp.json())))
+    console.log('users', users)
+    console.log('posts', posts)
+    console.log('albums', albums)
+    } catch (err){
+        console.log('oops', err)
+    }
+}
+
+const loopThroughUrls = urls => {
+    for (url of urls) {
+        console.log(url)
+    }
+}
+
+const getData2 = async function() {
+    // creating an array of these fetch promises of each one of the requests
+    const arrayOfPromises = urls.map(url => fetch(url));
+    for await (let request of arrayOfPromises) {
+        const data = await request.json();
+        console.log(data);
+    }
+}
+
+getData2();
+// Promise {<pending>}
+// (10) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+// (100) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+// (100) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+```
+Once called get all the users, posts, and the albums. Exact same thing as above with the `async/await`. Just another way of writing it. Only thing the `for/await/of` feature does, is allows us to loop through the multiple promises almost as if we're writing synchronous code. 
+
+To review: Have the `finally()` function we can run at the end of a promise. Have the for/await/of that takes each item from an array of promises that returns to us in the correct order all the responses. 
