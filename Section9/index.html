@@ -26,6 +26,19 @@
   <body>
     <h1>Section 9: Modules in JavaScriptt</h1>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="index.js"></script>
+    <script>
+      var globalSecret = '1234'
+      var fight = 'hahahah'
+    </script>
+    <script>
+      var script2 = (function(globalSecret) {
+        $('h1').click(function(){
+          $('h1').hide();
+        })
+        globalSecret = '0'
+      })(globalSecret)
+    </script>
   </body>
 </html>

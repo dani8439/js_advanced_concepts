@@ -61,3 +61,88 @@ If we move the above code into the index.js file, we can call it once we `open i
 Okay, can't we just move the `script` up higher so the other script gets read after? Yes. Have the function. But, it's not good. Because these variables are on global scope, every part of the code that's on file, can change that variable. Have really hard code to debug, and as it gets bigger and bigger, it's impossible to maintain. How do we solve this? 
 
 Back in the day we used to have one page of JS. How do we do this in JS? JS has something called ESModule. It's recent. What did we do before? Will show how to understand the older methods.
+
+# Module Pattern 
+
+Modules give us a better way to organize variables and functions, so we can group them in a way that makes sense together. Had idea of Global Scope, and function scope. Now have block scope. In an ideal world, have Module Scope above function scope and they all coexist. Can share things without having to go through the global scope. Can be explicit. 
+
+Made the module pattern to create module scope as didn't actually have it, using closures. 
+
+Looked like this: (IIFE)
+
+```js 
+// Global scope 
+    // Module scope
+        // Function scope
+            // block scope - let and const 
+
+// IIFE
+(function() {
+    var harry = 'potter'
+    var voldemort = 'He who must not be named'
+
+    function fight(char1, char2) {
+    var attack1 = Math.floor(Math.random() * char1.length);
+    var attack2 = Math.floor(Math.random() * char2.length);
+    console.log(attack1) // random generated number
+    return attack1 > attack2 ? `${char1} wins` : `${char2} wins`
+    }
+    console.log(fight(harry, voldemort))
+})()
+```
+
+Using the idea to write function scope that's private. Also have the ability to access global variables. Essentially a function as a module. 
+
+No longer have access to fight, but if it's in the index.js, it still works. 
+
+What if we wanted other scripts to use this `fight()` function but we don't want them to touch `harry` or `voldemort` as they are private variables? Using the IIFE pattern can say: 
+
+```js 
+// IIFE
+// Module Pattern
+var fightModule = (function() {
+    var harry = 'potter'
+    var voldemort = 'He who must not be named'
+
+    function fight(char1, char2) {
+    var attack1 = Math.floor(Math.random() * char1.length);
+    var attack2 = Math.floor(Math.random() * char2.length);
+    console.log(attack1) // random generated number
+    return attack1 > attack2 ? `${char1} wins` : `${char2} wins`
+    }
+    return {
+        fight: fight
+    }
+})()
+```
+Allows us to assign to this variable, whatever it is that is returned and immediately invoked. Can switch the `console.log()` to `return { fight: fight }`
+
+If we refresh the page and do `fight`, under the `fightModule` we have fight. 
+
+Can  call `fightModule.fight('ron', 'hagrid')`
+
+Other pieces of code can now use this code, but only when we tell it. Essentially what we are doing is a public API. It's our interface. Only exporting it. Everything else we're not exporting, you can't touch. The pattern of returning what we need is called the **returning module pattern**. 
+
+Can have private functions, and private variables, etc. Because of closure, even though this function gets executed, because we're returning a function inside of a function, if we call it, we still have access to harry and voldemort if we wanted to.
+
+Other benefit of this is used by jQuery. Can add in jquery and have access to it in the global scope. Underneath the hood, jQuery is doing the same as this `fightModule`. 
+
+
+In the index.html:
+```html
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="index.js"></script>
+    <script>
+      var globalSecret = '1234'
+      var fight = 'hahahah'
+    </script>
+    <script>
+      var script2 = (function($, globalSecret) {
+        $('h1').click(function(){
+          $('h1').hide();
+        })
+        globalSecret = '0'
+      })(jQuery, globalSecret)
+    </script>
+```
+Using the module pattern, able to make something available to the outside world, using a public API and returning it, and attaching it to a variable. Other modules can explicitly say they want to use the global variable and be explicit over what they are using.
