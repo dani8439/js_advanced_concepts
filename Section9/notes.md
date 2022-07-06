@@ -146,3 +146,17 @@ In the index.html:
     </script>
 ```
 Using the module pattern, able to make something available to the outside world, using a public API and returning it, and attaching it to a variable. Other modules can explicitly say they want to use the global variable and be explicit over what they are using.
+
+# Module Patterns Pros and Cons 
+
+Using an IIFE we're able to create a function scope that mimics a module scope. Everything in it will run because we're immediately invoking it, and only return to a variable as it's accesible on the global scope. So `fightModule` is a global variable. 
+
+Benefit of it is that we're only revealing one variable just once. Hiding everything else. Everything we want to make public we can attach to that variable. It's great for maintainability. By definition a module is self contained now. A well designed module like this can just contain functionality and also lower the depenencies on other parts of the cohorts. 
+
+If we do something like say, modifying the jQuery inside of it, won't do it everywhere else. It's contained. It's decoupled. Won't effect the outside parts. Can have one team working on one part, another on the other, no issues. 
+
+Other great thing is reusability. Can copy parts of the code over and over. Have 1 place in our code that has the fight function, don't have to change in multiple places one place to go if we want to change it down the line. 
+
+Two main problems in this. First is that we're still technically polluting the global namespace. `fightModule` is on the global namespace. 
+
+Other issue is that we don't necessarily know all the dependencies. Have to make sure that the order of the script tags is correct. For ex, if we moved the jquery script tag code to the bottom of the page *after* we used the code, it breaks. Computer has no idea because it was declared after. How do we solve this? Had 2 major solutions.
