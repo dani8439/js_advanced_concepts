@@ -1,0 +1,5 @@
+# Modules in JS Intro
+
+Just like a painter has on his palate paint in different apartments in different colors and combines them to create art, modules are just like that. Different pieces of code are grouped together, so that things are organized and as our application gets larger and larger we can combine different pieces together to make these large applications. Very similar to separation of concerns (FP and OOP). Good modules are like that, highly self contained and grouped together with their own functionality, allowing them to be moved around without disrupting the system as a whole. 
+
+Need a way in JS to import dependency and export functionality, often called an interface. In modules, this extends beyond functions and classes. Goes beyond just js files. The concept prevails throughout programming. 
