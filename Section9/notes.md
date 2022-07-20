@@ -245,3 +245,6 @@ Trick is you ahve to define the type of the script as a module so it will work:
       console.log(fight('ron', 'hedwig'))
    </script>
 ```
+
+# Section Review 
+Learned about JS modules. How things were in the beginning, and how things changed as the web grew more complex. How the code has developed, now we have ES6 modules, reusable code, code that is more maintainable. Able to separate concerns, divide things up into chunks. Can now compose different modules together. Can use third party code on NPM. 
