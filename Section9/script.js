@@ -1,7 +1,7 @@
 const harry = 'potter'
 const voldemort = 'He who must not be named'
 
-function jump() {}
+export function jump() {}
 
 export function fight(char1, char2) {
   const attack1 = Math.floor(Math.random() * char1.length);

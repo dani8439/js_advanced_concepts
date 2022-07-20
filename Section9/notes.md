@@ -236,3 +236,12 @@ export function fight(char1, char2) {
 To use it, put `<script> import {fight} from 'script' </script>` in index.html. This is called a named export. Need the curly brackets. 
 
 Can also do a default export, is `export default function....` and that's the default item that gets imported so you don't need brackets anymore. 
+
+Trick is you ahve to define the type of the script as a module so it will work:
+
+```html
+   <script type="module"> 
+      import {fight} from './script.js';
+      console.log(fight('ron', 'hedwig'))
+   </script>
+```
