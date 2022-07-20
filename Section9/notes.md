@@ -160,3 +160,54 @@ Other great thing is reusability. Can copy parts of the code over and over. Have
 Two main problems in this. First is that we're still technically polluting the global namespace. `fightModule` is on the global namespace. 
 
 Other issue is that we don't necessarily know all the dependencies. Have to make sure that the order of the script tags is correct. For ex, if we moved the jquery script tag code to the bottom of the page *after* we used the code, it breaks. Computer has no idea because it was declared after. How do we solve this? Had 2 major solutions.
+
+# CommonJS, AMD, UMD
+
+After the module pattern came two really great solutions. Instead of using an IFFE and a module pattern, something called *CommonJS and AMD* came out. Solve a problem the way we won't have a problem of interference with global scope. AMD is Asnychnronous module definition. 
+
+Different modules we require, can even export specific functions. Or we can create our own `fight` function and export within it. Simple. None of this immediately invoked function. Original commonjs standard might be familiar as it was for node. Made for the server with Node.js in mind. One of the main reasons Node.js became so popular. The commonjs import/export module system, made code very easy to share for node.js programmers. 
+
+Might have heard of NPM, node package manager, is just a way for people to share their code/modules. One of the reasons why it Node has grown since 2009, because of npm. 
+
+Modules are meant to be loaded synchronously. Means JS has one callstack. If a module takes a long time to load, that's not ideal. Synchronous code on the browser can get dangerous. How can we use some of these packages on the browser? Had 2 things that came out. 1) Broswerify. Lets you require modules in the browser by bundling up all your dependencies. By using it, in our command line run something like `broswerify script.js > bundle.js` and it will read my script.js and understand the `require` syntax and `export` syntax and output it all to a `bundle.js`. Becomes 1 giant JS file. Webpack can also do this. Finally have the benefit of no global namespace pollution.
+
+```js 
+// Common JS and AMD
+var module1 = require('module1') //.fight;
+var module2 = require('module2') //.importedFunc2;
+
+function fight() {
+
+}
+
+module.exports = {
+  fight: fight
+};
+```
+
+What about AMD? It looks something like this: 
+
+```js
+// CommonJS and AMD 
+define(['module1', 'module2'],
+  function (module1Import, module2Import) {
+    var module1 = module1Import.fight 
+    var module2 = module2Import // .importedFunc2
+
+    function dance() {
+
+    }
+
+    return {
+      dance: dance,
+    };
+  });
+```
+
+Doesn't look as clean as commonjs. AMD loads scripts or modules asynchronously. Crucial for browsers, where the code can't really wait until a module is finished loading. Solved that problem with CommonJS and browserify, but because JS didn't have native modules, came up with different solutions. 
+
+May not have heard of AMD, but may have heard of the libary that makes it possible, `require.js`. 
+
+Commonjs and AMD, resolve 2 problems, depency resolution, and pollution of global scope. We only need to take care of the dependencies when we define our file, and we'er explicit with what each file needs. But also avoiding the pollution of the global namespace. AMD helps us load modules asynchronously as needed. Learned that commonjs allows us to import and be explicit. At the same time, because it's synchronous, we can use a module bundler, to bundle all of our code into one bundle.js file and still use it on the browser. Because of these different standards, if you wanted to have a package in NPM, now you have 2 ways you need to share that, using AMD and commonjs. 
+
+Another thing that came out called UMD, universal module definition, that tried to solve this. In the end it was just an if/else system. Was great and all but wasn't solving our core problem.
