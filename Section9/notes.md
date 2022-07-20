@@ -211,3 +211,28 @@ May not have heard of AMD, but may have heard of the libary that makes it possib
 Commonjs and AMD, resolve 2 problems, depency resolution, and pollution of global scope. We only need to take care of the dependencies when we define our file, and we'er explicit with what each file needs. But also avoiding the pollution of the global namespace. AMD helps us load modules asynchronously as needed. Learned that commonjs allows us to import and be explicit. At the same time, because it's synchronous, we can use a module bundler, to bundle all of our code into one bundle.js file and still use it on the browser. Because of these different standards, if you wanted to have a package in NPM, now you have 2 ways you need to share that, using AMD and commonjs. 
 
 Another thing that came out called UMD, universal module definition, that tried to solve this. In the end it was just an if/else system. Was great and all but wasn't solving our core problem.
+
+# ES6 Modules 
+
+Just have to export so we'll have access to it. 
+
+```js
+// import module1 from 'module1' // {fight}
+// import module2 from 'module2'
+
+const harry = 'potter'
+const voldemort = 'He who must not be named'
+
+function jump() {}
+
+export function fight(char1, char2) {
+  const attack1 = Math.floor(Math.random() * char1.length);
+  const attack2 = Math.floor(Math.random() * char2.length);
+  console.log(attack1) // random generated number
+  return attack1 > attack2 ? `${char1} wins` : `${char2} wins`
+}
+```
+
+To use it, put `<script> import {fight} from 'script' </script>` in index.html. This is called a named export. Need the curly brackets. 
+
+Can also do a default export, is `export default function....` and that's the default item that gets imported so you don't need brackets anymore. 
