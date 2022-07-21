@@ -1,0 +1,2 @@
+# Section Overview
+Errors or exceptions in programming are rarely taught. However handling errors is an important skill in becoming a great developer. No such thing as a perfect program. Need to stop thinking of errors as mistakes, but as a feature to tell the program when something is wrong.
