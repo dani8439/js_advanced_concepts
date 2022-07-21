@@ -103,11 +103,40 @@ fail();
 function fail() {
     try {
         console.log('this works')
+        throw new Error('oopsie!!!')
     } catch (error) {
         console.log('we have made an oopsie')
+        console.log(error.name) /// error.stack, error.message...
+    } finally {
+        console.log('still good')
+        return 'returning fail'
     }
+    console.log('!!!!!!:)')
 }
 
 fail();
 // this works
 ```
+
+If we changed it to `consol.log()` get a huge stack trace error. If we move the `throw new Error('oopsie!!')` up, won't go past that, will stop the code right there. Can also have a `finally {}` block. This block says, no matter what happens in the try/catch block, do something for me can do above code, and `returning fail`. 
+
+The interesting thing with the try/catch block, if we had any code outside of it, say a `console.log('!!!!!!:)')`. That part will never run. 
+
+Often times the try/catch is the simplest way to solve errors. Can be used in different ways, can nest them if we wanted. 
+
+```js
+try {
+    try {
+        something();
+    } catch(e) {
+        throw new Error(e)
+    }
+} catch (e) {
+    console.log('got it', e)
+}
+
+// get a huge reference error, as something is not defined. 
+// change to console.log('got it', err) get a red ReferenceError
+```
+
+The try/catch block works with synchronous errors/synchronous code. If we had a `setTimeout(function() { fakeVariable; }, 1000)` inside the try block that doesn't do anything. If we change `err` to `e`, and click run, don't get any errors. Runs 1. That is a problem. In JS we do not always write synchronous code. How do we handle that? 
