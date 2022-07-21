@@ -76,3 +76,38 @@ Runtime catch: `onerror()`
 As soon as an error happens on the callstack, go to the EC beneath us. Then keep going. If all the way through the callstack there's nothing handling it, we're going to get the `onerror()` function that runs in the browser. In Node.js we have a `process.on('uncaughtexception')`. 
 
 The power in the errors is in the fact that you can create these little hurdles/stops to catch the exceptions. How do we catch an error in JS? Will show in next video.
+
+# `Try` `Catch`
+How can we catch errors in our programs? Two ways. 1 is the `try{} catch{}` block. Also the `catch()` method.
+
+How does it work? A try/catch block works like this:
+
+`try` means run this piece of code. Can be accompanied by a `catch` block. If inside of this block there are any errors, catch it. 
+
+```js
+function fail() {
+    try {
+        console.log('this works')
+    } catch {
+        console.log('we have made an oopsie')
+    }
+}
+
+fail();
+// SyntaxError: Unexpected token. 
+```
+
+`catch` block also accepts an error parameter, so should be this: 
+
+```js
+function fail() {
+    try {
+        console.log('this works')
+    } catch (error) {
+        console.log('we have made an oopsie')
+    }
+}
+
+fail();
+// this works
+```
