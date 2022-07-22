@@ -247,3 +247,21 @@ The try catch block is only for synchronous code and use .catch() block for our 
 // VM1894:7 is this still good?
 // Promise {<fulfilled>: undefined}
 ```
+
+# Exercise: Error Handling 
+```js
+(function () {
+  try {
+    throw new Error();
+  } catch (err) {
+    var err = 5;
+    var boo = 10;
+    console.log(err);
+  }
+  //Guess what the output is here:
+  console.log(err);
+  console.log(boo);
+})();
+// 5 
+// boo
+```
