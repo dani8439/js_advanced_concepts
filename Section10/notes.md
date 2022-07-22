@@ -227,3 +227,23 @@ Promise.resolve('asyncfail')
 ```
 
 `async await` luckily have it rather than all this chaining. Can be a lot simpler.
+
+# Async Error Handling 2
+
+The try catch block is only for synchronous code and use .catch() block for our asynchronous code using promises. Because `async/await `code makes our code look synchronous, we can use `try/catch` blocks with them. 
+
+```js
+(async function() {
+    try {
+        await Promise.reject('oopsie #1')
+        await Promise.reject('oopsie #2')
+    } catch (err) {
+        console.log(err)
+    }
+    console.log('is this still good?')
+})()
+
+// oopsie
+// VM1894:7 is this still good?
+// Promise {<fulfilled>: undefined}
+```
