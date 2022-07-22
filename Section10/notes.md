@@ -140,3 +140,90 @@ try {
 ```
 
 The try/catch block works with synchronous errors/synchronous code. If we had a `setTimeout(function() { fakeVariable; }, 1000)` inside the try block that doesn't do anything. If we change `err` to `e`, and click run, don't get any errors. Runs 1. That is a problem. In JS we do not always write synchronous code. How do we handle that? 
+
+# Async Error Handling 
+How do we handle asynchronous code? Our code is not always going to be synchronous. When we have an asychronous function and an error occurs inside of it, our script will just continue executing. Handle these types of errors in JS using the `catch()` method. 
+
+```js
+Promise.resolve('asyncfail')
+    .then(response => {
+        throw new Error('#1 Fail')
+        // console.log(response)
+        return response
+    })
+    .then(response => {
+        console.log(response)
+    })
+```
+Code above is a HUGE gotcha. A silent error. It could have failed, but we don't know as we don't see it. Doesn't display or show this error. Very dangerous. Need to make sure with our promises to have `.catch()` clause. Works the same as the catch part of they try/catch block.
+
+```js
+Promise.resolve('asyncfail')
+    .then(response => {
+        throw new Error('#1 Fail')
+        // console.log(response)
+        return response
+    })
+    .then(response => {
+        console.log(response)
+    })
+    .catch(err => {
+        console.log(err)
+        // can also return err
+    })
+    .then(response => {
+        console.log(response.message)
+    })
+    .catch(err => {
+        console.log('final error')
+    })
+
+// # Error: #1 Fail
+```
+
+```js
+Promise.resolve('asyncfail')
+    .then(response => {
+        Promise.resolve().then( ()=> {
+            throw new Error('#3 fail')
+        })
+        return 5
+    })
+    .then(response => {
+        console.log(response)
+    })
+    .catch(err => {
+        throw new Error('#2')
+    })
+    .then(response => {
+        console.log(response.message)
+    })
+    .catch(err => {
+        console.log('final error')
+    })
+
+// 5
+// final error
+```
+
+```js
+Promise.resolve('asyncfail')
+    .then(response => {
+        Promise.resolve().then(() => {
+            throw new Error('#3 Fail')
+        }).catch(console.log)
+        return 5
+    })
+    .then(response => {
+        console.log(response)
+    })
+    .catch(err => {
+        console.log('final error', err)
+    })
+
+// 5
+// Error: #3 fail 
+//    at Promise.resolve.then (eval at n.evaluate)...
+```
+
+`async await` luckily have it rather than all this chaining. Can be a lot simpler.
