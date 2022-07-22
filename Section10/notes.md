@@ -301,3 +301,6 @@ class PermissionError extends Error {
     }
 }
 ```
+
+# Section Review
+Errors aren't just mistakes. Expecting them to happen during runtime and handling them correctly is a better strategy than them coming up unexpectedly. Unavoidable some will pass through and you can't catch everything. 
