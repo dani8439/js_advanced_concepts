@@ -265,3 +265,39 @@ The try catch block is only for synchronous code and use .catch() block for our 
 // 5 
 // boo
 ```
+
+# Extending Errors
+The error constructor is an object that we can extend from. Can create a class extended from `Error`, inherit all the properties of it, and then build upon it. 
+
+```js
+class AuthenticationError extends Error {
+    constructor(message) {
+        super(message)
+        this.name = 'authenticationError'
+        this.favoriteSnack = 'grapes'
+    }
+}
+
+// throw new authenticationError('oopsie')
+/// VM2241:9 Uncaught authenticationError: oopsie
+//    at <anonymous>:9:7
+
+const a = new AuthenticationError('oopsie')
+a.favoriteSnack // 'grapes'
+
+class DatabaseError extends Error {
+    constructor(message) {
+        super(message)
+        this.name = 'DatabaseError'
+        this.favoriteSnack = 'grapes'
+    }
+}
+
+class PermissionError extends Error {
+    constructor(message) {
+        super(message)
+        this.name = 'PermissionError'
+        this.favoriteSnack = 'grapes'
+    }
+}
+```
